@@ -4,7 +4,10 @@ __cell_comm_SRCS = \
 	forwardCellLink.v \
 	forwardData.v \
 	readBPMlink.v \
-	readBPMlinks.v
+	readBPMlinks.v \
+	axiDataUpconverter.v \
+	axiDataDownconverter.v
+
 cell_comm_SRCS = $(addprefix $(CELL_COMM_MODULES_DIR), $(__cell_comm_SRCS))
 
 vpath %.v $(CELL_COMM_MODULES_DIR)
