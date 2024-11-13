@@ -106,6 +106,24 @@ work/
 !/gateware/platform/xilinx/*/*/system_aurora_64b66b/*.bd
 /gateware/platform/xilinx/*/*/ila_td256_s4096_cap/*
 !/gateware/platform/xilinx/*/*/ila_td256_s4096_cap/ila_td256_s4096_cap.xci
+/gateware/platform/xilinx/*/*/axisDataFifo32/*
+!/gateware/platform/xilinx/*/*/axisDataFifo32/axisDataFifo32.xci
+/gateware/platform/xilinx/*/*/axiStreamDwUpcon/*
+!/gateware/platform/xilinx/*/*/axiStreamDwUpcon/axiStreamDwUpcon.xci
+/gateware/platform/xilinx/*/*/axiStreamSubConvUpcon/*
+!/gateware/platform/xilinx/*/*/axiStreamSubConvUpcon/axiStreamSubConvUpcon.xci
+/gateware/platform/xilinx/*/*/axiStreamClkConvUpcon/*
+!/gateware/platform/xilinx/*/*/axiStreamClkConvUpcon/axiStreamClkConvUpcon.xci
+/gateware/platform/xilinx/*/*/axiStreamClkConvDowncon/*
+!/gateware/platform/xilinx/*/*/axiStreamClkConvDowncon/axiStreamClkConvDowncon.xci
+/gateware/platform/xilinx/*/*/axiStreamDwDowncon/*
+!/gateware/platform/xilinx/*/*/axiStreamDwDowncon/axiStreamDwDowncon.xci
+/gateware/platform/xilinx/*/*/axiStreamSubConvInDowncon/*
+!/gateware/platform/xilinx/*/*/axiStreamSubConvInDowncon/axiStreamSubConvInDowncon.xci
+/gateware/platform/xilinx/*/*/axiStreamSubConvOutDowncon/*
+!/gateware/platform/xilinx/*/*/axiStreamSubConvOutDowncon/axiStreamSubConvOutDowncon.xci
+/gateware/platform/xilinx/*/*/aurora64b66b/*
+!/gateware/platform/xilinx/*/*/aurora64b66b/aurora64b66b.xci
 
 gateware/top/*/gpioIDX.vh
 gateware/modules/marble_i2c.vh
