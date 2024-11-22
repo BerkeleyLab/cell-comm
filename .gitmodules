@@ -1,0 +1,3 @@
+[submodule "gateware/submodules/bedrock"]
+	path = gateware/submodules/bedrock
+	url = git@gitlab-ssh.lbl.gov:hdl-libraries/bedrock.git
