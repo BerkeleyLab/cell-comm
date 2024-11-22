@@ -4,7 +4,8 @@ VFLAGS_DEP += -I. -y . -y$(DSP_DIR)
 VFLAGS += -I. -y . -y$(DSP_DIR) -I$(AUTOGEN_DIR)
 
 TEST_BENCH = \
-	writeFMPSTestLink_tb
+	writeFMPSTestLink_tb \
+	writeBPMTestLink_tb
 
 TGT_ := $(TEST_BENCH)
 NO_CHECK =
