@@ -114,7 +114,7 @@ wire                         packetStrobe;
 wire [INDEX_WIDTH-1:0]       packetIndex;
 wire [32*NUM_DATA_WORDS-1:0] packetData;
 
-checkAXISPacket #(
+AXIS2Packet #(
     .MAGIC_WIDTH(MAGIC_WIDTH),
     .MAGIC_START_BIT(MAGIC_START_BIT),
     .INDEX_WIDTH(INDEX_WIDTH),
@@ -122,7 +122,7 @@ checkAXISPacket #(
     .NUM_DATA_WORDS(NUM_DATA_WORDS),
     .TREADY_PROB(TREADY_PROB)
 )
-  AXISCheck (
+  AXIS2Packet (
     .auroraClk(auClk),
     .newCycleStrobe(auFAStrobe),
     .TVALID(FMPS_TEST_AXI_STREAM_TX_tvalid),
