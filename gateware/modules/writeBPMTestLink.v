@@ -43,7 +43,6 @@ parameter FOFB_INDEX_WIDTH    = 9;
 
 // Could be made register in the future if needed
 localparam BPM_COUNT_PER_SECTOR = 16;
-localparam CELL_INDEX = 12;
 
 assign TESTstatusStrobe = 0;
 assign TESTstatusCode = 0;
