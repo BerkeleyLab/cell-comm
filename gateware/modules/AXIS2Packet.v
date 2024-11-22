@@ -1,5 +1,5 @@
 // Check if the incoming link looks good
-module checkAXISPacket #(
+module AXIS2Packet #(
     // header magic number of bits. Always at the
     // MSB in the header
     parameter MAGIC_WIDTH = 16,
