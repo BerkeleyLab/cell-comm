@@ -1,4 +1,5 @@
 __cell_comm_SRCS = \
+	genericFifo.v \
 	fofbReadLink.v \
 	fofbReadLinks.v \
 	forwardCellLink.v \
