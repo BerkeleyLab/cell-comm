@@ -1,23 +1,26 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Fri Nov 22 05:33:06 2024
+[*] Fri Nov 22 20:01:30 2024
 [*]
 [dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.vcd"
-[dumpfile_mtime] "Fri Nov 22 05:31:31 2024"
-[dumpfile_size] 238417
+[dumpfile_mtime] "Fri Nov 22 19:48:58 2024"
+[dumpfile_size] 56040
 [savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.gtkw"
-[timestart] 0
-[size] 1875 888
-[pos] 2136 189
-*-18.000000 93000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 1844600
+[size] 2560 1348
+[pos] 1919 32
+*-16.000000 2090000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] writeFMPSTestLink_tb.
 [treeopen] writeFMPSTestLink_tb.DUT.
 [sst_width] 214
 [signals_width] 495
 [sst_expanded] 1
-[sst_vpaned_height] 253
+[sst_vpaned_height] 415
 @200
 -TB
+@28
+writeFMPSTestLink_tb.auClk
+writeFMPSTestLink_tb.auFAStrobe
 @22
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
 @28
@@ -25,25 +28,23 @@ writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tlast
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tready
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tvalid
 writeFMPSTestLink_tb.auChannelUp
-writeFMPSTestLink_tb.auClk
-writeFMPSTestLink_tb.auFAStrobe
 @420
-writeFMPSTestLink_tb.cc
 writeFMPSTestLink_tb.errors
-writeFMPSTestLink_tb.idx
 @28
 writeFMPSTestLink_tb.module_done
 writeFMPSTestLink_tb.module_ready
 @22
 writeFMPSTestLink_tb.strobeCnt[7:0]
-@420
-writeFMPSTestLink_tb.sysCc
 @28
 writeFMPSTestLink_tb.sysClk
 @22
 writeFMPSTestLink_tb.sysFMPSCSR[31:0]
 @200
 -DUT
+@28
+writeFMPSTestLink_tb.DUT.auroraUserClk
+writeFMPSTestLink_tb.DUT.auroraChannelUp
+writeFMPSTestLink_tb.DUT.auroraFAstrobe
 @22
 writeFMPSTestLink_tb.DUT.FAcycleCounter[7:0]
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
@@ -52,40 +53,40 @@ writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tlast
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tready
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tvalid
 writeFMPSTestLink_tb.DUT.FMPSenabled
-writeFMPSTestLink_tb.DUT.TESTstatusCode[1:0]
-writeFMPSTestLink_tb.DUT.TESTstatusStrobe
 @22
 writeFMPSTestLink_tb.DUT.auCsrCellIndex[4:0]
-@23
-writeFMPSTestLink_tb.DUT.auFMPSCSR[31:0]
-@28
-writeFMPSTestLink_tb.DUT.auroraChannelUp
-writeFMPSTestLink_tb.DUT.auroraFAstrobe
-writeFMPSTestLink_tb.DUT.auroraUserClk
-writeFMPSTestLink_tb.DUT.dbgFwState[2:0]
-writeFMPSTestLink_tb.DUT.fifoAlmostFull
-@22
-writeFMPSTestLink_tb.DUT.fifoCount[3:0]
-writeFMPSTestLink_tb.DUT.fifoDataIn[31:0]
-writeFMPSTestLink_tb.DUT.fifoDataOut[31:0]
-@28
-writeFMPSTestLink_tb.DUT.fifoEmpty
-writeFMPSTestLink_tb.DUT.fifoForceRe
-writeFMPSTestLink_tb.DUT.fifoFull
-@22
-writeFMPSTestLink_tb.DUT.fifoIn[32:0]
-writeFMPSTestLink_tb.DUT.fifoOut[32:0]
-@28
-writeFMPSTestLink_tb.DUT.fifoRe
-writeFMPSTestLink_tb.DUT.fifoUserIn
-writeFMPSTestLink_tb.DUT.fifoUserOut
-writeFMPSTestLink_tb.DUT.fifoValid
-writeFMPSTestLink_tb.DUT.fifoWe
+@29
 writeFMPSTestLink_tb.DUT.fwState[2:0]
+@28
 writeFMPSTestLink_tb.DUT.sysClk
 @22
 writeFMPSTestLink_tb.DUT.sysFMPSCSR[31:0]
 writeFMPSTestLink_tb.DUT.txData[31:0]
 writeFMPSTestLink_tb.DUT.txHeader[31:0]
+@200
+-AXISCheck
+@22
+writeFMPSTestLink_tb.AXISCheck.TDATA[31:0]
+@28
+writeFMPSTestLink_tb.AXISCheck.TLAST
+writeFMPSTestLink_tb.AXISCheck.TREADY
+writeFMPSTestLink_tb.AXISCheck.TVALID
+writeFMPSTestLink_tb.AXISCheck.auroraClk
+@22
+writeFMPSTestLink_tb.AXISCheck.expectedHeaderMagic[15:0]
+writeFMPSTestLink_tb.AXISCheck.headerIndex[4:0]
+writeFMPSTestLink_tb.AXISCheck.headerMagic[15:0]
+@28
+writeFMPSTestLink_tb.AXISCheck.incomingDataCounter[1:0]
+writeFMPSTestLink_tb.AXISCheck.isNewPacket
+writeFMPSTestLink_tb.AXISCheck.newCycleStrobe
+@22
+writeFMPSTestLink_tb.AXISCheck.packetData[31:0]
+writeFMPSTestLink_tb.AXISCheck.packetIndex[4:0]
+@28
+writeFMPSTestLink_tb.AXISCheck.packetStrobe
+writeFMPSTestLink_tb.AXISCheck.state[1:0]
+writeFMPSTestLink_tb.AXISCheck.statusCode[1:0]
+writeFMPSTestLink_tb.AXISCheck.statusStrobe
 [pattern_trace] 1
 [pattern_trace] 0

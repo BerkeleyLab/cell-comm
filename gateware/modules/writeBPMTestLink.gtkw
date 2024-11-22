@@ -1,18 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Thu Aug  1 20:57:13 2024
+[*] Fri Nov 22 20:11:26 2024
 [*]
-[dumpfile] "/home/lrusso/repos/cell-controller/gateware/modules/writeBPMTestLink.vcd"
-[dumpfile_mtime] "Thu Aug  1 20:55:11 2024"
-[dumpfile_size] 693121
-[savefile] "/home/lrusso/repos/cell-controller/gateware/modules/writeBPMTestLink.gtkw"
+[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeBPMTestLink.vcd"
+[dumpfile_mtime] "Fri Nov 22 20:10:30 2024"
+[dumpfile_size] 187573
+[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeBPMTestLink.gtkw"
 [timestart] 1778300
-[size] 3436 1344
+[size] 2556 1344
 [pos] -1 -1
-*-17.000000 2530000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.000000 2270000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] writeBPMTestLink_tb.
-[sst_width] 214
-[signals_width] 412
+[sst_width] 269
+[signals_width] 530
 [sst_expanded] 1
 [sst_vpaned_height] 415
 @200
@@ -42,9 +42,7 @@ writeBPMTestLink_tb.strobeCnt[7:0]
 writeBPMTestLink_tb.DUT.auroraUserClk
 writeBPMTestLink_tb.DUT.auroraFAstrobe
 @22
-writeBPMTestLink_tb.DUT.BPMGlobalPrefix[3:0]
 writeBPMTestLink_tb.DUT.BPMIndex[4:0]
-@23
 writeBPMTestLink_tb.DUT.BPM_TEST_AXI_STREAM_TX_tdata[31:0]
 @28
 writeBPMTestLink_tb.DUT.BPM_TEST_AXI_STREAM_TX_tlast
@@ -59,22 +57,6 @@ writeBPMTestLink_tb.DUT.fifoAlmostFull
 @22
 writeBPMTestLink_tb.DUT.fifoCount[3:0]
 @28
-writeBPMTestLink_tb.DUT.fifoEmpty
-writeBPMTestLink_tb.DUT.fifoForceRe
-writeBPMTestLink_tb.DUT.fifoFull
-@22
-writeBPMTestLink_tb.DUT.fifoDataIn[31:0]
-@28
-writeBPMTestLink_tb.DUT.fifoUserIn
-@22
-writeBPMTestLink_tb.DUT.fifoIn[32:0]
-writeBPMTestLink_tb.DUT.fifoOut[32:0]
-writeBPMTestLink_tb.DUT.fifoDataOut[31:0]
-@28
-writeBPMTestLink_tb.DUT.fifoUserOut
-writeBPMTestLink_tb.DUT.fifoRe
-writeBPMTestLink_tb.DUT.fifoValid
-writeBPMTestLink_tb.DUT.fifoWe
 writeBPMTestLink_tb.DUT.TESTstatusCode[1:0]
 writeBPMTestLink_tb.DUT.TESTstatusStrobe
 @22
@@ -86,5 +68,33 @@ writeBPMTestLink_tb.DUT.sum[31:0]
 writeBPMTestLink_tb.DUT.txHeader[31:0]
 writeBPMTestLink_tb.DUT.txXerror[31:0]
 writeBPMTestLink_tb.DUT.txYerror[31:0]
+@200
+-AXISCheck
+@22
+writeBPMTestLink_tb.AXISCheck.TDATA[31:0]
+@28
+writeBPMTestLink_tb.AXISCheck.TLAST
+writeBPMTestLink_tb.AXISCheck.TREADY
+writeBPMTestLink_tb.AXISCheck.TVALID
+writeBPMTestLink_tb.AXISCheck.auroraClk
+@22
+writeBPMTestLink_tb.AXISCheck.expectedHeaderMagic[15:0]
+writeBPMTestLink_tb.AXISCheck.headerIndex[4:0]
+writeBPMTestLink_tb.AXISCheck.headerMagic[15:0]
+@28
+writeBPMTestLink_tb.AXISCheck.isNewPacket
+@24
+writeBPMTestLink_tb.AXISCheck.incomingDataCounter[2:0]
+@28
+writeBPMTestLink_tb.AXISCheck.newCycleStrobe
+@22
+writeBPMTestLink_tb.AXISCheck.packetIndex[4:0]
+writeBPMTestLink_tb.AXISCheck.packetData[95:0]
+@29
+writeBPMTestLink_tb.AXISCheck.packetStrobe
+@28
+writeBPMTestLink_tb.AXISCheck.state[1:0]
+writeBPMTestLink_tb.AXISCheck.statusCode[1:0]
+writeBPMTestLink_tb.AXISCheck.statusStrobe
 [pattern_trace] 1
 [pattern_trace] 0

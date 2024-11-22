@@ -2,34 +2,8 @@
 
 module writeBPMTestLink_tb;
 
-//
-// Functions
-//
-
-function automatic f_gen_bit_one;
-    input real prob;
-    real temp;
-begin
-    // $random is surronded by the concat operator in order
-    // to provide us with only unsigned (bit vector) data.
-    // Generates valud in a 0..1 range
-    temp = ({$random} % 100 + 1)/100.00;//threshold;
-
-    if (temp <= prob)
-        f_gen_bit_one = 1'b1;
-    else
-        f_gen_bit_one = 1'b0;
-end
-endfunction
-
-function automatic f_gen_data_rdy_gen;
-    input real prob;
-begin
-    f_gen_data_rdy_gen = f_gen_bit_one(prob);
-end
-endfunction
-
 reg module_done = 0;
+reg fail = 0;
 integer errors = 0;
 integer idx = 0;
 initial begin
@@ -39,15 +13,21 @@ initial begin
     end
 
     wait(module_done);
-    $display("%s",errors==0?"# PASS":"# FAIL");
-    $finish();
+
+	if (fail) begin
+		$display("FAIL");
+		$stop(0);
+	end else begin
+		$display("PASS");
+		$finish(0);
+	end
 end
 
 integer sysCc;
 reg sysClk = 0;
 initial begin
     sysClk = 0;
-    for (sysCc = 0; sysCc < 3000; sysCc = sysCc+1) begin
+    for (sysCc = 0; sysCc < 1000; sysCc = sysCc+1) begin
         sysClk = 0; #5;
         sysClk = 1; #5;
     end
@@ -57,7 +37,7 @@ integer cc;
 reg auClk = 0;
 initial begin
     auClk = 0;
-    for (cc = 0; cc < 3000; cc = cc+1) begin
+    for (cc = 0; cc < 1000; cc = cc+1) begin
         auClk = 1; #5;
         auClk = 0; #5;
     end
@@ -69,7 +49,7 @@ reg auChannelUp = 0;
 wire  [31:0] BPM_TEST_AXI_STREAM_TX_tdata;
 wire         BPM_TEST_AXI_STREAM_TX_tvalid;
 wire         BPM_TEST_AXI_STREAM_TX_tlast;
-reg          BPM_TEST_AXI_STREAM_TX_tready;
+wire         BPM_TEST_AXI_STREAM_TX_tready;
 
 // generate FA strobe every few clock cycles
 localparam STROBE_CNT_MAX = 200;
@@ -94,16 +74,6 @@ always @(posedge auClk) begin
     end
 end
 
-// Generate READY signal with some probability
-always @(posedge auClk) begin
-    if (!module_ready) begin
-        BPM_TEST_AXI_STREAM_TX_tready <= 0;
-    end
-    else begin
-        BPM_TEST_AXI_STREAM_TX_tready <= f_gen_data_rdy_gen(0.5);
-    end
-end
-
 //
 // BPM test data streamer
 //
@@ -111,6 +81,16 @@ wire [31:0] sysBPMCSR;
 assign sysBPMCSR[31:29] = 0;
 assign sysBPMCSR[28:24] = 1;
 assign sysBPMCSR[23:0] = 0;
+
+// Packet format
+localparam MAGIC_WIDTH = 16;
+localparam MAGIC_START_BIT = 16;
+localparam INDEX_WIDTH = 5;
+localparam INDEX_START_BIT = 10;
+localparam NUM_DATA_WORDS = 3;
+localparam real TREADY_PROB = 0.5;
+
+localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hA5BE;
 
 writeBPMTestLink #()
   DUT(
@@ -128,6 +108,38 @@ writeBPMTestLink #()
     .BPM_TEST_AXI_STREAM_TX_tready(BPM_TEST_AXI_STREAM_TX_tready)
 );
 
+wire                         statusStrobe;
+wire [1:0]                   statusCode;
+wire                         packetStrobe;
+wire [INDEX_WIDTH-1:0]       packetIndex;
+wire [32*NUM_DATA_WORDS-1:0] packetData;
+
+checkAXISPacket #(
+    .MAGIC_WIDTH(MAGIC_WIDTH),
+    .MAGIC_START_BIT(MAGIC_START_BIT),
+    .INDEX_WIDTH(INDEX_WIDTH),
+    .INDEX_START_BIT(INDEX_START_BIT),
+    .NUM_DATA_WORDS(NUM_DATA_WORDS),
+    .TREADY_PROB(TREADY_PROB)
+)
+  AXISCheck (
+    .auroraClk(auClk),
+    .newCycleStrobe(auFAStrobe),
+    .TVALID(BPM_TEST_AXI_STREAM_TX_tvalid),
+    .TLAST(BPM_TEST_AXI_STREAM_TX_tlast),
+    .TDATA(BPM_TEST_AXI_STREAM_TX_tdata),
+    .TREADY(BPM_TEST_AXI_STREAM_TX_tready),
+
+    .expectedHeaderMagic(EXPECTED_HEADER_MAGIC),
+
+    .statusStrobe(statusStrobe),
+    .statusCode(statusCode),
+
+    .packetStrobe(packetStrobe),
+    .packetIndex(packetIndex),
+    .packetData(packetData)
+);
+
 // stimulus
 initial begin
     @(posedge auClk);
@@ -138,6 +150,11 @@ initial begin
 
     auChannelUp = 1;
     @(posedge auClk);
+
+    repeat (500)
+        @(posedge auClk);
+
+    module_done = 1;
 end
 
 endmodule
