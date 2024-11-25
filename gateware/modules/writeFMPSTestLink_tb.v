@@ -190,9 +190,6 @@ initial begin
     auChannelUp = 1;
     @(posedge auClk);
 
-    // generate 8 FMPS packets
-    genStrobe(8, 8);
-
     repeat (500)
         @(posedge auClk);
 
