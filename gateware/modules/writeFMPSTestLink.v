@@ -5,9 +5,10 @@
 //
 module writeFMPSTestLink #(
     parameter WITH_MULT_PACK_SUPPORT = "false",
-    parameter faStrobeDebug    = "false",
-    parameter stateDebug       = "false",
-    parameter testInDebug      = "false") (
+    parameter [15:0] DATA_MAGIC      = 16'hCACA,
+    parameter faStrobeDebug          = "false",
+    parameter stateDebug             = "false",
+    parameter testInDebug            = "false") (
 
     input wire         sysClk,
     input wire [31:0]  sysFMPSCSR,

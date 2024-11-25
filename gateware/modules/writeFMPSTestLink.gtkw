@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Mon Nov 25 17:42:52 2024
+[*] Mon Nov 25 23:05:53 2024
 [*]
 [dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.vcd"
-[dumpfile_mtime] "Mon Nov 25 17:37:08 2024"
-[dumpfile_size] 71499
+[dumpfile_mtime] "Mon Nov 25 22:59:56 2024"
+[dumpfile_size] 98807
 [savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.gtkw"
-[timestart] 6161000
+[timestart] 1255000
 [size] 1716 1344
 [pos] 0 32
-*-17.617186 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.617186 1470000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] writeFMPSTestLink_tb.
 [treeopen] writeFMPSTestLink_tb.DUT.
 [sst_width] 214
@@ -18,31 +18,43 @@
 [sst_vpaned_height] 415
 @200
 -TB
-@28
-writeFMPSTestLink_tb.auClk
-writeFMPSTestLink_tb.auFAStrobe
 @22
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
 @28
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tlast
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tready
 writeFMPSTestLink_tb.FMPS_TEST_AXI_STREAM_TX_tvalid
+writeFMPSTestLink_tb.FMPS_cycleCounter
+writeFMPSTestLink_tb.FMPS_dataCounter
+writeFMPSTestLink_tb.FMPS_dataMagic
+writeFMPSTestLink_tb.FMPS_invalidCC2CC
+writeFMPSTestLink_tb.FMPS_invalidFMPS2CC
+writeFMPSTestLink_tb.FMPS_reserved
 writeFMPSTestLink_tb.auChannelUp
+writeFMPSTestLink_tb.auClk
+writeFMPSTestLink_tb.auFAStrobe
 @420
-writeFMPSTestLink_tb.errors
-@28
-writeFMPSTestLink_tb.module_done
-writeFMPSTestLink_tb.module_ready
+writeFMPSTestLink_tb.cc
+@24
+writeFMPSTestLink_tb.cycleCounter[7:0]
+writeFMPSTestLink_tb.dataCounter[4:0]
 @22
+writeFMPSTestLink_tb.packetData[31:0]
+@24
+writeFMPSTestLink_tb.packetIndex[4:0]
+@29
+writeFMPSTestLink_tb.packetStrobe
+@22
+writeFMPSTestLink_tb.state[3:0]
+@28
+writeFMPSTestLink_tb.statusCode[1:0]
+writeFMPSTestLink_tb.statusStrobe
+@24
 writeFMPSTestLink_tb.strobeCnt[7:0]
 @28
 writeFMPSTestLink_tb.sysClk
 @22
 writeFMPSTestLink_tb.sysFMPSCSR[31:0]
-@28
-writeFMPSTestLink_tb.genPacketStrobe
-writeFMPSTestLink_tb.packetStrobe
-writeFMPSTestLink_tb.genPacketStrobe
 @200
 -DUT
 @28
@@ -57,9 +69,7 @@ writeFMPSTestLink_tb.DUT.FAcycleCounter[7:0]
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
 @28
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tlast
-@29
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tready
-@28
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tvalid
 writeFMPSTestLink_tb.DUT.FMPSenabled
 @24
@@ -97,5 +107,7 @@ writeFMPSTestLink_tb.AXIS2Packet.packetStrobe
 writeFMPSTestLink_tb.AXIS2Packet.state[1:0]
 writeFMPSTestLink_tb.AXIS2Packet.statusCode[1:0]
 writeFMPSTestLink_tb.AXIS2Packet.statusStrobe
+@200
+-Packet Test
 [pattern_trace] 1
 [pattern_trace] 0

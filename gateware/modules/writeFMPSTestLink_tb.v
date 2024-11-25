@@ -119,6 +119,8 @@ assign sysFMPSCSR[28:24] = 1;
 assign sysFMPSCSR[23:0] = 0;
 
 // Packet format
+localparam DATA_MAGIC_WIDTH = 16;
+localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
 localparam MAGIC_WIDTH = 16;
 localparam MAGIC_START_BIT = 16;
 localparam INDEX_WIDTH = 5;
@@ -129,7 +131,8 @@ localparam real TREADY_PROB = 0.5;
 localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
 
 writeFMPSTestLink #(
-    .WITH_MULT_PACK_SUPPORT("true")
+    .WITH_MULT_PACK_SUPPORT("true"),
+    .DATA_MAGIC(DATA_MAGIC)
 )
   DUT(
     .sysClk(sysClk),
@@ -178,6 +181,118 @@ AXIS2Packet #(
     .packetIndex(packetIndex),
     .packetData(packetData)
 );
+
+// Data Packet has the format
+// bit
+// 31:    invalid FMPS to Cell Controller packet
+// 30:    invalid Cell Controller to Cell Controller packet
+// 29:    reserved, always 0
+// 28-24: monotonic counter, starting at 0
+// 23-8:  16'hCACA
+// 7-0:   cycle counter, starting at 1
+// txData  <= {1'b0, 1'b0,
+//     1'b0, fmpsDataCounter,
+//     16'hCACA, FAcycleCounter};
+
+// Dissect packet data
+wire FMPS_invalidFMPS2CC = packetData[31];
+wire FMPS_invalidCC2CC = packetData[30];
+wire FMPS_reserved = packetData[29];
+wire [INDEX_WIDTH-1:0] FMPS_dataCounter = packetData[28:24];
+wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = packetData[23:8];
+wire [7:0] FMPS_cycleCounter = packetData[7:0];
+
+// Test data
+localparam ST_IDLE                  = 0,
+           ST_CHECK_PACKET          = 1,
+           ST_INVALID_PACKET_BITS   = 2,
+           ST_INVALID_RESERVED_BITS = 3,
+           ST_INVALID_DATA_COUNTER  = 4,
+           ST_INVALID_DATA_MAGIC    = 5,
+           ST_INVALID_CYCLE_COUNTER = 6,
+           ST_FAIL                  = 7,
+           ST_HALT                  = 8;
+reg [3:0] state = 0;
+reg [INDEX_WIDTH-1:0] dataCounter = 0;
+reg [7:0] cycleCounter = 0;
+always @(posedge auClk) begin
+    if (auFAStrobe && state != ST_HALT) begin
+        state <= ST_IDLE;
+        dataCounter <= 0;
+        cycleCounter <= cycleCounter + 1;
+    end
+    else begin
+        case (state)
+        ST_IDLE: begin
+            state <= ST_CHECK_PACKET;
+        end
+
+        ST_CHECK_PACKET: begin
+            if (packetStrobe) begin
+                if (FMPS_invalidFMPS2CC || FMPS_invalidCC2CC) begin
+                    state <= ST_INVALID_PACKET_BITS;
+                end
+                else if (FMPS_reserved != 0) begin
+                    state <= ST_INVALID_RESERVED_BITS;
+                end
+                else if (FMPS_dataCounter != dataCounter) begin
+                    state <= ST_INVALID_DATA_COUNTER;
+                end
+                else if (FMPS_dataMagic != DATA_MAGIC) begin
+                    state <= ST_INVALID_DATA_MAGIC;
+                end
+                else if (FMPS_cycleCounter != cycleCounter) begin
+                    state <= ST_INVALID_CYCLE_COUNTER;
+                end
+                else begin
+                    dataCounter <= dataCounter + 1;
+                end
+            end
+        end
+
+        ST_INVALID_PACKET_BITS: begin
+            $display("@%0d: Invalid packet bit: FMPS2CC: %d, CC2CC: %d",
+                $time, FMPS_invalidFMPS2CC, FMPS_invalidFMPS2CC);
+            state <= ST_FAIL;
+        end
+
+        ST_INVALID_RESERVED_BITS: begin
+            $display("@%0d: Invalid reserved bit: reserved: %d",
+                $time, FMPS_reserved);
+            state <= ST_FAIL;
+        end
+
+        ST_INVALID_DATA_COUNTER: begin
+            $display("@%0d: Invalid data counter: dataCounter: %d, expected: %d",
+                $time, FMPS_dataCounter, dataCounter);
+            state <= ST_FAIL;
+        end
+
+        ST_INVALID_DATA_MAGIC: begin
+            $display("@%0d: Invalid data magic: dataMagic: 0x%04X, expected: 0x%04X",
+                $time, FMPS_dataMagic, DATA_MAGIC);
+            state <= ST_FAIL;
+        end
+
+        ST_INVALID_CYCLE_COUNTER: begin
+            $display("@%0d: Invalid cycle counter: cycleCounter: %d, expected: %d",
+                $time, FMPS_cycleCounter, cycleCounter);
+            state <= ST_FAIL;
+        end
+
+        ST_FAIL: begin
+            $display("@%0d: Failed data packet: 0x%08X", $time, packetData);
+            fail <= 1;
+            state <= ST_HALT;
+        end
+
+        ST_HALT: ;
+
+        default: ;
+
+        endcase
+    end
+end
 
 // stimulus
 initial begin
