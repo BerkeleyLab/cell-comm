@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Fri Nov 22 20:01:30 2024
+[*] Mon Nov 25 17:42:52 2024
 [*]
 [dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.vcd"
-[dumpfile_mtime] "Fri Nov 22 19:48:58 2024"
-[dumpfile_size] 56040
+[dumpfile_mtime] "Mon Nov 25 17:37:08 2024"
+[dumpfile_size] 71499
 [savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/writeFMPSTestLink.gtkw"
-[timestart] 1844600
-[size] 2560 1348
-[pos] 1919 32
-*-16.000000 2090000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 6161000
+[size] 1716 1344
+[pos] 0 32
+*-17.617186 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] writeFMPSTestLink_tb.
 [treeopen] writeFMPSTestLink_tb.DUT.
 [sst_width] 214
@@ -39,9 +39,16 @@ writeFMPSTestLink_tb.strobeCnt[7:0]
 writeFMPSTestLink_tb.sysClk
 @22
 writeFMPSTestLink_tb.sysFMPSCSR[31:0]
+@28
+writeFMPSTestLink_tb.genPacketStrobe
+writeFMPSTestLink_tb.packetStrobe
+writeFMPSTestLink_tb.genPacketStrobe
 @200
 -DUT
 @28
+writeFMPSTestLink_tb.DUT.multiplePacketEn
+writeFMPSTestLink_tb.DUT.genPacketStrobe
+writeFMPSTestLink_tb.DUT.requestNewPacket
 writeFMPSTestLink_tb.DUT.auroraUserClk
 writeFMPSTestLink_tb.DUT.auroraChannelUp
 writeFMPSTestLink_tb.DUT.auroraFAstrobe
@@ -50,12 +57,12 @@ writeFMPSTestLink_tb.DUT.FAcycleCounter[7:0]
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
 @28
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tlast
+@29
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tready
+@28
 writeFMPSTestLink_tb.DUT.FMPS_TEST_AXI_STREAM_TX_tvalid
 writeFMPSTestLink_tb.DUT.FMPSenabled
-@22
-writeFMPSTestLink_tb.DUT.auCsrCellIndex[4:0]
-@29
+@24
 writeFMPSTestLink_tb.DUT.fwState[2:0]
 @28
 writeFMPSTestLink_tb.DUT.sysClk
@@ -63,6 +70,9 @@ writeFMPSTestLink_tb.DUT.sysClk
 writeFMPSTestLink_tb.DUT.sysFMPSCSR[31:0]
 writeFMPSTestLink_tb.DUT.txData[31:0]
 writeFMPSTestLink_tb.DUT.txHeader[31:0]
+@24
+writeFMPSTestLink_tb.DUT.fmpsIndexCounter[4:0]
+writeFMPSTestLink_tb.DUT.fmpsDataCounter[4:0]
 @200
 -AXIS2Packet
 @22
@@ -71,7 +81,6 @@ writeFMPSTestLink_tb.AXIS2Packet.TDATA[31:0]
 writeFMPSTestLink_tb.AXIS2Packet.TLAST
 writeFMPSTestLink_tb.AXIS2Packet.TREADY
 writeFMPSTestLink_tb.AXIS2Packet.TVALID
-writeFMPSTestLink_tb.AXIS2Packet.auroraClk
 @22
 writeFMPSTestLink_tb.AXIS2Packet.expectedHeaderMagic[15:0]
 writeFMPSTestLink_tb.AXIS2Packet.headerIndex[4:0]

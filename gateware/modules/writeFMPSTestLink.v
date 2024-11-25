@@ -4,6 +4,7 @@
 // All other nets are in the Aurora user clock domain.
 //
 module writeFMPSTestLink #(
+    parameter WITH_MULT_PACK_SUPPORT = "false",
     parameter faStrobeDebug    = "false",
     parameter stateDebug       = "false",
     parameter testInDebug      = "false") (
@@ -14,6 +15,7 @@ module writeFMPSTestLink #(
     // Start of Aurora user clock domain nets
     input  wire         auroraUserClk,
 
+    input  wire         genPacketStrobe,
     // Marker for beginning of data transfer session
     (* mark_debug = faStrobeDebug *)
     input  wire         auroraFAstrobe,
@@ -33,6 +35,29 @@ module writeFMPSTestLink #(
     output wire  [2:0]  dbgFwState
 );
 
+wire multiplePacketEn;
+wire requestNewPacket;
+generate
+if (WITH_MULT_PACK_SUPPORT != "TRUE" && WITH_MULT_PACK_SUPPORT != "true" &&
+    WITH_MULT_PACK_SUPPORT != "FALSE" && WITH_MULT_PACK_SUPPORT != "false") begin
+    writeFMPSTestLink_WITH_MULT_PACK_SUPPORT_only_TRUE_or_FALSE_SUPPORTED();
+end
+endgenerate
+
+generate
+if (WITH_MULT_PACK_SUPPORT == "TRUE" || WITH_MULT_PACK_SUPPORT == "true") begin
+    assign multiplePacketEn = 1'b1;
+    assign requestNewPacket = genPacketStrobe;
+end
+endgenerate
+
+generate
+if (WITH_MULT_PACK_SUPPORT == "FALSE" || WITH_MULT_PACK_SUPPORT == "false") begin
+    assign multiplePacketEn = 1'b0;
+    assign requestNewPacket = 1'b1;
+end
+endgenerate
+
 localparam MAX_FMPSS          = 32;
 parameter FMPS_COUNT_WIDTH    = $clog2(MAX_FMPSS + 1);
 parameter FMPS_INDEX_WIDTH    = $clog2(MAX_FMPSS);
@@ -51,14 +76,20 @@ forwardData #(
     .outClk(auroraUserClk),
     .outData(auFMPSCSR));
 
-wire [FMPS_INDEX_WIDTH-1:0] auCsrCellIndex = auFMPSCSR[24+:FMPS_INDEX_WIDTH];
+wire [FMPS_INDEX_WIDTH-1:0] auCsrFmpsIndex = auFMPSCSR[24+:FMPS_INDEX_WIDTH];
+
+reg [FMPS_INDEX_WIDTH-1:0] fmpsIndex = 0;
+reg [FMPS_INDEX_WIDTH-1:0] fmpsIndexCounter = 0;
+always @(posedge auroraUserClk) begin
+    fmpsIndex <= auCsrFmpsIndex + fmpsIndexCounter;
+end
 
 // Forwarded values
 wire FMPSenabled = 1;
 wire [31:0] txHeader = {
                 16'hB6CF,
                 FMPSenabled,
-                {6-1-FMPS_INDEX_WIDTH{1'b0}}, auCsrCellIndex,
+                {6-1-FMPS_INDEX_WIDTH{1'b0}}, fmpsIndex,
                 {10{1'b0}}};
 reg [31:0] txData = 0;
 
@@ -116,9 +147,12 @@ localparam FWST_IDLE          = 0,
 (* mark_debug = stateDebug *) reg  [2:0] fwState = FWST_IDLE;
 assign dbgFwState = fwState;
 reg [7:0] FAcycleCounter = 0;
+reg [FMPS_INDEX_WIDTH-1:0] fmpsDataCounter = 0;
 always @(posedge auroraUserClk) begin
     if (auroraFAstrobe) begin
         // Start a new readout session
+        fmpsIndexCounter <= 0;
+        fmpsDataCounter <= 0;
         FAcycleCounter <= FAcycleCounter + 1;
         fwState <= FWST_EMPTY_FIFO;
     end
@@ -142,13 +176,18 @@ always @(posedge auroraUserClk) begin
         end
 
         FWST_PUSH_HEADER: begin
-            if (!fifoAlmostFull) begin
+            if (requestNewPacket && !fifoAlmostFull) begin
+                // Prepare for next packet header
+                fmpsIndexCounter <= fmpsIndexCounter+1;
+
                 fifoWe <= 1;
                 fifoDataIn <= txHeader;
                 fifoUserIn <= 0;
 
                 // bit 31 and 30 have special meaning
-                txData  <= {1'b0, 1'b0, {6{1'b0}}, 16'hCACA, FAcycleCounter};
+                txData  <= {1'b0, 1'b0,
+                    1'b0, fmpsDataCounter,
+                    16'hCACA, FAcycleCounter};
                 fwState <= FWST_PUSH_DATA;
             end
         end
@@ -158,7 +197,13 @@ always @(posedge auroraUserClk) begin
                 fifoWe <= 1;
                 fifoDataIn <= txData;
                 fifoUserIn <= 1;
+                // Prepare for next packet data
+                fmpsDataCounter <= fmpsDataCounter+1;
+
                 fwState <= FWST_IDLE;
+                if (multiplePacketEn) begin
+                    fwState <= FWST_PUSH_HEADER;
+                end
             end
         end
 

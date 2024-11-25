@@ -43,6 +43,27 @@ initial begin
     end
 end
 
+//////////////////////////////////////////////////////////
+// Functions/Tasks
+//////////////////////////////////////////////////////////
+
+reg genPacketStrobe = 0;
+
+task genStrobe;
+  input integer numStrobes;
+  input integer delay;
+begin : gen_strobe
+    repeat (numStrobes) begin
+        repeat (delay)
+            @(posedge auClk);
+
+        genPacketStrobe <= 1'b1;
+        @(posedge auClk);
+        genPacketStrobe <= 1'b0;
+    end
+end
+endtask // rw_generic
+
 reg module_ready = 0;
 reg auChannelUp = 0;
 
@@ -74,6 +95,13 @@ always @(posedge auClk) begin
     end
 end
 
+always @(posedge auClk) begin
+    // generate 8 FMPS packets
+    if (auFAStrobe) begin
+        genStrobe(8, 8);
+    end
+end
+
 //
 // FMPS test data streamer
 //
@@ -92,12 +120,15 @@ localparam real TREADY_PROB = 0.5;
 
 localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
 
-writeFMPSTestLink #()
+writeFMPSTestLink #(
+    .WITH_MULT_PACK_SUPPORT("true")
+)
   DUT(
     .sysClk(sysClk),
     .sysFMPSCSR(sysFMPSCSR),
 
     .auroraUserClk(auClk),
+    .genPacketStrobe(genPacketStrobe),
     .auroraFAstrobe(auFAStrobe),
     .auroraChannelUp(auChannelUp),
 
@@ -150,6 +181,9 @@ initial begin
 
     auChannelUp = 1;
     @(posedge auClk);
+
+    // generate 8 FMPS packets
+    genStrobe(8, 8);
 
     repeat (500)
         @(posedge auClk);
