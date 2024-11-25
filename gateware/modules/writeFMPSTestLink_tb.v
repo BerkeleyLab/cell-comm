@@ -38,8 +38,8 @@ reg auClk = 0;
 initial begin
     auClk = 0;
     for (cc = 0; cc < 1000; cc = cc+1) begin
-        auClk = 1; #5;
-        auClk = 0; #5;
+        auClk = 1; #4;
+        auClk = 0; #4;
     end
 end
 
