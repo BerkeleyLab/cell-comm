@@ -91,7 +91,6 @@ wire [CELL_INDEX_WIDTH-1:0] auCCWcellIndex, auCWcellIndex;
 wire [(1<<FOFB_INDEX_WIDTH)-1:0] auCCW_FOFBbitmap, auCW_FOFBbitmap;
 (* mark_debug = cellCountDebug *)
 wire [CELL_COUNT_WIDTH-1:0] auCCWpacketCounter, auCWpacketCounter;
-wire [(1<<FOFB_INDEX_WIDTH)-1:0] auCCWfofbIndex, auCWfofbIndex;
 wire                 [31:0] ccwX, ccwY, ccwS, cwX, cwY, cwS;
 fofbReadLink #(.dbg(ccwLinkDebug)) readCCW (
     .auroraClk(auClk),
