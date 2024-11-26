@@ -240,10 +240,15 @@ always @(posedge sysClk) begin
             readoutActive <= 0;
         end
         if (mergedTVALID && (mergedStatus == ST_SUCCESS)) begin
+
+            // Mark all the Cell nodes that we've received data,
+            // regardless if it's enabled or not
             cellBitmap[mergedCellIndex] <= 1;
             if (!cellBitmap[mergedCellIndex]) begin
                 cellCounter <= cellCounter + 1;
             end
+
+            // Mark only the Cell nodes that are enabled
             if (mergedFOFBenabled) begin
                 fofbBitmap[mergedCellIndex] <= 1;
                 if (!fofbBitmap[mergedCellIndex]) begin
