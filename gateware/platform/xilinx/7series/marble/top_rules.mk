@@ -2,6 +2,7 @@ cell_comm_marble_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/7series/marble/
 
 cell_comm_IP_CORES = \
 	fofbReadLinksMux \
+	fmpsReadLinksMux \
 	forwardCellLinkMux \
 	readBPMlinksMux \
 	axisDataFifo32 \
