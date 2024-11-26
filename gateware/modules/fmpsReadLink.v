@@ -12,17 +12,17 @@ module fmpsReadLink #(
     (*mark_debug=dbg*) input  wire [31:0] TDATA,
 
     // Link statistics
-    (*mark_debug=dbg*) output wire                            statusStrobe,
-    (*mark_debug=dbg*) output reg                       [1:0] statusCode,
-    (*mark_debug=dbg*) output reg                             statusFMPSenabled,
+    (*mark_debug=dbg*) output wire      statusStrobe,
+    (*mark_debug=dbg*) output reg [1:0] statusCode,
+    (*mark_debug=dbg*) output reg       statusFMPSenabled,
 
                        output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmap,
                        output reg        [INDEX_WIDTH:0] fmpsCounter,
 
     // Readout (system clock domain)
-                       input  wire                        sysClk,
+                       input  wire                   sysClk,
     (*mark_debug=dbg*) input  wire [INDEX_WIDTH-1:0] readoutAddress,
-    (*mark_debug=dbg*) output wire                 [31:0] readoutFMPS);
+    (*mark_debug=dbg*) output wire            [31:0] readoutFMPS);
 
 //
 // Dissect header
