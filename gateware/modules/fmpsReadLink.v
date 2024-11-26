@@ -12,9 +12,10 @@ module fmpsReadLink #(
     (*mark_debug=dbg*) input  wire [31:0] TDATA,
 
     // Link statistics
-    (*mark_debug=dbg*) output wire      statusStrobe,
-    (*mark_debug=dbg*) output reg [1:0] statusCode,
-    (*mark_debug=dbg*) output reg       statusFMPSenabled,
+    (*mark_debug=dbg*) output wire                  statusStrobe,
+    (*mark_debug=dbg*) output reg [1:0]             statusCode,
+    (*mark_debug=dbg*) output reg                   statusFMPSenabled,
+                       output reg [INDEX_WIDTH-1:0] statusFMPSindex,
 
                        output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmap,
                        output reg        [INDEX_WIDTH:0] fmpsCounter,
@@ -88,7 +89,10 @@ always @(posedge auroraClk) begin
                         packetFMPSmap <= 0;
                     end
                     if (headerMagic == 16'hB6CF) begin
+                        // Same index for internal bitmap
+                        // and status interface
                         fmpsIndex <= headerFMPSIndex;
+                        statusFMPSindex <= headerFMPSIndex;
                         statusFMPSenabled <= headerFMPSenabled;
                         state <= S_AWAIT_DATA;
                     end
