@@ -80,10 +80,6 @@ forwardData #(
 wire [FMPS_INDEX_WIDTH-1:0] auCsrFmpsIndex = auFMPSCSR[24+:FMPS_INDEX_WIDTH];
 
 reg [FMPS_INDEX_WIDTH-1:0] fmpsIndex = 0;
-reg [FMPS_INDEX_WIDTH-1:0] fmpsIndexCounter = 0;
-always @(posedge auroraUserClk) begin
-    fmpsIndex <= auCsrFmpsIndex + fmpsIndexCounter;
-end
 
 // Forwarded values
 wire FMPSenabled = 1;
@@ -148,12 +144,10 @@ localparam FWST_IDLE          = 0,
 (* mark_debug = stateDebug *) reg  [2:0] fwState = FWST_IDLE;
 assign dbgFwState = fwState;
 reg [7:0] FAcycleCounter = 0;
-reg [FMPS_INDEX_WIDTH-1:0] fmpsDataCounter = 0;
 always @(posedge auroraUserClk) begin
     if (auroraFAstrobe) begin
         // Start a new readout session
-        fmpsIndexCounter <= 0;
-        fmpsDataCounter <= 0;
+        fmpsIndex <= auCsrFmpsIndex;
         FAcycleCounter <= FAcycleCounter + 1;
         fwState <= FWST_EMPTY_FIFO;
     end
@@ -178,16 +172,13 @@ always @(posedge auroraUserClk) begin
 
         FWST_PUSH_HEADER: begin
             if (requestNewPacket && !fifoAlmostFull) begin
-                // Prepare for next packet header
-                fmpsIndexCounter <= fmpsIndexCounter+1;
-
                 fifoWe <= 1;
                 fifoDataIn <= txHeader;
                 fifoUserIn <= 0;
 
                 // bit 31 and 30 have special meaning
                 txData  <= {1'b0, 1'b0,
-                    1'b0, fmpsDataCounter,
+                    1'b0, fmpsIndex,
                     16'hCACA, FAcycleCounter};
                 fwState <= FWST_PUSH_DATA;
             end
@@ -198,11 +189,11 @@ always @(posedge auroraUserClk) begin
                 fifoWe <= 1;
                 fifoDataIn <= txData;
                 fifoUserIn <= 1;
-                // Prepare for next packet data
-                fmpsDataCounter <= fmpsDataCounter+1;
 
                 fwState <= FWST_IDLE;
                 if (multiplePacketEn) begin
+                    // Prepare for next packet
+                    fmpsIndex <= fmpsIndex + 1;
                     fwState <= FWST_PUSH_HEADER;
                 end
             end

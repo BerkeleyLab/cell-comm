@@ -213,12 +213,10 @@ localparam ST_IDLE                  = 0,
            ST_FAIL                  = 7,
            ST_HALT                  = 8;
 reg [3:0] state = 0;
-reg [INDEX_WIDTH-1:0] dataCounter = 0;
 reg [7:0] cycleCounter = 0;
 always @(posedge auClk) begin
     if (auFAStrobe && state != ST_HALT) begin
         state <= ST_IDLE;
-        dataCounter <= 0;
         cycleCounter <= cycleCounter + 1;
     end
     else begin
@@ -235,7 +233,7 @@ always @(posedge auClk) begin
                 else if (FMPS_reserved != 0) begin
                     state <= ST_INVALID_RESERVED_BITS;
                 end
-                else if (FMPS_dataCounter != dataCounter) begin
+                else if (FMPS_dataCounter != packetIndex) begin
                     state <= ST_INVALID_DATA_COUNTER;
                 end
                 else if (FMPS_dataMagic != DATA_MAGIC) begin
@@ -245,7 +243,6 @@ always @(posedge auClk) begin
                     state <= ST_INVALID_CYCLE_COUNTER;
                 end
                 else begin
-                    dataCounter <= dataCounter + 1;
                 end
             end
         end
@@ -264,7 +261,7 @@ always @(posedge auClk) begin
 
         ST_INVALID_DATA_COUNTER: begin
             $display("@%0d: Invalid data counter: dataCounter: %d, expected: %d",
-                $time, FMPS_dataCounter, dataCounter);
+                $time, FMPS_dataCounter, packetIndex);
             state <= ST_FAIL;
         end
 
