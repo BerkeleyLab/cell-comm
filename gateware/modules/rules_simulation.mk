@@ -7,7 +7,8 @@ TEST_BENCH = \
 	writeFMPSTestLink_tb \
 	writeBPMTestLink_tb \
 	fmpsReadLink_tb \
-	rr_arb_tb
+	rrArbReq_tb \
+	axisMux_tb
 
 TGT_ := $(TEST_BENCH)
 NO_CHECK =

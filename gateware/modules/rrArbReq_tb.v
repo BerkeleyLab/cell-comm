@@ -1,6 +1,6 @@
 `timescale 1ns / 100ps
 
-module rr_arb_tb;
+module rrArbReq_tb;
 
 reg module_done = 0;
 reg module_ready = 0;
@@ -9,8 +9,8 @@ integer errors = 0;
 integer idx = 0;
 initial begin
     if ($test$plusargs("vcd")) begin
-        $dumpfile("rr_arb.vcd");
-        $dumpvars(0, rr_arb_tb);
+        $dumpfile("rrArbReq.vcd");
+        $dumpvars(0, rrArbReq_tb);
     end
 
     wait(module_done);
@@ -44,42 +44,74 @@ end
 
 localparam NREQ = 4;
 
-reg   [NREQ-1:0] req_bus = 0;
-wire  [NREQ-1:0] grant_bus;
-rr_arb #(
+reg   [NREQ-1:0] reqBus = 0;
+reg              reqArb = 0;
+wire  [NREQ-1:0] grantBus;
+rrArbReq #(
+    .TIMEOUT_CNT_MAX(16),
     .NREQ(NREQ)
 )
   DUT(
     .clk(clk),
-    .req_bus(req_bus),
-    .grant_bus(grant_bus)
+    .reqArb(reqArb),
+    .reqBus(reqBus),
+    .grantBus(grantBus)
 );
 
 // stimulus
 initial begin
     @(posedge clk);
-    module_ready = 1;
+    module_ready <= 1;
 
     @(posedge clk);
-    req_bus = 4'b0000;
-    repeat (16)
+    reqBus <= 4'b0000;
+    repeat (64)
         @(posedge clk);
 
     @(posedge clk);
-    req_bus = 4'b0101;
-    repeat (16)
+    reqBus <= 4'b0101;
+    repeat (96)
+        @(posedge clk);
+
+    reqArb <= 1'b1;
+    @(posedge clk);
+    reqArb <= 1'b0;
+
+    repeat(8)
+        @(posedge clk);
+
+    reqArb <= 1'b1;
+    @(posedge clk);
+    reqArb <= 1'b0;
+
+    repeat(8)
         @(posedge clk);
 
     @(posedge clk);
-    req_bus = 4'b1111;
-    repeat (16)
-        @(posedge clk);
-
-    repeat (10)
+    reqBus <= 4'b0111;
+    repeat (64)
         @(posedge clk);
 
     @(posedge clk);
-    module_done = 1;
+    reqBus <= 4'b1110;
+    repeat (64)
+        @(posedge clk);
+
+    @(posedge clk);
+    reqBus <= 4'b0000;
+    repeat (64)
+        @(posedge clk);
+
+    @(posedge clk);
+    reqBus <= 4'b1111;
+    repeat (64)
+        @(posedge clk);
+
+    repeat (256)
+        @(posedge clk);
+
+    @(posedge clk);
+    module_done <= 1;
     @(posedge clk);
 end
 

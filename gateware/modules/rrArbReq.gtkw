@@ -1,0 +1,56 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Tue Dec 10 23:10:40 2024
+[*]
+[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/rrArbReq.vcd"
+[dumpfile_mtime] "Tue Dec 10 23:08:20 2024"
+[dumpfile_size] 28248
+[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/rrArbReq.gtkw"
+[timestart] 1263800
+[size] 1716 1344
+[pos] -1715 -1
+*-17.000000 1725000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] rrArbReq_tb.
+[treeopen] rrArbReq_tb.DUT.
+[sst_width] 214
+[signals_width] 352
+[sst_expanded] 1
+[sst_vpaned_height] 413
+@200
+-rrArbReq_tb
+@28
+rrArbReq_tb.clk
+rrArbReq_tb.reqArb
+@c00022
+rrArbReq_tb.reqBus[3:0]
+@28
+(0)rrArbReq_tb.reqBus[3:0]
+(1)rrArbReq_tb.reqBus[3:0]
+(2)rrArbReq_tb.reqBus[3:0]
+(3)rrArbReq_tb.reqBus[3:0]
+@1401200
+-group_end
+@22
+rrArbReq_tb.grantBus[3:0]
+@200
+-DUT
+@28
+rrArbReq_tb.DUT.clk
+@29
+rrArbReq_tb.DUT.reqArb
+@22
+rrArbReq_tb.DUT.reqBus[3:0]
+rrArbReq_tb.DUT.grantBus[3:0]
+@28
+rrArbReq_tb.DUT.srcServed
+rrArbReq_tb.DUT.timeout
+@24
+rrArbReq_tb.DUT.timeoutCnt[5:0]
+@28
+rrArbReq_tb.DUT.reqArb_r
+@24
+rrArbReq_tb.DUT.base[3:0]
+@22
+rrArbReq_tb.DUT.grantBus_d[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
