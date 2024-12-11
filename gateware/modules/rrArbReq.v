@@ -53,7 +53,13 @@ always @(posedge clk) begin
     if (reqArb || timeout ||
         (reqArb_r && ((grantBus_d == grantBus) && |reqBus))) begin
         base <= base << 1 | base[NREQ-1];
+
+        // if grantBus already changed, we know we won't
+        // need to shift base by more than 1
         reqArb_r <= 1;
+        if (grantBus_d != grantBus) begin
+            reqArb_r <= 0;
+        end
     end
     else begin
         reqArb_r <= 0;
