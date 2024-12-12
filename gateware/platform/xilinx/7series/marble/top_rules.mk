@@ -12,7 +12,6 @@ cell_comm_IP_CORES = \
 	axiStreamDwDowncon \
 	axiStreamSubConvInDowncon \
 	axiStreamSubConvOutDowncon \
-	evrmgt \
 	aurora64b66b
 
 cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_marble_platform_DIR), $(cell_comm_IP_CORES))
