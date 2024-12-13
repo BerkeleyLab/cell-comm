@@ -8,6 +8,7 @@
 module axisMux #(
     parameter FIFO_DEPTH    = 8,
     parameter DATA_WIDTH    = 32,
+    parameter USER_WIDTH    = 8,
     parameter NUM_SOURCES   = 2
     ) (
     input  wire                                      clk,
@@ -16,11 +17,13 @@ module axisMux #(
     input  wire         [NUM_SOURCES-1:0]            s_valid,
     output wire         [NUM_SOURCES-1:0]            s_ready,
     input  wire         [NUM_SOURCES-1:0]            s_last,
+    input  wire         [USER_WIDTH*NUM_SOURCES-1:0] s_user,
     input  wire         [DATA_WIDTH*NUM_SOURCES-1:0] s_data,
 
     output wire                                      m_valid,
     input  wire                                      m_ready,
     output wire                                      m_last,
+    output wire                     [USER_WIDTH-1:0] m_user,
     output wire                     [DATA_WIDTH-1:0] m_data
 );
 
@@ -31,7 +34,7 @@ end
 endgenerate
 
 localparam FIFO_AW = $clog2(FIFO_DEPTH+1);
-localparam FIFO_DW = DATA_WIDTH+1; // with last bit
+localparam FIFO_DW = DATA_WIDTH+USER_WIDTH+1; // data + user + last bit
 localparam FIFO_MAX = 2**FIFO_AW-1;
 
 wire [FIFO_DW-1:0] fifoIn [0:NUM_SOURCES-1];
@@ -49,7 +52,9 @@ genvar i;
 generate
 for (i = 0; i < NUM_SOURCES; i = i + 1) begin: fifo_gen
 
-assign fifoIn[i] = {s_last[i], s_data[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
+assign fifoIn[i] = {s_last[i],
+    s_user[(i+1)*USER_WIDTH-1:i*USER_WIDTH],
+    s_data[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
 assign fifoWe[i] = s_valid[i] && s_ready[i];
 
 genericFifo #(
@@ -133,6 +138,7 @@ wire [FIFO_DW-1:0] fifoDataGranted = fifoOut[grantBusBinary];
 
 assign m_valid = fifoValidGranted;
 assign m_data = fifoDataGranted[DATA_WIDTH-1:0];
-assign m_last = fifoDataGranted[DATA_WIDTH];
+assign m_user = fifoDataGranted[DATA_WIDTH+USER_WIDTH-1:DATA_WIDTH];
+assign m_last = fifoDataGranted[DATA_WIDTH+USER_WIDTH];
 
 endmodule

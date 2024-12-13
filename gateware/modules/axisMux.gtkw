@@ -1,14 +1,14 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Wed Dec 11 00:43:42 2024
+[*] Fri Dec 13 23:04:41 2024
 [*]
-[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.vcd"
-[dumpfile_mtime] "Wed Dec 11 00:02:39 2024"
-[dumpfile_size] 218387
-[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.gtkw"
+[dumpfile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.vcd"
+[dumpfile_mtime] "Fri Dec 13 23:04:37 2024"
+[dumpfile_size] 219040
+[savefile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.gtkw"
 [timestart] 1602200
 [size] 1716 1344
-[pos] -1715 -1
+[pos] -1 -1
 *-16.349998 1728000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axisMux_tb.
 [treeopen] axisMux_tb.DUT.
@@ -361,7 +361,6 @@ axisMux_tb.DUT.s_ready[3:0]
 -group_end
 @22
 axisMux_tb.DUT.s_last[3:0]
-axisMux_tb.DUT.fifoDataGranted[32:0]
 @28
 axisMux_tb.DUT.fifoValidGranted
 @24
@@ -389,7 +388,7 @@ axisMux_tb.DUT.rrArbitrer.reqArb
 axisMux_tb.DUT.rrArbitrer.reqArb_r
 @c00023
 axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
-@28
+@29
 (0)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
 (1)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
 (2)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]

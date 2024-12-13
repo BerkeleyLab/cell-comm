@@ -114,6 +114,7 @@ end
 //
 // Packet format
 localparam DATA_WIDTH = 32;
+localparam USER_WIDTH = 1;
 localparam DATA_MAGIC_WIDTH = 16;
 localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
 localparam MAGIC_WIDTH = 16;
@@ -126,11 +127,13 @@ localparam real TREADY_PROB = 0.5;
 localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
 
 wire  [DATA_WIDTH-1:0] FMPS_TEST_AXI_STREAM_TX_tdata[0:NUM_SOURCES-1];
+wire  [USER_WIDTH-1:0] FMPS_TEST_AXI_STREAM_TX_tuser[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tvalid[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tlast[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tready[0:NUM_SOURCES-1];
 
 wire  [DATA_WIDTH*NUM_SOURCES-1:0] FMPS_TEST_AXI_STREAM_TX_tdata_flatten;
+wire  [USER_WIDTH*NUM_SOURCES-1:0] FMPS_TEST_AXI_STREAM_TX_tuser_flatten;
 wire  [NUM_SOURCES-1:0]            FMPS_TEST_AXI_STREAM_TX_tvalid_flatten;
 wire  [NUM_SOURCES-1:0]            FMPS_TEST_AXI_STREAM_TX_tlast_flatten;
 wire  [NUM_SOURCES-1:0]            FMPS_TEST_AXI_STREAM_TX_tready_flatten;
@@ -165,7 +168,10 @@ writeFMPSTestLink #(
     .FMPS_TEST_AXI_STREAM_TX_tready(FMPS_TEST_AXI_STREAM_TX_tready[i])
 );
 
+assign FMPS_TEST_AXI_STREAM_TX_tuser[i] = 'h0;
+
 assign FMPS_TEST_AXI_STREAM_TX_tdata_flatten[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH] = FMPS_TEST_AXI_STREAM_TX_tdata[i];
+assign FMPS_TEST_AXI_STREAM_TX_tuser_flatten[(i+1)*USER_WIDTH-1:i*USER_WIDTH] = FMPS_TEST_AXI_STREAM_TX_tuser[i];
 assign FMPS_TEST_AXI_STREAM_TX_tvalid_flatten[i] = FMPS_TEST_AXI_STREAM_TX_tvalid[i];
 assign FMPS_TEST_AXI_STREAM_TX_tlast_flatten[i] = FMPS_TEST_AXI_STREAM_TX_tlast[i];
 assign FMPS_TEST_AXI_STREAM_TX_tready[i] = FMPS_TEST_AXI_STREAM_TX_tready_flatten[i];
@@ -174,6 +180,7 @@ end
 endgenerate
 
 wire  [DATA_WIDTH-1:0] AXIS_MUX_tdata;
+wire  [USER_WIDTH-1:0] AXIS_MUX_tuser;
 wire                   AXIS_MUX_tvalid;
 wire                   AXIS_MUX_tlast;
 wire                   AXIS_MUX_tready;
@@ -181,6 +188,7 @@ wire                   AXIS_MUX_tready;
 axisMux #(
     .FIFO_DEPTH(8),
     .DATA_WIDTH(DATA_WIDTH),
+    .USER_WIDTH(USER_WIDTH),
     .NUM_SOURCES(NUM_SOURCES)
     ) DUT (
     .clk(auClk),
@@ -190,11 +198,13 @@ axisMux #(
     .s_ready(FMPS_TEST_AXI_STREAM_TX_tready_flatten),
     .s_last(FMPS_TEST_AXI_STREAM_TX_tlast_flatten),
     .s_data(FMPS_TEST_AXI_STREAM_TX_tdata_flatten),
+    .s_user(FMPS_TEST_AXI_STREAM_TX_tuser_flatten),
 
     .m_valid(AXIS_MUX_tvalid),
     .m_ready(AXIS_MUX_tready),
     .m_last(AXIS_MUX_tlast),
-    .m_data(AXIS_MUX_tdata)
+    .m_data(AXIS_MUX_tdata),
+    .m_user(AXIS_MUX_tuser)
 );
 
 // Check Packet
