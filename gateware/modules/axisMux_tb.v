@@ -194,17 +194,17 @@ axisMux #(
     .clk(auClk),
     .rst(!auChannelUp),
 
-    .s_valid(FMPS_TEST_AXI_STREAM_TX_tvalid_flatten),
-    .s_ready(FMPS_TEST_AXI_STREAM_TX_tready_flatten),
-    .s_last(FMPS_TEST_AXI_STREAM_TX_tlast_flatten),
-    .s_data(FMPS_TEST_AXI_STREAM_TX_tdata_flatten),
-    .s_user(FMPS_TEST_AXI_STREAM_TX_tuser_flatten),
+    .s_tvalid(FMPS_TEST_AXI_STREAM_TX_tvalid_flatten),
+    .s_tready(FMPS_TEST_AXI_STREAM_TX_tready_flatten),
+    .s_tlast(FMPS_TEST_AXI_STREAM_TX_tlast_flatten),
+    .s_tdata(FMPS_TEST_AXI_STREAM_TX_tdata_flatten),
+    .s_tuser(FMPS_TEST_AXI_STREAM_TX_tuser_flatten),
 
-    .m_valid(AXIS_MUX_tvalid),
-    .m_ready(AXIS_MUX_tready),
-    .m_last(AXIS_MUX_tlast),
-    .m_data(AXIS_MUX_tdata),
-    .m_user(AXIS_MUX_tuser)
+    .m_tvalid(AXIS_MUX_tvalid),
+    .m_tready(AXIS_MUX_tready),
+    .m_tlast(AXIS_MUX_tlast),
+    .m_tdata(AXIS_MUX_tdata),
+    .m_tuser(AXIS_MUX_tuser)
 );
 
 // Check Packet

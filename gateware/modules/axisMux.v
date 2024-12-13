@@ -14,17 +14,17 @@ module axisMux #(
     input  wire                                      clk,
     input  wire                                      rst,
 
-    input  wire         [NUM_SOURCES-1:0]            s_valid,
-    output wire         [NUM_SOURCES-1:0]            s_ready,
-    input  wire         [NUM_SOURCES-1:0]            s_last,
-    input  wire         [USER_WIDTH*NUM_SOURCES-1:0] s_user,
-    input  wire         [DATA_WIDTH*NUM_SOURCES-1:0] s_data,
+    input  wire         [NUM_SOURCES-1:0]            s_tvalid,
+    output wire         [NUM_SOURCES-1:0]            s_tready,
+    input  wire         [NUM_SOURCES-1:0]            s_tlast,
+    input  wire         [USER_WIDTH*NUM_SOURCES-1:0] s_tuser,
+    input  wire         [DATA_WIDTH*NUM_SOURCES-1:0] s_tdata,
 
-    output wire                                      m_valid,
-    input  wire                                      m_ready,
-    output wire                                      m_last,
-    output wire                     [USER_WIDTH-1:0] m_user,
-    output wire                     [DATA_WIDTH-1:0] m_data
+    output wire                                      m_tvalid,
+    input  wire                                      m_tready,
+    output wire                                      m_tlast,
+    output wire                     [USER_WIDTH-1:0] m_tuser,
+    output wire                     [DATA_WIDTH-1:0] m_tdata
 );
 
 generate
@@ -52,10 +52,10 @@ genvar i;
 generate
 for (i = 0; i < NUM_SOURCES; i = i + 1) begin: fifo_gen
 
-assign fifoIn[i] = {s_last[i],
-    s_user[(i+1)*USER_WIDTH-1:i*USER_WIDTH],
-    s_data[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
-assign fifoWe[i] = s_valid[i] && s_ready[i];
+assign fifoIn[i] = {s_tlast[i],
+    s_tuser[(i+1)*USER_WIDTH-1:i*USER_WIDTH],
+    s_tdata[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
+assign fifoWe[i] = s_tvalid[i] && s_tready[i];
 
 genericFifo #(
     .aw(FIFO_AW),
@@ -78,9 +78,9 @@ fifo (
 
 assign fifoValid[i] = !(fifoEmpty[i] || fifoForceRe[i]);
 assign fifoAlmostFull[i] = (fifoCount[i] >= FIFO_MAX-2);
-assign fifoRe[i] = (fifoValid[i] && grantBus[i] && m_ready) || fifoForceRe[i];
+assign fifoRe[i] = (fifoValid[i] && grantBus[i] && m_tready) || fifoForceRe[i];
 
-assign s_ready[i] = !fifoAlmostFull[i];
+assign s_tready[i] = !fifoAlmostFull[i];
 
 // Reset logic for each FIFO
 always @(posedge clk) begin
@@ -120,7 +120,7 @@ rrArbReq #(
     .grantBus(grantBus)
 );
 
-assign reqArb = m_valid && m_ready && m_last;
+assign reqArb = m_tvalid && m_tready && m_tlast;
 
 localparam NUM_SOURCES_LOG2 = $clog2(NUM_SOURCES+1);
 
@@ -136,9 +136,9 @@ onehot2binary #(
 wire fifoValidGranted = fifoValid[grantBusBinary];
 wire [FIFO_DW-1:0] fifoDataGranted = fifoOut[grantBusBinary];
 
-assign m_valid = fifoValidGranted;
-assign m_data = fifoDataGranted[DATA_WIDTH-1:0];
-assign m_user = fifoDataGranted[DATA_WIDTH+USER_WIDTH-1:DATA_WIDTH];
-assign m_last = fifoDataGranted[DATA_WIDTH+USER_WIDTH];
+assign m_tvalid = fifoValidGranted;
+assign m_tdata = fifoDataGranted[DATA_WIDTH-1:0];
+assign m_tuser = fifoDataGranted[DATA_WIDTH+USER_WIDTH-1:DATA_WIDTH];
+assign m_tlast = fifoDataGranted[DATA_WIDTH+USER_WIDTH];
 
 endmodule
