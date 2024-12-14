@@ -4,11 +4,12 @@ VFLAGS_DEP += -I. -y . -y$(DSP_DIR)
 VFLAGS += -I. -y . -y$(DSP_DIR) -I$(AUTOGEN_DIR)
 
 TEST_BENCH = \
+	rrArbReq_tb \
+	axisMux_tb \
 	writeFMPSTestLink_tb \
 	writeBPMTestLink_tb \
 	fmpsReadLink_tb \
-	rrArbReq_tb \
-	axisMux_tb
+	fmpsReadLinks_tb
 
 TGT_ := $(TEST_BENCH)
 NO_CHECK =
