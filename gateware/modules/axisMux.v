@@ -11,15 +11,16 @@ module axisMux #(
     parameter USER_WIDTH    = 8,
     parameter NUM_SOURCES   = 2
     ) (
-    input  wire                                      clk,
-    input  wire                                      rst,
+    input  wire                                      arst,
 
+    input  wire         [NUM_SOURCES-1:0]            s_clk,
     input  wire         [NUM_SOURCES-1:0]            s_tvalid,
     output wire         [NUM_SOURCES-1:0]            s_tready,
     input  wire         [NUM_SOURCES-1:0]            s_tlast,
     input  wire         [USER_WIDTH*NUM_SOURCES-1:0] s_tuser,
     input  wire         [DATA_WIDTH*NUM_SOURCES-1:0] s_tdata,
 
+    input  wire                                      m_clk,
     output wire                                      m_tvalid,
     input  wire                                      m_tready,
     output wire                                      m_tlast,
@@ -57,23 +58,22 @@ assign fifoIn[i] = {s_tlast[i],
     s_tdata[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
 assign fifoWe[i] = s_tvalid[i] && s_tready[i];
 
-genericFifo #(
+genericFifo_2c #(
     .aw(FIFO_AW),
     .dw(FIFO_DW),
     .fwft(1))
-fifo (
-    .clk(clk),
-
+fifo_2c (
+    .wr_clk(s_clk[i]),
     .din(fifoIn[i]),
     .we(fifoWe[i]),
+    .full(fifoFull[i]),
+    .wr_count(fifoCount[i]),
 
+    .rd_clk(m_clk),
     .dout(fifoOut[i]),
     .re(fifoRe[i]),
-
-    .full(fifoFull[i]),
     .empty(fifoEmpty[i]),
-
-    .count(fifoCount[i])
+    .rd_count()
 );
 
 assign fifoValid[i] = !(fifoEmpty[i] || fifoForceRe[i]);
@@ -83,8 +83,8 @@ assign fifoRe[i] = (fifoValid[i] && grantBus[i] && m_tready) || fifoForceRe[i];
 assign s_tready[i] = !fifoAlmostFull[i];
 
 // Reset logic for each FIFO
-always @(posedge clk) begin
-    if (rst) begin
+always @(posedge s_clk[i] or posedge arst) begin
+    if (arst) begin
         fifoForceRe[i] <= 1;
     end else begin
         if (fifoEmpty[i]) begin
@@ -114,7 +114,7 @@ rrArbReq #(
     .TIMEOUT_CNT_MAX(128),
     .NREQ(NUM_SOURCES)
 ) rrArbitrer(
-    .clk(clk),
+    .clk(m_clk),
     .reqArb(reqArb),
     .reqBus(reqBus),
     .grantBus(grantBus)

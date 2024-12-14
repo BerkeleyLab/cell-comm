@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Fri Dec 13 23:04:41 2024
+[*] Sat Dec 14 00:57:12 2024
 [*]
 [dumpfile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.vcd"
-[dumpfile_mtime] "Fri Dec 13 23:04:37 2024"
-[dumpfile_size] 219040
+[dumpfile_mtime] "Sat Dec 14 00:56:59 2024"
+[dumpfile_size] 349270
 [savefile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.gtkw"
-[timestart] 1602200
-[size] 1716 1344
-[pos] -1 -1
-*-16.349998 1728000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 1226000
+[size] 1276 1344
+[pos] -1281 -1
+*-18.349998 1728000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axisMux_tb.
 [treeopen] axisMux_tb.DUT.
 [treeopen] axisMux_tb.DUT.fifo_gen[0].
@@ -183,6 +183,7 @@ axisMux_tb.AXIS_MUX_tready
 axisMux_tb.AXIS_MUX_tlast
 axisMux_tb.auChannelUp
 axisMux_tb.auFAStrobe
+axisMux_tb.sysFAStrobe
 @22
 axisMux_tb.cycleCounter[7:0]
 axisMux_tb.packetData[31:0]
@@ -193,9 +194,10 @@ axisMux_tb.statusStrobe
 @200
 -axisMux
 @28
-axisMux_tb.DUT.clk
-axisMux_tb.DUT.rst
+axisMux_tb.DUT.arst
 axisMux_tb.DUT.reqArb
+@22
+axisMux_tb.DUT.s_clk[3:0]
 @800022
 axisMux_tb.DUT.s_tdata[127:0]
 @c00022
@@ -367,6 +369,9 @@ axisMux_tb.DUT.fifoValidGranted
 axisMux_tb.DUT.grantBusBinary[2:0]
 @22
 axisMux_tb.DUT.grantBus[3:0]
+@28
+axisMux_tb.DUT.m_clk
+@22
 axisMux_tb.DUT.m_tdata[31:0]
 @28
 axisMux_tb.DUT.m_tlast
@@ -386,14 +391,14 @@ axisMux_tb.DUT.rrArbitrer.grantBus_d[3:0]
 @28
 axisMux_tb.DUT.rrArbitrer.reqArb
 axisMux_tb.DUT.rrArbitrer.reqArb_r
-@c00023
+@c00022
 axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
-@29
+@28
 (0)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
 (1)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
 (2)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
 (3)axisMux_tb.DUT.rrArbitrer.reqBus[3:0]
-@1401201
+@1401200
 -group_end
 @28
 axisMux_tb.DUT.rrArbitrer.srcServed

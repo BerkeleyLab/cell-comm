@@ -109,6 +109,15 @@ always @(posedge auClk) begin
     end
 end
 
+wire sysFAStrobe;
+pulseSync pulseSync (
+    .s_clk(auClk),
+    .s_pulse(auFAStrobe),
+
+    .d_clk(sysClk),
+    .d_pulse(sysFAStrobe)
+);
+
 //
 // FMPS test data streamer
 //
@@ -126,12 +135,14 @@ localparam real TREADY_PROB = 0.5;
 
 localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
 
+wire                   FMPS_TEST_AXI_STREAM_TX_clk[0:NUM_SOURCES-1];
 wire  [DATA_WIDTH-1:0] FMPS_TEST_AXI_STREAM_TX_tdata[0:NUM_SOURCES-1];
 wire  [USER_WIDTH-1:0] FMPS_TEST_AXI_STREAM_TX_tuser[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tvalid[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tlast[0:NUM_SOURCES-1];
 wire                   FMPS_TEST_AXI_STREAM_TX_tready[0:NUM_SOURCES-1];
 
+wire  [NUM_SOURCES-1:0]            FMPS_TEST_AXI_STREAM_TX_clk_flatten;
 wire  [DATA_WIDTH*NUM_SOURCES-1:0] FMPS_TEST_AXI_STREAM_TX_tdata_flatten;
 wire  [USER_WIDTH*NUM_SOURCES-1:0] FMPS_TEST_AXI_STREAM_TX_tuser_flatten;
 wire  [NUM_SOURCES-1:0]            FMPS_TEST_AXI_STREAM_TX_tvalid_flatten;
@@ -168,8 +179,10 @@ writeFMPSTestLink #(
     .FMPS_TEST_AXI_STREAM_TX_tready(FMPS_TEST_AXI_STREAM_TX_tready[i])
 );
 
+assign FMPS_TEST_AXI_STREAM_TX_clk[i] = auClk;
 assign FMPS_TEST_AXI_STREAM_TX_tuser[i] = 'h0;
 
+assign FMPS_TEST_AXI_STREAM_TX_clk_flatten[i] = FMPS_TEST_AXI_STREAM_TX_clk[i];
 assign FMPS_TEST_AXI_STREAM_TX_tdata_flatten[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH] = FMPS_TEST_AXI_STREAM_TX_tdata[i];
 assign FMPS_TEST_AXI_STREAM_TX_tuser_flatten[(i+1)*USER_WIDTH-1:i*USER_WIDTH] = FMPS_TEST_AXI_STREAM_TX_tuser[i];
 assign FMPS_TEST_AXI_STREAM_TX_tvalid_flatten[i] = FMPS_TEST_AXI_STREAM_TX_tvalid[i];
@@ -191,15 +204,16 @@ axisMux #(
     .USER_WIDTH(USER_WIDTH),
     .NUM_SOURCES(NUM_SOURCES)
     ) DUT (
-    .clk(auClk),
-    .rst(!auChannelUp),
+    .arst(!auChannelUp),
 
+    .s_clk(FMPS_TEST_AXI_STREAM_TX_clk_flatten),
     .s_tvalid(FMPS_TEST_AXI_STREAM_TX_tvalid_flatten),
     .s_tready(FMPS_TEST_AXI_STREAM_TX_tready_flatten),
     .s_tlast(FMPS_TEST_AXI_STREAM_TX_tlast_flatten),
     .s_tdata(FMPS_TEST_AXI_STREAM_TX_tdata_flatten),
     .s_tuser(FMPS_TEST_AXI_STREAM_TX_tuser_flatten),
 
+    .m_clk(sysClk),
     .m_tvalid(AXIS_MUX_tvalid),
     .m_tready(AXIS_MUX_tready),
     .m_tlast(AXIS_MUX_tlast),
@@ -224,8 +238,8 @@ AXIS2Packet #(
     .TREADY_PROB(TREADY_PROB)
 )
   AXIS2Packet (
-    .auroraClk(auClk),
-    .newCycleStrobe(auFAStrobe),
+    .auroraClk(sysClk),
+    .newCycleStrobe(sysFAStrobe),
     .TVALID(AXIS_MUX_tvalid),
     .TLAST(AXIS_MUX_tlast),
     .TDATA(AXIS_MUX_tdata),
@@ -273,8 +287,8 @@ localparam ST_IDLE                  = 0,
            ST_HALT                  = 8;
 reg [3:0] state = 0;
 reg [7:0] cycleCounter = 0;
-always @(posedge auClk) begin
-    if (auFAStrobe && state != ST_HALT) begin
+always @(posedge sysClk) begin
+    if (sysFAStrobe && state != ST_HALT) begin
         state <= ST_IDLE;
         cycleCounter <= cycleCounter + 1;
     end
