@@ -196,7 +196,7 @@ end
 wire FMPS_invalidFMPS2CC = readoutFMPS[31];
 wire FMPS_invalidCC2CC = readoutFMPS[30];
 wire FMPS_reserved = readoutFMPS[29];
-wire [INDEX_WIDTH-1:0] FMPS_dataCounter = readoutFMPS[28:24];
+wire [INDEX_WIDTH-1:0] FMPS_dataIndex = readoutFMPS[28:24];
 wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = readoutFMPS[23:8];
 wire [7:0] FMPS_cycleCounter = readoutFMPS[7:0];
 
@@ -208,14 +208,14 @@ localparam ST_IDLE                   = 0,
            ST_CHECK_PACKET           = 4,
            ST_INVALID_PACKET_BITS    = 5,
            ST_INVALID_RESERVED_BITS  = 6,
-           ST_INVALID_DATA_COUNTER   = 7,
+           ST_INVALID_DATA_INDEX     = 7,
            ST_INVALID_DATA_MAGIC     = 8,
            ST_INVALID_CYCLE_COUNTER  = 9,
            ST_READ_CYCLE_END         = 10,
            ST_FAIL                   = 11,
            ST_HALT                   = 12;
 reg [3:0] state = 0;
-reg [INDEX_WIDTH-1:0] dataCounter = 0;
+reg [INDEX_WIDTH-1:0] dataIndex = 0;
 reg [7:0] cycleCounter = 0;
 wire fmpsPacketPresent = fmpsBitmap[readoutAddress];
 always @(posedge auClk) begin
@@ -252,9 +252,9 @@ always @(posedge auClk) begin
         ST_READ_PACKET: begin
             // we have that packet and it's ready to be checked
             if (fmpsPacketPresent) begin
-                // dataCounter field must be the same as the
+                // dataIndex field must be the same as the
                 // FMPS index for this test
-                dataCounter <= readoutAddress;
+                dataIndex <= readoutAddress;
                 state <= ST_CHECK_PACKET;
             end else begin
                 state <= ST_READ_NEXT_PACKET;
@@ -268,8 +268,8 @@ always @(posedge auClk) begin
             else if (FMPS_reserved != 0) begin
                 state <= ST_INVALID_RESERVED_BITS;
             end
-            else if (FMPS_dataCounter != dataCounter) begin
-                state <= ST_INVALID_DATA_COUNTER;
+            else if (FMPS_dataIndex != dataIndex) begin
+                state <= ST_INVALID_DATA_INDEX;
             end
             else if (FMPS_dataMagic != DATA_MAGIC) begin
                 state <= ST_INVALID_DATA_MAGIC;
@@ -284,7 +284,7 @@ always @(posedge auClk) begin
 
         ST_INVALID_PACKET_BITS: begin
             $display("@%0d: Invalid packet bit: FMPS2CC: %d, CC2CC: %d",
-                $time, FMPS_invalidFMPS2CC, FMPS_invalidFMPS2CC);
+                $time, FMPS_invalidFMPS2CC, FMPS_invalidCC2CC);
             state <= ST_FAIL;
         end
 
@@ -294,9 +294,9 @@ always @(posedge auClk) begin
             state <= ST_FAIL;
         end
 
-        ST_INVALID_DATA_COUNTER: begin
-            $display("@%0d: Invalid data counter: dataCounter: %d, expected: %d",
-                $time, FMPS_dataCounter, dataCounter);
+        ST_INVALID_DATA_INDEX: begin
+            $display("@%0d: Invalid data counter: dataIndex: %d, expected: %d",
+                $time, FMPS_dataIndex, dataIndex);
             state <= ST_FAIL;
         end
 
