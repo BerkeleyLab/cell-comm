@@ -16,8 +16,11 @@ module fmpsReadLinks #(
     input wire                                                   csrStrobe,
     input wire                                            [31:0] GPIO_OUT,
     (*mark_debug=statusDebug*) output wire                [31:0] csr,
-    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] rxBitmap,
-    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsEnableBitmap,
+    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAllFASnapshot,
+    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsEnableBitmapFASnapshot,
+
+    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAll,
+    (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                        fmpsEnabled,
 
     // Synchronization
@@ -198,7 +201,6 @@ reg [SEQNO_WIDTH-1:0] seqno = 0;
 reg [$clog2(SYSCLK_RATE/1000000)-1:0] usDivider;
 reg [READOUT_TIMER_WIDTH-1:0] readoutTime, readoutTimer;
 (* mark_debug = FMPSCountDebug *) reg timeoutToggle = 0, timeoutToggle_d = 0;
-reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAll, fmpsBitmapEnabled;
 reg timeoutFlag;
 always @(posedge sysClk) begin
     timeoutToggle_d <= timeoutToggle;
@@ -214,8 +216,8 @@ always @(posedge sysClk) begin
         readoutTimer <= 0;
         readTimeout <= 0;
         timeoutFlag <= 0;
-        rxBitmap <= fmpsBitmapAll;
-        fmpsEnableBitmap <= fmpsBitmapEnabled;
+        fmpsBitmapAllFASnapshot <= fmpsBitmapAll;
+        fmpsEnableBitmapFASnapshot <= fmpsBitmapEnabled;
     end
     else if (readoutActive) begin
         if (fmpsCounter == FMPSCount) begin

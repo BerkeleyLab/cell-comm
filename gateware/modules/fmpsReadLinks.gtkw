@@ -1,23 +1,31 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Sat Dec 14 01:03:28 2024
+[*] Tue Dec 17 23:33:58 2024
 [*]
-[dumpfile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLinks.vcd"
-[dumpfile_mtime] "Sat Dec 14 01:02:16 2024"
-[dumpfile_size] 412504
-[savefile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLinks.gtkw"
-[timestart] 2059000
-[size] 1276 1344
-[pos] -1281 -1
-*-20.000000 4402000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLinks.vcd"
+[dumpfile_mtime] "Tue Dec 17 23:33:28 2024"
+[dumpfile_size] 455484
+[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLinks.gtkw"
+[timestart] 0
+[size] 1716 1344
+[pos] -1715 -1
+*-22.000000 9776000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] fmpsReadLinks_tb.
 [treeopen] fmpsReadLinks_tb.DUT.
-[sst_width] 214
-[signals_width] 333
+[sst_width] 263
+[signals_width] 402
 [sst_expanded] 1
 [sst_vpaned_height] 413
 @200
 -fmpsReadLinks_tb
+@22
+fmpsReadLinks_tb.FMPS_cycleCounter[7:0]
+fmpsReadLinks_tb.FMPS_dataIndex[4:0]
+fmpsReadLinks_tb.FMPS_dataMagic[15:0]
+@28
+fmpsReadLinks_tb.FMPS_invalidCC2CC
+fmpsReadLinks_tb.FMPS_invalidFMPS2CC
+fmpsReadLinks_tb.FMPS_reserved
 @22
 fmpsReadLinks_tb.GPIO_OUT[31:0]
 @28
@@ -27,26 +35,46 @@ fmpsReadLinks_tb.auClk
 fmpsReadLinks_tb.auFAStrobe
 @420
 fmpsReadLinks_tb.cc
+@22
+fmpsReadLinks_tb.cycleCounter[7:0]
+fmpsReadLinks_tb.dataIndex[4:0]
+@420
 fmpsReadLinks_tb.errors
 @28
 fmpsReadLinks_tb.fail
-fmpsReadLinks_tb.fmpsEnabled
 @22
-fmpsReadLinks_tb.fmpsEnabledBitmap[31:0]
-fmpsReadLinks_tb.fmpsReadoutAddress[4:0]
-fmpsReadLinks_tb.fmpsReadout[31:0]
-fmpsReadLinks_tb.fmps_CSR[31:0]
+fmpsReadLinks_tb.fmpsBitmapAllFASnapshot[31:0]
+fmpsReadLinks_tb.fmpsBitmapAll[31:0]
+fmpsReadLinks_tb.fmpsBitmapEnabled[31:0]
+fmpsReadLinks_tb.fmpsCSR[31:0]
+fmpsReadLinks_tb.fmpsEnableBitmapFASnapshot[31:0]
 @28
+fmpsReadLinks_tb.fmpsEnabled
+fmpsReadLinks_tb.fmpsPacketPresent
+@24
+fmpsReadLinks_tb.fmpsReadoutAddress[4:0]
+@23
+fmpsReadLinks_tb.fmpsReadout[31:0]
+@28
+fmpsReadLinks_tb.fofbReadoutActive
+fmpsReadLinks_tb.fofbReadoutActive_d
+fmpsReadLinks_tb.fofbReadoutValid
+fmpsReadLinks_tb.fofbReadoutValid_d
 fmpsReadLinks_tb.genPacketStrobe
+@420
+fmpsReadLinks_tb.j
+@28
 fmpsReadLinks_tb.module_done
 fmpsReadLinks_tb.module_ready
+@24
+fmpsReadLinks_tb.state[3:0]
 @22
-fmpsReadLinks_tb.rxBitmap[31:0]
 fmpsReadLinks_tb.strobeCnt[8:0]
 @420
 fmpsReadLinks_tb.sysCc
 @28
 fmpsReadLinks_tb.sysClk
+fmpsReadLinks_tb.sysFAstrobe
 fmpsReadLinks_tb.sysStatusCode[2:0]
 fmpsReadLinks_tb.sysStatusStrobe
 fmpsReadLinks_tb.sysTimeoutStrobe
@@ -155,14 +183,13 @@ fmpsReadLinks_tb.DUT.fmpsBitmapAll[31:0]
 -group_end
 @22
 fmpsReadLinks_tb.DUT.fmpsBitmapEnabled[31:0]
-@25
+@24
 fmpsReadLinks_tb.DUT.fmpsCounter[5:0]
-@22
-fmpsReadLinks_tb.DUT.fmpsEnableBitmap[31:0]
 @28
 fmpsReadLinks_tb.DUT.fmpsEnabled
 @22
 fmpsReadLinks_tb.DUT.fmpsEnabledCounter[5:0]
+@24
 fmpsReadLinks_tb.DUT.fmpsReadoutAddress[4:0]
 fmpsReadLinks_tb.DUT.fmpsReadoutAddress_d[4:0]
 @28
@@ -188,9 +215,6 @@ fmpsReadLinks_tb.DUT.readoutTime[4:0]
 fmpsReadLinks_tb.DUT.readoutTimer[4:0]
 @28
 fmpsReadLinks_tb.DUT.readoutValid
-@22
-fmpsReadLinks_tb.DUT.rxBitmap[31:0]
-@28
 fmpsReadLinks_tb.DUT.seqno[2:0]
 fmpsReadLinks_tb.DUT.sysClk
 fmpsReadLinks_tb.DUT.sysPkCountToggle

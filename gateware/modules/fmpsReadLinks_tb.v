@@ -145,6 +145,15 @@ always @(posedge auClk) begin
     end
 end
 
+wire sysFAstrobe;
+pulseSync pulseSync (
+    .s_clk(auClk),
+    .s_pulse(auFAStrobe),
+
+    .d_clk(sysClk),
+    .d_pulse(sysFAstrobe)
+);
+
 // Number of FMPS packets per cycle
 localparam NUM_FMPS_PKTS_PER_CYCLE = 8;
 
@@ -194,8 +203,10 @@ writeFMPSTestLink #(
 end
 endgenerate
 
-wire [(1<<INDEX_WIDTH)-1:0] rxBitmap;
-wire [(1<<INDEX_WIDTH)-1:0] fmpsEnabledBitmap;
+wire [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAll;
+wire [(1<<INDEX_WIDTH)-1:0] fmpsBitmapEnabled;
+wire [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAllFASnapshot;
+wire [(1<<INDEX_WIDTH)-1:0] fmpsEnableBitmapFASnapshot;
 wire fmpsEnabled;
 wire sysStatusStrobe;
 wire [2:0] sysStatusCode;
@@ -205,8 +216,8 @@ wire [31:0] fmpsReadout;
 reg uBreadoutStrobe = 0;
 wire [31:0] uBreadout;
 
-wire [31:0] fmps_CSR;
-assign GPIO_IN[WR_REG_OFFSET_CSR] = fmps_CSR;
+wire [31:0] fmpsCSR;
+assign GPIO_IN[WR_REG_OFFSET_CSR] = fmpsCSR;
 
 fmpsReadLinks #(
     .INDEX_WIDTH(INDEX_WIDTH),
@@ -217,12 +228,16 @@ fmpsReadLinks #(
 
     .csrStrobe(GPIO_STROBES),
     .GPIO_OUT(GPIO_OUT),
-    .csr(fmps_CSR),
-    .rxBitmap(rxBitmap),
-    .fmpsEnableBitmap(fmpsEnabledBitmap),
+    .csr(fmpsCSR),
+
+    .fmpsBitmapAllFASnapshot(fmpsBitmapAllFASnapshot),
+    .fmpsEnableBitmapFASnapshot(fmpsEnableBitmapFASnapshot),
+
+    .fmpsBitmapAll(fmpsBitmapAll),
+    .fmpsBitmapEnabled(fmpsBitmapEnabled),
     .fmpsEnabled(fmpsEnabled),
 
-    .FAstrobe(auFAStrobe),
+    .FAstrobe(sysFAstrobe),
 
     .sysStatusStrobe(sysStatusStrobe),
     .sysStatusCode(sysStatusCode),
@@ -253,151 +268,156 @@ fmpsReadLinks #(
 assign FMPS_TEST_AXI_STREAM_TX_tready[0] = 1'b1;
 assign FMPS_TEST_AXI_STREAM_TX_tready[1] = 1'b1;
 
-/////////////// Dump DPRAM
-/////////////integer i = 0;
-/////////////initial begin
-/////////////    for (i = 0; i < (1<<INDEX_WIDTH)-1; i = i + 1)
-/////////////        $dumpvars(0, DUT.dpram[i]);
-/////////////end
-/////////////
-/////////////// Data Packet has the format described in writeFMPSTestLink_tb.v
-/////////////// Dissect packet data
-/////////////wire FMPS_invalidFMPS2CC = readoutFMPS[31];
-/////////////wire FMPS_invalidCC2CC = readoutFMPS[30];
-/////////////wire FMPS_reserved = readoutFMPS[29];
-/////////////wire [INDEX_WIDTH-1:0] FMPS_dataCounter = readoutFMPS[28:24];
-/////////////wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = readoutFMPS[23:8];
-/////////////wire [7:0] FMPS_cycleCounter = readoutFMPS[7:0];
-/////////////
-/////////////// Test data
-/////////////localparam ST_IDLE                   = 0,
-/////////////           ST_READ_NEXT_PACKET       = 1,
-/////////////           ST_READ_SETTLE            = 2,
-/////////////           ST_READ_PACKET            = 3,
-/////////////           ST_CHECK_PACKET           = 4,
-/////////////           ST_INVALID_PACKET_BITS    = 5,
-/////////////           ST_INVALID_RESERVED_BITS  = 6,
-/////////////           ST_INVALID_DATA_COUNTER   = 7,
-/////////////           ST_INVALID_DATA_MAGIC     = 8,
-/////////////           ST_INVALID_CYCLE_COUNTER  = 9,
-/////////////           ST_READ_CYCLE_END         = 10,
-/////////////           ST_FAIL                   = 11,
-/////////////           ST_HALT                   = 12;
-/////////////reg [3:0] state = 0;
-/////////////reg [INDEX_WIDTH-1:0] dataCounter = 0;
-/////////////reg [7:0] cycleCounter = 0;
-/////////////wire fmpsPacketPresent = fmpsBitmap[readoutAddress];
-/////////////always @(posedge k) begin
-/////////////    if (auFAStrobe && state != ST_HALT) begin
-/////////////        cycleCounter <= cycleCounter + 1;
-/////////////        allFMPSpresent <= 0;
-/////////////        state <= ST_IDLE;
-/////////////    end
-/////////////    else begin
-/////////////        case (state)
-/////////////        ST_IDLE: begin
-/////////////            if (fmpsCounter == NUM_FMPS_PKTS_PER_CYCLE) begin
-/////////////                allFMPSpresent <= 1;
-/////////////                readoutAddress <= 0;
-/////////////                state <= ST_READ_SETTLE;
-/////////////            end
-/////////////        end
-/////////////
-/////////////        ST_READ_NEXT_PACKET: begin
-/////////////            readoutAddress <= readoutAddress + 1;
-/////////////            state <= ST_READ_SETTLE;
-/////////////
-/////////////            if (readoutAddress == (1<<INDEX_WIDTH)-1) begin
-/////////////                readoutAddress <= 0;
-/////////////                state <= ST_READ_CYCLE_END;
-/////////////            end
-/////////////        end
-/////////////
-/////////////        // Cope with 1 clock cycle latency
-/////////////        ST_READ_SETTLE: begin
-/////////////            state <= ST_READ_PACKET;
-/////////////        end
-/////////////
-/////////////        ST_READ_PACKET: begin
-/////////////            // we have that packet and it's ready to be checked
-/////////////            if (fmpsPacketPresent) begin
-/////////////                // dataCounter field must be the same as the
-/////////////                // FMPS index for this test
-/////////////                dataCounter <= readoutAddress;
-/////////////                state <= ST_CHECK_PACKET;
-/////////////            end else begin
-/////////////                state <= ST_READ_NEXT_PACKET;
-/////////////            end
-/////////////        end
-/////////////
-/////////////        ST_CHECK_PACKET: begin
-/////////////            if (FMPS_invalidFMPS2CC || FMPS_invalidCC2CC) begin
-/////////////                state <= ST_INVALID_PACKET_BITS;
-/////////////            end
-/////////////            else if (FMPS_reserved != 0) begin
-/////////////                state <= ST_INVALID_RESERVED_BITS;
-/////////////            end
-/////////////            else if (FMPS_dataCounter != dataCounter) begin
-/////////////                state <= ST_INVALID_DATA_COUNTER;
-/////////////            end
-/////////////            else if (FMPS_dataMagic != DATA_MAGIC) begin
-/////////////                state <= ST_INVALID_DATA_MAGIC;
-/////////////            end
-/////////////            else if (FMPS_cycleCounter != cycleCounter) begin
-/////////////                state <= ST_INVALID_CYCLE_COUNTER;
-/////////////            end
-/////////////            else begin
-/////////////                state <= ST_READ_NEXT_PACKET;
-/////////////            end
-/////////////        end
-/////////////
-/////////////        ST_INVALID_PACKET_BITS: begin
-/////////////            $display("@%0d: Invalid packet bit: FMPS2CC: %d, CC2CC: %d",
-/////////////                $time, FMPS_invalidFMPS2CC, FMPS_invalidFMPS2CC);
-/////////////            state <= ST_FAIL;
-/////////////        end
-/////////////
-/////////////        ST_INVALID_RESERVED_BITS: begin
-/////////////            $display("@%0d: Invalid reserved bit: reserved: %d",
-/////////////                $time, FMPS_reserved);
-/////////////            state <= ST_FAIL;
-/////////////        end
-/////////////
-/////////////        ST_INVALID_DATA_COUNTER: begin
-/////////////            $display("@%0d: Invalid data counter: dataCounter: %d, expected: %d",
-/////////////                $time, FMPS_dataCounter, dataCounter);
-/////////////            state <= ST_FAIL;
-/////////////        end
-/////////////
-/////////////        ST_INVALID_DATA_MAGIC: begin
-/////////////            $display("@%0d: Invalid data magic: dataMagic: 0x%04X, expected: 0x%04X",
-/////////////                $time, FMPS_dataMagic, DATA_MAGIC);
-/////////////            state <= ST_FAIL;
-/////////////        end
-/////////////
-/////////////        ST_INVALID_CYCLE_COUNTER: begin
-/////////////            $display("@%0d: Invalid cycle counter: cycleCounter: %d, expected: %d",
-/////////////                $time, FMPS_cycleCounter, cycleCounter);
-/////////////            state <= ST_FAIL;
-/////////////        end
-/////////////
-/////////////        // Wait until reset. This cycle was good
-/////////////        ST_READ_CYCLE_END: ;
-/////////////
-/////////////        ST_FAIL: begin
-/////////////            $display("@%0d: Failed data packet[%d]: 0x%08X", $time, readoutAddress,
-/////////////                readoutFMPS);
-/////////////            fail <= 1;
-/////////////            state <= ST_HALT;
-/////////////        end
-/////////////
-/////////////        ST_HALT: ;
-/////////////
-/////////////        default: ;
-/////////////
-/////////////        endcase
-/////////////    end
-/////////////end
+// Dump DPRAM
+integer j = 0;
+initial begin
+    for (j = 0; j < (1<<INDEX_WIDTH)-1; j = j + 1) begin
+        $dumpvars(0, DUT.readCCW.dpram[j]);
+        $dumpvars(0, DUT.readCW.dpram[j]);
+    end
+end
+
+// Test data
+localparam ST_IDLE                   = 0,
+           ST_READ_NEXT_PACKET       = 1,
+           ST_READ_SETTLE            = 2,
+           ST_READ_PACKET            = 3,
+           ST_CHECK_PACKET           = 4,
+           ST_INVALID_PACKET_BITS    = 5,
+           ST_INVALID_RESERVED_BITS  = 6,
+           ST_INVALID_DATA_INDEX     = 7,
+           ST_INVALID_DATA_MAGIC     = 8,
+           ST_INVALID_CYCLE_COUNTER  = 9,
+           ST_FAIL                   = 10,
+           ST_HALT                   = 11;
+reg [3:0] state = 0;
+
+// Packet dissection
+wire FMPS_invalidFMPS2CC = fmpsReadout[31];
+wire FMPS_invalidCC2CC = fmpsReadout[30];
+wire FMPS_reserved = fmpsReadout[29];
+wire [INDEX_WIDTH-1:0] FMPS_dataIndex = fmpsReadout[28:24];
+wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = fmpsReadout[23:8];
+wire [7:0] FMPS_cycleCounter = fmpsReadout[7:0];
+
+// Tap into the CSR
+wire fofbReadoutActive = fmpsCSR[31];
+wire fofbReadoutValid = fmpsCSR[30];
+reg fofbReadoutActive_d, fofbReadoutValid_d = 0;
+
+reg [INDEX_WIDTH-1:0] dataIndex = 0;
+reg [7:0] cycleCounter = 0;
+wire fmpsPacketPresent = fmpsBitmapAll[fmpsReadoutAddress];
+
+always @(posedge sysClk) begin
+    if (sysFAstrobe) begin
+        cycleCounter <= cycleCounter + 1;
+    end
+
+    fofbReadoutActive_d <= fofbReadoutActive;
+    fofbReadoutValid_d <= fofbReadoutValid;
+
+    case (state)
+    ST_IDLE: begin
+        // Wait for new data to arrive or acquisition interval to end
+        if ((fofbReadoutValid && !fofbReadoutValid_d)
+         || (!fofbReadoutActive && fofbReadoutActive_d)) begin
+            fmpsReadoutAddress <= 0;
+            state <= ST_READ_NEXT_PACKET;
+        end
+    end
+
+    ST_READ_NEXT_PACKET: begin
+        fmpsReadoutAddress <= fmpsReadoutAddress + 1;
+        state <= ST_READ_SETTLE;
+
+        if (fmpsReadoutAddress == (1<<INDEX_WIDTH)-1) begin
+            fmpsReadoutAddress <= 0;
+            state <= ST_IDLE;
+        end
+    end
+
+    // Cope with 1 clock cycle latency
+    ST_READ_SETTLE: begin
+        state <= ST_READ_PACKET;
+    end
+
+   ST_READ_PACKET: begin
+       // we have that packet and it's ready to be checked
+       if (fmpsPacketPresent) begin
+           // dataIndex field must be the same as the
+           // FMPS index for this test
+           dataIndex <= fmpsReadoutAddress;
+           state <= ST_CHECK_PACKET;
+       end else begin
+           state <= ST_READ_NEXT_PACKET;
+       end
+   end
+
+    ST_CHECK_PACKET: begin
+        if (FMPS_invalidFMPS2CC || FMPS_invalidCC2CC) begin
+            state <= ST_INVALID_PACKET_BITS;
+        end
+        else if (FMPS_reserved != 0) begin
+            state <= ST_INVALID_RESERVED_BITS;
+        end
+        else if (FMPS_dataIndex != dataIndex) begin
+            state <= ST_INVALID_DATA_INDEX;
+        end
+        else if (FMPS_dataMagic != DATA_MAGIC) begin
+            state <= ST_INVALID_DATA_MAGIC;
+        end
+        else if (FMPS_cycleCounter != cycleCounter) begin
+            state <= ST_INVALID_CYCLE_COUNTER;
+        end
+        else begin
+            state <= ST_READ_NEXT_PACKET;
+        end
+    end
+
+    ST_INVALID_PACKET_BITS: begin
+        $display("@%0d: Invalid packet bit: FMPS2CC: %d, CC2CC: %d",
+            $time, FMPS_invalidFMPS2CC, FMPS_invalidCC2CC);
+        state <= ST_FAIL;
+    end
+
+    ST_INVALID_RESERVED_BITS: begin
+        $display("@%0d: Invalid reserved bit: reserved: %d",
+            $time, FMPS_reserved);
+        state <= ST_FAIL;
+    end
+
+    ST_INVALID_DATA_INDEX: begin
+        $display("@%0d: Invalid data index: dataIndex: %d, expected: %d",
+            $time, FMPS_dataIndex, dataIndex);
+        state <= ST_FAIL;
+    end
+
+    ST_INVALID_DATA_MAGIC: begin
+        $display("@%0d: Invalid data magic: dataMagic: 0x%04X, expected: 0x%04X",
+            $time, FMPS_dataMagic, DATA_MAGIC);
+        state <= ST_FAIL;
+    end
+
+    ST_INVALID_CYCLE_COUNTER: begin
+        $display("@%0d: Invalid cycle counter: cycleCounter: %d, expected: %d",
+            $time, FMPS_cycleCounter, cycleCounter);
+        state <= ST_FAIL;
+    end
+
+    ST_FAIL: begin
+        $display("@%0d: Failed data packet[%d]: 0x%08X", $time, fmpsReadoutAddress,
+            fmpsReadout);
+        fail <= 1;
+        state <= ST_HALT;
+    end
+
+    ST_HALT: ;
+
+    default: ;
+
+    endcase
+end
 
 // stimulus
 
