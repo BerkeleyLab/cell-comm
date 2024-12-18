@@ -4,9 +4,10 @@
 // All other nets are in the Aurora user clock domain.
 //
 module writeBPMTestLink #(
-    parameter faStrobeDebug    = "false",
-    parameter stateDebug       = "false",
-    parameter testInDebug      = "false") (
+    parameter [15:0] HEADER_MAGIC = 16'hA5BE,
+    parameter faStrobeDebug       = "false",
+    parameter stateDebug          = "false",
+    parameter testInDebug         = "false") (
 
     input wire         sysClk,
     input wire [31:0]  sysBPMCSR,
@@ -78,7 +79,7 @@ wire [FOFB_INDEX_WIDTH-1:0] FOFBIndex = {
 // Forwarded values
 wire FOFBenabled = 1;
 wire [31:0] txHeader = {
-                16'hA5BE,
+                HEADER_MAGIC,
                 FOFBenabled,
                 {6-1-CELL_INDEX_WIDTH{1'b0}}, cellIndex,
                 {10-FOFB_INDEX_WIDTH{1'b0}}, FOFBIndex};

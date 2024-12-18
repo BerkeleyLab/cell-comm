@@ -5,7 +5,7 @@
 //
 module writeFMPSTestLink #(
     parameter WITH_MULT_PACK_SUPPORT = "false",
-    parameter [15:0] DATA_MAGIC      = 16'hCACA,
+    parameter [15:0] HEADER_MAGIC    = 16'hB6CF,
     parameter faStrobeDebug          = "false",
     parameter stateDebug             = "false",
     parameter testInDebug            = "false") (
@@ -84,7 +84,7 @@ reg [FMPS_INDEX_WIDTH-1:0] fmpsIndex = 0;
 // Forwarded values
 wire FMPSenabled = 1;
 wire [31:0] txHeader = {
-                16'hB6CF,
+                HEADER_MAGIC,
                 FMPSenabled,
                 {6-1-FMPS_INDEX_WIDTH{1'b0}}, fmpsIndex,
                 {10{1'b0}}};
