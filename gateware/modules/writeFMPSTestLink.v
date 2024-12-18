@@ -6,6 +6,7 @@
 module writeFMPSTestLink #(
     parameter WITH_MULT_PACK_SUPPORT = "false",
     parameter [15:0] HEADER_MAGIC    = 16'hB6CF,
+    parameter [15:0] DATA_PATTERN    = 16'hCACA,
     parameter faStrobeDebug          = "false",
     parameter stateDebug             = "false",
     parameter testInDebug            = "false") (
@@ -179,7 +180,7 @@ always @(posedge auroraUserClk) begin
                 // bit 31 and 30 have special meaning
                 txData  <= {1'b0, 1'b0,
                     1'b0, fmpsIndex,
-                    16'hCACA, FAcycleCounter};
+                    DATA_PATTERN, FAcycleCounter};
                 fwState <= FWST_PUSH_DATA;
             end
         end
