@@ -91,7 +91,6 @@ wire [CELL_INDEX_WIDTH-1:0] auCCWcellIndex, auCWcellIndex;
 wire [(1<<FOFB_INDEX_WIDTH)-1:0] auCCW_FOFBbitmap, auCW_FOFBbitmap;
 (* mark_debug = cellCountDebug *)
 wire [CELL_COUNT_WIDTH-1:0] auCCWpacketCounter, auCWpacketCounter;
-wire [(1<<FOFB_INDEX_WIDTH)-1:0] auCCWfofbIndex, auCWfofbIndex;
 wire                 [31:0] ccwX, ccwY, ccwS, cwX, cwY, cwS;
 fofbReadLink #(.dbg(ccwLinkDebug)) readCCW (
     .auroraClk(auClk),
@@ -241,10 +240,15 @@ always @(posedge sysClk) begin
             readoutActive <= 0;
         end
         if (mergedTVALID && (mergedStatus == ST_SUCCESS)) begin
+
+            // Mark all the Cell nodes that we've received data,
+            // regardless if it's enabled or not
             cellBitmap[mergedCellIndex] <= 1;
             if (!cellBitmap[mergedCellIndex]) begin
                 cellCounter <= cellCounter + 1;
             end
+
+            // Mark only the Cell nodes that are enabled
             if (mergedFOFBenabled) begin
                 fofbBitmap[mergedCellIndex] <= 1;
                 if (!fofbBitmap[mergedCellIndex]) begin

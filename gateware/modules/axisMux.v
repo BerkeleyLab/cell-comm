@@ -1,0 +1,144 @@
+// Simple AXIS mux, mostly for simulation
+// since we have big combinatorial paths
+//
+// * with backpressure handshake (valid/ready)
+// * arbitrate only on tlast
+// * configurable number of sources
+// * FIFO-based design
+module axisMux #(
+    parameter FIFO_DEPTH    = 8,
+    parameter DATA_WIDTH    = 32,
+    parameter USER_WIDTH    = 8,
+    parameter NUM_SOURCES   = 2
+    ) (
+    input  wire                                      arst,
+
+    input  wire         [NUM_SOURCES-1:0]            s_clk,
+    input  wire         [NUM_SOURCES-1:0]            s_tvalid,
+    output wire         [NUM_SOURCES-1:0]            s_tready,
+    input  wire         [NUM_SOURCES-1:0]            s_tlast,
+    input  wire         [USER_WIDTH*NUM_SOURCES-1:0] s_tuser,
+    input  wire         [DATA_WIDTH*NUM_SOURCES-1:0] s_tdata,
+
+    input  wire                                      m_clk,
+    output wire                                      m_tvalid,
+    input  wire                                      m_tready,
+    output wire                                      m_tlast,
+    output wire                     [USER_WIDTH-1:0] m_tuser,
+    output wire                     [DATA_WIDTH-1:0] m_tdata
+);
+
+generate
+if (NUM_SOURCES > 8) begin
+    NUM_SOURCES_bigger_than_8_not_supported();
+end
+endgenerate
+
+localparam FIFO_AW = $clog2(FIFO_DEPTH+1);
+localparam FIFO_DW = DATA_WIDTH+USER_WIDTH+1; // data + user + last bit
+localparam FIFO_MAX = 2**FIFO_AW-1;
+
+wire [FIFO_DW-1:0] fifoIn [0:NUM_SOURCES-1];
+wire fifoWe [0:NUM_SOURCES-1];
+wire [FIFO_DW-1:0] fifoOut [0:NUM_SOURCES-1];
+wire fifoRe [0:NUM_SOURCES-1];
+reg  fifoForceRe [0:NUM_SOURCES-1];
+wire fifoFull [0:NUM_SOURCES-1];
+wire fifoEmpty [0:NUM_SOURCES-1];
+wire fifoValid [0:NUM_SOURCES-1];
+wire fifoAlmostFull [0:NUM_SOURCES-1];
+wire signed [FIFO_AW:0] fifoCount [0:NUM_SOURCES-1];
+
+genvar i;
+generate
+for (i = 0; i < NUM_SOURCES; i = i + 1) begin: fifo_gen
+
+assign fifoIn[i] = {s_tlast[i],
+    s_tuser[(i+1)*USER_WIDTH-1:i*USER_WIDTH],
+    s_tdata[(i+1)*DATA_WIDTH-1:i*DATA_WIDTH]};
+assign fifoWe[i] = s_tvalid[i] && s_tready[i];
+
+genericFifo_2c #(
+    .aw(FIFO_AW),
+    .dw(FIFO_DW),
+    .fwft(1))
+fifo_2c (
+    .wr_clk(s_clk[i]),
+    .din(fifoIn[i]),
+    .we(fifoWe[i]),
+    .full(fifoFull[i]),
+    .wr_count(fifoCount[i]),
+
+    .rd_clk(m_clk),
+    .dout(fifoOut[i]),
+    .re(fifoRe[i]),
+    .empty(fifoEmpty[i]),
+    .rd_count()
+);
+
+assign fifoValid[i] = !(fifoEmpty[i] || fifoForceRe[i]);
+assign fifoAlmostFull[i] = (fifoCount[i] >= FIFO_MAX-2);
+assign fifoRe[i] = (fifoValid[i] && grantBus[i] && m_tready) || fifoForceRe[i];
+
+assign s_tready[i] = !fifoAlmostFull[i];
+
+// Reset logic for each FIFO
+always @(posedge s_clk[i] or posedge arst) begin
+    if (arst) begin
+        fifoForceRe[i] <= 1;
+    end else begin
+        if (fifoEmpty[i]) begin
+            fifoForceRe[i] <= 0;
+        end
+    end
+end
+
+end
+endgenerate
+
+// Round-robin scheme for serving sources
+
+wire [NUM_SOURCES-1:0] reqBus;
+wire [NUM_SOURCES-1:0] grantBus;
+
+generate
+for (i = 0; i < NUM_SOURCES; i = i + 1) begin: grant_gen
+
+assign reqBus[i] = fifoValid[i];
+
+end
+endgenerate
+
+wire reqArb;
+rrArbReq #(
+    .TIMEOUT_CNT_MAX(128),
+    .NREQ(NUM_SOURCES)
+) rrArbitrer(
+    .clk(m_clk),
+    .reqArb(reqArb),
+    .reqBus(reqBus),
+    .grantBus(grantBus)
+);
+
+assign reqArb = m_tvalid && m_tready && m_tlast;
+
+localparam NUM_SOURCES_LOG2 = $clog2(NUM_SOURCES+1);
+
+wire [NUM_SOURCES_LOG2-1:0] grantBusBinary;
+onehot2binary #(
+    .WIDTH(NUM_SOURCES)
+) onehot2binary (
+    .onehot(grantBus),
+    .binary(grantBusBinary)
+);
+
+// Output
+wire fifoValidGranted = fifoValid[grantBusBinary];
+wire [FIFO_DW-1:0] fifoDataGranted = fifoOut[grantBusBinary];
+
+assign m_tvalid = fifoValidGranted;
+assign m_tdata = fifoDataGranted[DATA_WIDTH-1:0];
+assign m_tuser = fifoDataGranted[DATA_WIDTH+USER_WIDTH-1:DATA_WIDTH];
+assign m_tlast = fifoDataGranted[DATA_WIDTH+USER_WIDTH];
+
+endmodule

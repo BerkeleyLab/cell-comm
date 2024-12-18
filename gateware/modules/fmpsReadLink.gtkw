@@ -1,0 +1,137 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Tue Nov 26 00:23:06 2024
+[*]
+[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLink.vcd"
+[dumpfile_mtime] "Tue Nov 26 00:20:30 2024"
+[dumpfile_size] 130700
+[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLink.gtkw"
+[timestart] 0
+[size] 1716 1344
+[pos] -1 -1
+*-20.940838 4600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fmpsReadLink_tb.
+[sst_width] 214
+[signals_width] 470
+[sst_expanded] 1
+[sst_vpaned_height] 413
+@200
+-fmpsReadLink_tb
+@22
+fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tdata[31:0]
+@28
+fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tlast
+fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tready
+fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tvalid
+@24
+fmpsReadLink_tb.FMPS_cycleCounter[7:0]
+fmpsReadLink_tb.FMPS_dataCounter[4:0]
+@22
+fmpsReadLink_tb.FMPS_dataMagic[15:0]
+@28
+fmpsReadLink_tb.FMPS_invalidCC2CC
+fmpsReadLink_tb.FMPS_invalidFMPS2CC
+fmpsReadLink_tb.FMPS_reserved
+fmpsReadLink_tb.allFMPSpresent
+fmpsReadLink_tb.auChannelUp
+fmpsReadLink_tb.auClk
+fmpsReadLink_tb.auFAStrobe
+@22
+fmpsReadLink_tb.cycleCounter[7:0]
+fmpsReadLink_tb.dataCounter[4:0]
+@28
+fmpsReadLink_tb.fmpsBitmap[31:0]
+fmpsReadLink_tb.fmpsPacketPresent
+@24
+fmpsReadLink_tb.fmpsCounter[5:0]
+fmpsReadLink_tb.readoutAddress[4:0]
+@22
+fmpsReadLink_tb.readoutFMPS[31:0]
+@25
+fmpsReadLink_tb.state[3:0]
+@28
+fmpsReadLink_tb.statusCode[1:0]
+fmpsReadLink_tb.statusFMPSenabled
+fmpsReadLink_tb.statusStrobe
+fmpsReadLink_tb.sysClk
+@22
+fmpsReadLink_tb.sysFMPSCSR[31:0]
+@200
+-DUT
+@28
+fmpsReadLink_tb.DUT.auroraClk
+fmpsReadLink_tb.DUT.FAstrobe
+@22
+fmpsReadLink_tb.DUT.TDATA[31:0]
+@28
+fmpsReadLink_tb.DUT.TLAST
+fmpsReadLink_tb.DUT.TVALID
+fmpsReadLink_tb.DUT.allFMPSpresent
+@22
+fmpsReadLink_tb.DUT.dataFMPS[31:0]
+fmpsReadLink_tb.DUT.dpramQ[31:0]
+fmpsReadLink_tb.DUT.fmpsBitmap[31:0]
+@24
+fmpsReadLink_tb.DUT.fmpsCounter[5:0]
+fmpsReadLink_tb.DUT.fmpsIndex[4:0]
+@22
+fmpsReadLink_tb.DUT.headerFMPSIndex[4:0]
+@28
+fmpsReadLink_tb.DUT.headerFMPSenabled
+@22
+fmpsReadLink_tb.DUT.headerMagic[15:0]
+@28
+fmpsReadLink_tb.DUT.isNewPacket
+@22
+fmpsReadLink_tb.DUT.packetFMPSmap[31:0]
+fmpsReadLink_tb.DUT.readoutAddress[4:0]
+fmpsReadLink_tb.DUT.readoutFMPS[31:0]
+@28
+fmpsReadLink_tb.DUT.state[1:0]
+fmpsReadLink_tb.DUT.statusCode[1:0]
+fmpsReadLink_tb.DUT.statusFMPSenabled
+fmpsReadLink_tb.DUT.statusStrobe
+fmpsReadLink_tb.DUT.statusToggle
+fmpsReadLink_tb.DUT.statusToggle_d
+fmpsReadLink_tb.DUT.sysClk
+fmpsReadLink_tb.DUT.updateFMPSmapToggle
+fmpsReadLink_tb.DUT.updateFMPSmapToggle_d
+fmpsReadLink_tb.DUT.writeEnable
+fmpsReadLink_tb.DUT.writeToggle
+fmpsReadLink_tb.DUT.writeToggle_d
+@200
+-DUT_dpram
+@22
+fmpsReadLink_tb.DUT.\dpram[0][31:0]
+fmpsReadLink_tb.DUT.\dpram[1][31:0]
+fmpsReadLink_tb.DUT.\dpram[2][31:0]
+fmpsReadLink_tb.DUT.\dpram[3][31:0]
+fmpsReadLink_tb.DUT.\dpram[4][31:0]
+fmpsReadLink_tb.DUT.\dpram[5][31:0]
+fmpsReadLink_tb.DUT.\dpram[6][31:0]
+fmpsReadLink_tb.DUT.\dpram[7][31:0]
+fmpsReadLink_tb.DUT.\dpram[8][31:0]
+fmpsReadLink_tb.DUT.\dpram[9][31:0]
+fmpsReadLink_tb.DUT.\dpram[10][31:0]
+fmpsReadLink_tb.DUT.\dpram[11][31:0]
+fmpsReadLink_tb.DUT.\dpram[12][31:0]
+fmpsReadLink_tb.DUT.\dpram[13][31:0]
+fmpsReadLink_tb.DUT.\dpram[14][31:0]
+fmpsReadLink_tb.DUT.\dpram[15][31:0]
+fmpsReadLink_tb.DUT.\dpram[16][31:0]
+fmpsReadLink_tb.DUT.\dpram[17][31:0]
+fmpsReadLink_tb.DUT.\dpram[18][31:0]
+fmpsReadLink_tb.DUT.\dpram[19][31:0]
+fmpsReadLink_tb.DUT.\dpram[20][31:0]
+fmpsReadLink_tb.DUT.\dpram[21][31:0]
+fmpsReadLink_tb.DUT.\dpram[22][31:0]
+fmpsReadLink_tb.DUT.\dpram[23][31:0]
+fmpsReadLink_tb.DUT.\dpram[24][31:0]
+fmpsReadLink_tb.DUT.\dpram[25][31:0]
+fmpsReadLink_tb.DUT.\dpram[26][31:0]
+fmpsReadLink_tb.DUT.\dpram[27][31:0]
+fmpsReadLink_tb.DUT.\dpram[28][31:0]
+fmpsReadLink_tb.DUT.\dpram[29][31:0]
+fmpsReadLink_tb.DUT.\dpram[30][31:0]
+[pattern_trace] 1
+[pattern_trace] 0

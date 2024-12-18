@@ -3,7 +3,9 @@
 // local data stream to outgoing cell stream.
 //
 module forwardCellLink #(
-    parameter dbg = "false" ) (
+    parameter dbg = "false",
+    parameter withFMPSSupport = "false"
+) (
                        input  wire        auroraUserClk,
 (* mark_debug = dbg *) input  wire        auroraFAstrobe,
 
@@ -16,6 +18,11 @@ module forwardCellLink #(
 (* mark_debug = dbg *) input  wire        localRxTVALID,
 (* mark_debug = dbg *) input  wire        localRxTLAST,
 (* mark_debug = dbg *) input  wire [31:0] localRxTDATA,
+
+// Only used if withFMPSSupport = "true"
+(* mark_debug = dbg *) input  wire        localFMPSRxTVALID,
+(* mark_debug = dbg *) input  wire        localFMPSRxTLAST,
+(* mark_debug = dbg *) input  wire [31:0] localFMPSRxTDATA,
 
 (* mark_debug = dbg *) output reg         cellLinkTxTVALID,
 (* mark_debug = dbg *) output reg         cellLinkTxTLAST,
@@ -40,10 +47,12 @@ reg [3:0] muxResetStretch;
 
 // Dissect header
 wire                 [15:0] mergedHeaderMagic = mergedRxTDATA[31:16];
-wire [CELL_INDEX_WIDTH-1:0] mergedCellIndex=mergedRxTDATA[10+:CELL_INDEX_WIDTH];
+wire [CELL_INDEX_WIDTH-1:0] mergedCellIndex   = mergedRxTDATA[10+:CELL_INDEX_WIDTH];
 
 // Keep track of the cells we've transmitted
 (* mark_debug = dbg *) reg [MAX_CELLS-1:0] txBitmap;
+// Keep track of the FMPS nodes we've transmitted
+(* mark_debug = dbg *) reg [MAX_CELLS-1:0] txFMPSBitmap;
 (* mark_debug = dbg *) reg                 inPacket = 0, transmitting = 0;
 
 // A one in the most significant bit of the final word
@@ -60,6 +69,7 @@ always @(posedge auroraUserClk) begin
     if (auroraFAstrobe) begin
         cellLinkTxTVALID <= 0;
         txBitmap <= 0;
+        txFMPSBitmap <= 0;
         inPacket <= 0;
         transmitting <= 0;
         muxReset <= 1;
@@ -96,22 +106,63 @@ always @(posedge auroraUserClk) begin
         inPacket <= 1;
         watchdog <= ~0;
         timeout <= 0;
-        if ((mergedHeaderMagic != 16'hA5BE) || txBitmap[mergedCellIndex]) begin
-            cellLinkTxTVALID <= 0;
-            transmitting <= 0;
+
+        // FMPS protocol
+        if ((mergedHeaderMagic == 16'hB6CF) && !txFMPSBitmap[mergedCellIndex]) begin
+            txFMPSBitmap[mergedCellIndex] <= 1;
+            cellLinkTxTVALID <= 1;
+            cellLinkTxTLAST <= 0;
+            cellLinkTxTDATA <= mergedRxTDATA;
+            transmitting <= 1;
         end
-        else begin
+        // FOFB protocol
+        else if ((mergedHeaderMagic == 16'hA5BE) && !txBitmap[mergedCellIndex]) begin
             txBitmap[mergedCellIndex] <= 1;
             cellLinkTxTVALID <= 1;
             cellLinkTxTLAST <= 0;
             cellLinkTxTDATA <= mergedRxTDATA;
             transmitting <= 1;
         end
+        else begin
+            cellLinkTxTVALID <= 0;
+            transmitting <= 0;
+        end
     end
     else begin
         cellLinkTxTVALID <= 0;
     end
 end
+
+generate
+if (withFMPSSupport != "TRUE" && withFMPSSupport != "true" &&
+    withFMPSSupport != "FALSE" && withFMPSSupport != "false") begin
+    forwardCellLink_withFMPSSupport_only_TRUE_or_FALSE_SUPPORTED();
+end
+endgenerate
+
+wire        localFMPSRxTVALIDCellLinkMux;
+wire        localFMPSRxTLASTCellLinkMux;
+wire [31:0] localFMPSRxTDATACellLinkMux;
+
+generate
+if (withFMPSSupport == "TRUE" || withFMPSSupport != "true") begin
+
+assign localFMPSRxTVALIDCellLinkMux = localFMPSRxTVALID;
+assign localFMPSRxTLASTCellLinkMux = localFMPSRxTLAST;
+assign localFMPSRxTDATACellLinkMux = localFMPSRxTDATA;
+
+end
+endgenerate
+
+generate
+if (withFMPSSupport == "FALSE" || withFMPSSupport != "false") begin
+
+assign localFMPSRxTVALIDCellLinkMux = 1'b0;
+assign localFMPSRxTLASTCellLinkMux = 1'b0;
+assign localFMPSRxTDATACellLinkMux = 32'hXXXXXXXX;
+
+end
+endgenerate
 
 // Merge incoming and local streams
 // 256-deep packet-mode FIFO on incoming cell stream and on local stream
@@ -120,14 +171,19 @@ forwardCellLinkMux forwardCellLinkMux (.ACLK(auroraUserClk),
                                        .ARESETN(~muxReset),
                                        .S00_AXIS_ACLK(auroraUserClk),
                                        .S01_AXIS_ACLK(auroraUserClk),
+                                       .S02_AXIS_ACLK(auroraUserClk),
                                        .S00_AXIS_ARESETN(~muxReset),
                                        .S01_AXIS_ARESETN(~muxReset),
+                                       .S02_AXIS_ARESETN(~muxReset),
                                        .S00_AXIS_TVALID(cellLinkRxTVALID),
                                        .S00_AXIS_TDATA(cellLinkRxForwardData),
                                        .S00_AXIS_TLAST(cellLinkRxTLAST),
                                        .S01_AXIS_TVALID(localRxTVALID),
                                        .S01_AXIS_TDATA(localRxTDATA),
                                        .S01_AXIS_TLAST(localRxTLAST),
+                                       .S02_AXIS_TVALID(localFMPSRxTVALIDCellLinkMux),
+                                       .S02_AXIS_TDATA(localFMPSRxTDATACellLinkMux),
+                                       .S02_AXIS_TLAST(localFMPSRxTLASTCellLinkMux),
                                        .M00_AXIS_ACLK(auroraUserClk),
                                        .M00_AXIS_ARESETN(~muxReset),
                                        .M00_AXIS_TVALID(mergedRxTVALID),
@@ -135,7 +191,8 @@ forwardCellLinkMux forwardCellLinkMux (.ACLK(auroraUserClk),
                                        .M00_AXIS_TDATA(mergedRxTDATA),
                                        .M00_AXIS_TLAST(mergedRxTLAST),
                                        .S00_ARB_REQ_SUPPRESS(1'b0),
-                                       .S01_ARB_REQ_SUPPRESS(1'b0));
+                                       .S01_ARB_REQ_SUPPRESS(1'b0),
+                                       .S02_ARB_REQ_SUPPRESS(1'b0));
 `endif
 
 endmodule

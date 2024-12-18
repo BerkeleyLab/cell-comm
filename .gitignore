@@ -23,6 +23,7 @@ _xilinx/
 *.elf.size
 *.prm
 *.bin
+*_tb
 
 ######################
 # Modelsim

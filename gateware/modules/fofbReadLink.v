@@ -125,7 +125,7 @@ always @(posedge auroraClk) begin
                             statusCode <= ST_BAD_PACKET;
                         end
                         else begin
-                            if (!allBPMpresent) 
+                            if (!allBPMpresent)
                                       updateBPMmapToggle <= !updateBPMmapToggle;
                             statusCode <= ST_SUCCESS;
                             cellCounter <= cellCounter + 1;
