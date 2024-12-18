@@ -46,8 +46,8 @@ module fmpsReadLinks #(
     input  wire                              auClk,
     (*mark_debug=FAstrobeDebug*) input  wire auFAstrobe,
     input  wire                              auReset,
-    output reg                               auCCWFMPSInhibit = 0,
-    output reg                               auCWFMPSInhibit = 0,
+    output reg                               auCCWfmpsInhibit = 0,
+    output reg                               auCWfmpsInhibit = 0,
 
     // Tap of outgoing FMPS links
     (*mark_debug=rawDataDebug*) input  wire        auFMPSCCWlinkTVALID,
@@ -266,15 +266,15 @@ end
 //
 // Keep track of which buffers contain valid data from a particular FMPS.
 //
-(*ASYNC_REG="true"*) reg auCCWFMPSInhibit_m, auCWFMPSInhibit_m;
+(*ASYNC_REG="true"*) reg auCCWfmpsInhibit_m, auCWfmpsInhibit_m;
 always @(posedge auClk)begin
     auReadoutValid_m <= readoutValid;
     auReadoutValid   <= auReadoutValid_m;
-    auCCWFMPSInhibit_m <= ccwInhibit;
-    auCWFMPSInhibit_m  <= cwInhibit;
+    auCCWfmpsInhibit_m <= ccwInhibit;
+    auCWfmpsInhibit_m  <= cwInhibit;
     if (auFAstrobe) begin
-        auCCWFMPSInhibit <= auCCWFMPSInhibit_m;
-        auCWFMPSInhibit  <= auCWFMPSInhibit_m;
+        auCCWfmpsInhibit <= auCCWfmpsInhibit_m;
+        auCWfmpsInhibit  <= auCWfmpsInhibit_m;
     end
 end
 

@@ -252,8 +252,8 @@ fmpsReadLinks #(
     .auClk(auClk),
     .auFAstrobe(auFAStrobe),
     .auReset(1'b0),
-    .auCCWFMPSInhibit(),
-    .auCWFMPSInhibit(),
+    .auCCWfmpsInhibit(),
+    .auCWfmpsInhibit(),
 
     // Tap of outgoing FMPS links
     .auFMPSCCWlinkTVALID(FMPS_TEST_AXI_STREAM_TX_tvalid[0]),
