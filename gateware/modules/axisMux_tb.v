@@ -123,8 +123,8 @@ pulseSync pulseSync (
 // Packet format
 localparam DATA_WIDTH = 32;
 localparam USER_WIDTH = 1;
-localparam DATA_MAGIC_WIDTH = 16;
-localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
+localparam DATA_PATTERN_WIDTH = 16;
+localparam [DATA_PATTERN_WIDTH-1:0] DATA_PATTERN = 'hCACA;
 localparam MAGIC_WIDTH = 16;
 localparam MAGIC_START_BIT = 16;
 localparam INDEX_WIDTH = 5;
@@ -160,7 +160,7 @@ assign sysFMPSCSR[23:0] = 0;
 
 writeFMPSTestLink #(
     .WITH_MULT_PACK_SUPPORT("true"),
-    .DATA_MAGIC(DATA_MAGIC)
+    .DATA_PATTERN(DATA_PATTERN)
 )
   fmpsDataGen(
     .sysClk(sysClk),
@@ -271,7 +271,7 @@ wire FMPS_invalidFMPS2CC = packetData[31];
 wire FMPS_invalidCC2CC = packetData[30];
 wire FMPS_reserved = packetData[29];
 wire [INDEX_WIDTH-1:0] FMPS_dataCounter = packetData[28:24];
-wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = packetData[23:8];
+wire [DATA_PATTERN_WIDTH-1:0] FMPS_dataPattern = packetData[23:8];
 wire [7:0] FMPS_cycleCounter = packetData[7:0];
 
 // Test data
@@ -280,7 +280,7 @@ localparam ST_IDLE                  = 0,
            ST_INVALID_PACKET_BITS   = 2,
            ST_INVALID_RESERVED_BITS = 3,
            ST_INVALID_DATA_COUNTER  = 4,
-           ST_INVALID_DATA_MAGIC    = 5,
+           ST_INVALID_DATA_PATTERN  = 5,
            ST_INVALID_CYCLE_COUNTER = 6,
            ST_FAIL                  = 7,
            ST_HALT                  = 8;
@@ -308,8 +308,8 @@ always @(posedge sysClk) begin
                 else if (FMPS_dataCounter != packetIndex) begin
                     state <= ST_INVALID_DATA_COUNTER;
                 end
-                else if (FMPS_dataMagic != DATA_MAGIC) begin
-                    state <= ST_INVALID_DATA_MAGIC;
+                else if (FMPS_dataPattern != DATA_PATTERN) begin
+                    state <= ST_INVALID_DATA_PATTERN;
                 end
                 else if (FMPS_cycleCounter != cycleCounter) begin
                     state <= ST_INVALID_CYCLE_COUNTER;
@@ -337,9 +337,9 @@ always @(posedge sysClk) begin
             state <= ST_FAIL;
         end
 
-        ST_INVALID_DATA_MAGIC: begin
-            $display("@%0d: Invalid data magic: dataMagic: 0x%04X, expected: 0x%04X",
-                $time, FMPS_dataMagic, DATA_MAGIC);
+        ST_INVALID_DATA_PATTERN: begin
+            $display("@%0d: Invalid data magic: dataPattern: 0x%04X, expected: 0x%04X",
+                $time, FMPS_dataPattern, DATA_PATTERN);
             state <= ST_FAIL;
         end
 
