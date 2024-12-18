@@ -32,8 +32,6 @@ module writeFMPSTestLink #(
     output  wire         FMPS_TEST_AXI_STREAM_TX_tlast,
     (* mark_debug = testInDebug *)
     input  wire         FMPS_TEST_AXI_STREAM_TX_tready,
-    output wire         TESTstatusStrobe,
-    output wire  [1:0]  TESTstatusCode,
     output wire  [2:0]  dbgFwState
 );
 
@@ -63,9 +61,6 @@ endgenerate
 localparam MAX_FMPSS          = 32;
 parameter FMPS_COUNT_WIDTH    = $clog2(MAX_FMPSS + 1);
 parameter FMPS_INDEX_WIDTH    = $clog2(MAX_FMPSS);
-
-assign TESTstatusStrobe = 0;
-assign TESTstatusCode = 0;
 
 // Get CSR from FMPS
 wire [31:0] auFMPSCSR;

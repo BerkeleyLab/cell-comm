@@ -29,8 +29,6 @@ module writeBPMTestLink #(
     output  wire         BPM_TEST_AXI_STREAM_TX_tlast,
     (* mark_debug = testInDebug *)
     input  wire         BPM_TEST_AXI_STREAM_TX_tready,
-    output wire         TESTstatusStrobe,
-    output wire  [1:0]  TESTstatusCode,
     output wire  [2:0]  dbgFwState
 );
 
@@ -44,9 +42,6 @@ parameter FOFB_INDEX_WIDTH    = 9;
 
 // Could be made register in the future if needed
 localparam BPM_COUNT_PER_SECTOR = 16;
-
-assign TESTstatusStrobe = 0;
-assign TESTstatusCode = 0;
 
 wire  [BPM_COUNT_WIDTH-1:0] BPMcount = BPM_COUNT_PER_SECTOR;
 wire [CELL_INDEX_WIDTH-1:0] cellIndex = 0;
