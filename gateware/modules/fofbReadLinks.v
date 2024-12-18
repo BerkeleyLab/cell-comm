@@ -18,8 +18,11 @@ module fofbReadLinks #(
     input wire                                            csrStrobe,
     input wire                                     [31:0] GPIO_OUT,
     (*mark_debug=statusDebug*) output wire         [31:0] csr,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] rxBitmap,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmap,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot,
+
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAll,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                 fofbEnabled,
 
     // Synchronization
@@ -205,7 +208,6 @@ reg [SEQNO_WIDTH-1:0] seqno = 0;
 reg [$clog2(SYSCLK_RATE/1000000)-1:0] usDivider;
 reg [READOUT_TIMER_WIDTH-1:0] readoutTime, readoutTimer;
 (* mark_debug = cellCountDebug *) reg timeoutToggle = 0, timeoutToggle_d = 0;
-reg [MAX_CELLS-1:0] cellBitmap, fofbBitmap;
 reg timeoutFlag;
 always @(posedge sysClk) begin
     timeoutToggle_d <= timeoutToggle;
@@ -213,16 +215,16 @@ always @(posedge sysClk) begin
     if (FAstrobe) begin
         cellCounter <= 0;
         fofbCounter <= 0;
-        cellBitmap <= 0;
-        fofbBitmap <= 0;
+        fofbBitmapAll <= 0;
+        fofbBitmapEnabled <= 0;
         readoutActive <= 1;
         readoutValid <= 0;
         usDivider <= ((SYSCLK_RATE/1000000)/2)-1;
         readoutTimer <= 0;
         readTimeout <= 0;
         timeoutFlag <= 0;
-        rxBitmap <= cellBitmap;
-        fofbEnableBitmap <= fofbBitmap;
+        fofbBitmapAllFASnapshot <= fofbBitmapAll;
+        fofbEnableBitmapFASnapshot <= fofbBitmapEnabled;
     end
     else if (readoutActive) begin
         if (cellCounter == cellCount) begin
@@ -243,15 +245,15 @@ always @(posedge sysClk) begin
 
             // Mark all the Cell nodes that we've received data,
             // regardless if it's enabled or not
-            cellBitmap[mergedCellIndex] <= 1;
-            if (!cellBitmap[mergedCellIndex]) begin
+            fofbBitmapAll[mergedCellIndex] <= 1;
+            if (!fofbBitmapAll[mergedCellIndex]) begin
                 cellCounter <= cellCounter + 1;
             end
 
             // Mark only the Cell nodes that are enabled
             if (mergedFOFBenabled) begin
-                fofbBitmap[mergedCellIndex] <= 1;
-                if (!fofbBitmap[mergedCellIndex]) begin
+                fofbBitmapEnabled[mergedCellIndex] <= 1;
+                if (!fofbBitmapEnabled[mergedCellIndex]) begin
                     fofbCounter <= fofbCounter + 1;
                 end
             end
