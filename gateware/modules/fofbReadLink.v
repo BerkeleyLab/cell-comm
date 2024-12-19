@@ -60,6 +60,7 @@ reg writeToggle = 0, writeToggle_d = 0;
 wire writeEnable = (writeToggle != writeToggle_d);
 reg [(1<<FOFB_INDEX_WIDTH)-1:0] packetBPMmap;
 (*mark_debug=dbg*) reg isNewPacket = 0;
+(*mark_debug=dbg*) reg receiving = 0;
 (*mark_debug=dbg*) reg updateBPMmapToggle = 0, updateBPMmapToggle_d = 0;
 
 always @(posedge auroraClk) begin
@@ -70,16 +71,18 @@ always @(posedge auroraClk) begin
         bpmBitmap <= 0;
         state <= S_AWAIT_HEADER;
         isNewPacket <= 1;
+        receiving <= 0;
         cellCounter <= 0;
     end
     else begin
         if (updateBPMmapToggle != updateBPMmapToggle_d)
                                          bpmBitmap <= bpmBitmap | packetBPMmap;
         if (TVALID) begin
-            if (TLAST && !state[2]) begin
+            if (receiving && TLAST && !state[2]) begin
                 statusCode <= ST_BAD_SIZE;
                 statusToggle <= !statusToggle;
                 isNewPacket <= 1;
+                receiving <= 0;
                 state <= S_AWAIT_HEADER;
             end
             else begin
@@ -89,16 +92,21 @@ always @(posedge auroraClk) begin
                         isNewPacket <= 0;
                         packetBPMmap <= 0;
                     end
+
                     if (headerMagic == 16'hA5BE) begin
                         statusCellIndex <= headerCellIndex;
                         fofbIndex <= headerFOFBindex;
                         statusFOFBenabled <= headerFOFBenabled;
+                        receiving <= 1;
                         state <= S_AWAIT_X;
                     end
-                    else begin
+                    // it's only a bad header if we were in a packet
+                    // and we got a different header.
+                    else if (receiving) begin
                         statusCode <= ST_BAD_HEADER;
                         statusToggle <= !statusToggle;
                         isNewPacket <= 1;
+                        receiving <= 0;
                         state <= S_AWAIT_LAST;
                     end
                 end
@@ -119,8 +127,10 @@ always @(posedge auroraClk) begin
                         packetBPMmap[fofbIndex] <= 1;
                         if (!allBPMpresent) writeToggle <= !writeToggle;
                     end
+
                     if (TLAST) begin
                         isNewPacket <= 1;
+                        receiving <= 0;
                         if (TDATA[30]) begin
                             statusCode <= ST_BAD_PACKET;
                         end

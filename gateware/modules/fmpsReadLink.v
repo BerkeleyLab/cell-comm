@@ -57,6 +57,7 @@ reg writeToggle = 0, writeToggle_d = 0;
 wire writeEnable = (writeToggle != writeToggle_d);
 reg [(1<<INDEX_WIDTH)-1:0] packetFMPSmap;
 (*mark_debug=dbg*) reg isNewPacket = 0;
+(*mark_debug=dbg*) reg receiving = 0;
 (*mark_debug=dbg*) reg updateFMPSmapToggle = 0, updateFMPSmapToggle_d = 0;
 
 always @(posedge auroraClk) begin
@@ -67,6 +68,7 @@ always @(posedge auroraClk) begin
         fmpsBitmap <= 0;
         state <= S_AWAIT_HEADER;
         isNewPacket <= 1;
+        receiving <= 0;
         fmpsCounter <= 0;
     end
     else begin
@@ -74,11 +76,12 @@ always @(posedge auroraClk) begin
                                          fmpsBitmap <= fmpsBitmap | packetFMPSmap;
         if (TVALID) begin
             // TLAST coming at the wrong time
-            if (TLAST &&
+            if (receiving && TLAST &&
                     !(state == S_AWAIT_DATA || state == S_AWAIT_LAST)) begin
                 statusCode <= ST_BAD_SIZE;
                 statusToggle <= !statusToggle;
                 isNewPacket <= 1;
+                receiving <= 0;
                 state <= S_AWAIT_HEADER;
             end
             else begin
@@ -88,18 +91,23 @@ always @(posedge auroraClk) begin
                         isNewPacket <= 0;
                         packetFMPSmap <= 0;
                     end
+
                     if (headerMagic == 16'hB6CF) begin
                         // Same index for internal bitmap
                         // and status interface
                         fmpsIndex <= headerFMPSIndex;
                         statusFMPSindex <= headerFMPSIndex;
                         statusFMPSenabled <= headerFMPSenabled;
+                        receiving <= 1;
                         state <= S_AWAIT_DATA;
                     end
-                    else begin
+                    // it's only a bad header if we were in a packet
+                    // and we got a different header.
+                    else if (receiving) begin
                         statusCode <= ST_BAD_HEADER;
                         statusToggle <= !statusToggle;
                         isNewPacket <= 1;
+                        receiving <= 0;
                         state <= S_AWAIT_LAST;
                     end
                 end
@@ -119,6 +127,7 @@ always @(posedge auroraClk) begin
 
                     if (TLAST) begin
                         isNewPacket <= 1;
+                        receiving <= 0;
                         if (TDATA[30]) begin
                             statusCode <= ST_BAD_PACKET;
                         end
