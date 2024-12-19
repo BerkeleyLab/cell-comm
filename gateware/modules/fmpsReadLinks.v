@@ -7,7 +7,7 @@ module fmpsReadLinks #(
     parameter     rawDataDebug  = "false",
     parameter     ccwLinkDebug  = "false",
     parameter      cwLinkDebug  = "false",
-    parameter   FMPSCountDebug  = "false",
+    parameter   fmpsCountDebug  = "false",
     parameter  readoutDebug  = "false"
     ) (
     input  wire        sysClk,
@@ -65,12 +65,12 @@ localparam READOUT_TIMER_WIDTH = 5;
 // Control register
 //
 reg ccwInhibit = 0, cwInhibit = 0;
-reg [FMPS_COUNT_WIDTH-1:0] FMPSCount = 0;
+reg [FMPS_COUNT_WIDTH-1:0] fmpsCount = 0;
 reg readoutActive = 0, readoutValid = 0, readTimeout = 0;
 reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
-        FMPSCount <= GPIO_OUT[0+:FMPS_COUNT_WIDTH];
+        fmpsCount <= GPIO_OUT[0+:FMPS_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*FMPS_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*FMPS_COUNT_WIDTH+1];
     end
@@ -84,7 +84,7 @@ wire       auCCWstatusFMPSenabled, auCWstatusFMPSenabled;
 wire [1:0] auCCWstatusCode, auCWstatusCode;
 wire [INDEX_WIDTH-1:0] auCCWFMPSindex, auCWFMPSindex;
 wire [(1<<INDEX_WIDTH)-1:0] auCCW_FMPSbitmap, auCW_FMPSbitmap;
-(* mark_debug = FMPSCountDebug *)
+(* mark_debug = fmpsCountDebug *)
 wire [FMPS_COUNT_WIDTH-1:0] auCCWpacketCounter, auCWpacketCounter;
 wire                 [31:0] ccwData, cwData;
 fmpsReadLink #(
@@ -129,8 +129,8 @@ fmpsReadLink #(
 //
 // Merge FMPS info from packet reception and get into system clock domain.
 //
-(* mark_debug = FMPSCountDebug *) wire       mergedTVALID;
-(* mark_debug = FMPSCountDebug *) wire [0:0] mergedTUSER;
+(* mark_debug = fmpsCountDebug *) wire       mergedTVALID;
+(* mark_debug = fmpsCountDebug *) wire [0:0] mergedTUSER;
                                   wire [7:0] mergedTDATA;
 wire [INDEX_WIDTH-1:0] mergedFMPSindex = mergedTDATA[0+:INDEX_WIDTH];
 wire [1:0]                 mergedStatus = mergedTDATA[INDEX_WIDTH+:2];
@@ -195,12 +195,12 @@ end
 // When we've sent data from all FMPSs mark the readout as valid.
 //
 localparam SEQNO_WIDTH = 3;
-(* mark_debug = FMPSCountDebug *)
+(* mark_debug = fmpsCountDebug *)
 reg [FMPS_COUNT_WIDTH-1:0] fmpsCounter, fmpsEnabledCounter;
 reg [SEQNO_WIDTH-1:0] seqno = 0;
 reg [$clog2(SYSCLK_RATE/1000000)-1:0] usDivider;
 reg [READOUT_TIMER_WIDTH-1:0] readoutTime, readoutTimer;
-(* mark_debug = FMPSCountDebug *) reg timeoutToggle = 0, timeoutToggle_d = 0;
+(* mark_debug = fmpsCountDebug *) reg timeoutToggle = 0, timeoutToggle_d = 0;
 reg timeoutFlag;
 always @(posedge sysClk) begin
     timeoutToggle_d <= timeoutToggle;
@@ -220,8 +220,8 @@ always @(posedge sysClk) begin
         fmpsEnableBitmapFASnapshot <= fmpsBitmapEnabled;
     end
     else if (readoutActive) begin
-        if (fmpsCounter == FMPSCount) begin
-            fmpsEnabled <= (fmpsEnabledCounter == FMPSCount);
+        if (fmpsCounter == fmpsCount) begin
+            fmpsEnabled <= (fmpsEnabledCounter == fmpsCount);
             seqno <= seqno + 1;
             readoutValid <= 1;
             readoutTime <= readoutTimer;
@@ -299,7 +299,7 @@ assign fmpsReadout = ccwHasFMPS ? ccwData : (cwHasFMPS ? cwData : 0);
 assign csr = { readoutActive, readoutValid, readoutTime, seqno,
             {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*FMPS_COUNT_WIDTH){1'b0}},
                                      1'b0, cwInhibit, ccwInhibit,
-                                     cwPacketCount, ccwPacketCount, FMPSCount };
+                                     cwPacketCount, ccwPacketCount, fmpsCount };
 
 //
 // MicroBlaze readout DPRAM
