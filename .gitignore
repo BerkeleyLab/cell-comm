@@ -24,6 +24,7 @@ _xilinx/
 *.prm
 *.bin
 *_tb
+*.vcd
 
 ######################
 # Modelsim
@@ -91,14 +92,6 @@ work/
 !/gateware/platform/xilinx/*/*/psSetpointCalcFixToFloat/*.xci
 /gateware/platform/xilinx/*/*/readBPMlinksMux/*
 !/gateware/platform/xilinx/*/*/readBPMlinksMux/*.xci
-/gateware/platform/xilinx/*/*/readOldBPMs_DoubleToFloat/*
-!/gateware/platform/xilinx/*/*/readOldBPMs_DoubleToFloat/*.xci
-/gateware/platform/xilinx/*/*/readOldBPMs_FIFO/*
-!/gateware/platform/xilinx/*/*/readOldBPMs_FIFO/*.xci
-/gateware/platform/xilinx/*/*/readOldBPMs_Fix/*
-!/gateware/platform/xilinx/*/*/readOldBPMs_Fix/*.xci
-/gateware/platform/xilinx/*/*/readOldBPMs_Multiply/*
-!/gateware/platform/xilinx/*/*/readOldBPMs_Multiply/*.xci
 /gateware/platform/xilinx/*/*/udpFIFO/*
 !/gateware/platform/xilinx/*/*/udpFIFO/udpFIFO.xci
 /gateware/platform/xilinx/*/*/system_aurora_8b10b/*
@@ -125,6 +118,8 @@ work/
 !/gateware/platform/xilinx/*/*/axiStreamSubConvOutDowncon/axiStreamSubConvOutDowncon.xci
 /gateware/platform/xilinx/*/*/aurora64b66b/*
 !/gateware/platform/xilinx/*/*/aurora64b66b/aurora64b66b.xci
+/gateware/platform/xilinx/*/*/fmpsReadLinksMux/*
+!/gateware/platform/xilinx/*/*/fmpsReadLinksMux/fmpsReadLinksMux.xci
 
 gateware/top/*/gpioIDX.vh
 gateware/modules/marble_i2c.vh
@@ -158,10 +153,6 @@ gateware/modules/marble_i2c.vh
 *psSetpointCalcConvertToAmps_iverilog_cfile.txt
 *psSetpointCalcFixToFloat_iverilog_cfile.txt
 *readBPMlinksMux_iverilog_cfile.txt
-*readOldBPMs_DoubleToFloat_iverilog_cfile.txt
-*readOldBPMs_FIFO_iverilog_cfile.txt
-*readOldBPMs_Fix_iverilog_cfile.txt
-*readOldBPMs_Multiply_iverilog_cfile.txt
 
 # Script-generated
 *softwareBuildDate.h
