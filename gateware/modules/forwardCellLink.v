@@ -79,8 +79,14 @@ always @(posedge auroraUserClk) begin
         muxResetStretch <= muxResetStretch - 1;
         if (muxResetStretch == 0) muxReset <= 0;
     end
+    // inPacket = we received the 1st tvalid and not
+    // yet a tlast, so inside a AXIS packet, but maybe not
+    // a packet we understand (different haeder)
     else if (inPacket) begin
         cellLinkTxTDATA <= mergedRxTDATA;
+
+        // transmitting = we are in a packet we understand, i.e., with
+        // one of the supported protocols (headers)
         if (transmitting) begin
             watchdog <= watchdog - 1;
             if (watchdog == 0) timeout <= 1;
@@ -98,10 +104,15 @@ always @(posedge auroraUserClk) begin
         else begin
             cellLinkTxTVALID <= 0;
         end
+
+        // end of the current packet condition.
         if (mergedRxTVALID && mergedRxTLAST) begin
             inPacket <= 0;
         end
     end
+    // start of a new packet condition.
+    // because we were not in a packet, this must be
+    // a new packet
     else if (mergedRxTVALID && !mergedRxTLAST) begin
         inPacket <= 1;
         watchdog <= ~0;
