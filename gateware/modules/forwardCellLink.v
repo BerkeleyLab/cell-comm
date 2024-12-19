@@ -11,17 +11,20 @@ module forwardCellLink #(
 
 (* mark_debug = dbg *) input  wire        cellLinkRxTVALID,
 (* mark_debug = dbg *) input  wire        cellLinkRxTLAST,
+(* mark_debug = dbg *) output wire        cellLinkRxTREADY,
 (* mark_debug = dbg *) input  wire [31:0] cellLinkRxTDATA,
 (* mark_debug = dbg *) input  wire        cellLinkRxCRCvalid,
 (* mark_debug = dbg *) input  wire        cellLinkRxCRCpass,
 
 (* mark_debug = dbg *) input  wire        localRxTVALID,
 (* mark_debug = dbg *) input  wire        localRxTLAST,
+(* mark_debug = dbg *) output wire        localRxTREADY,
 (* mark_debug = dbg *) input  wire [31:0] localRxTDATA,
 
 // Only used if withFMPSSupport = "true"
 (* mark_debug = dbg *) input  wire        localFMPSRxTVALID,
 (* mark_debug = dbg *) input  wire        localFMPSRxTLAST,
+(* mark_debug = dbg *) output wire        localFMPSRxTREADY,
 (* mark_debug = dbg *) input  wire [31:0] localFMPSRxTDATA,
 
 (* mark_debug = dbg *) output reg         cellLinkTxTVALID,
@@ -153,6 +156,7 @@ endgenerate
 
 wire        localFMPSRxTVALIDCellLinkMux;
 wire        localFMPSRxTLASTCellLinkMux;
+wire        localFMPSRxTREADYCellLinkMux;
 wire [31:0] localFMPSRxTDATACellLinkMux;
 
 generate
@@ -160,6 +164,7 @@ if (withFMPSSupport == "TRUE" || withFMPSSupport != "true") begin
 
 assign localFMPSRxTVALIDCellLinkMux = localFMPSRxTVALID;
 assign localFMPSRxTLASTCellLinkMux = localFMPSRxTLAST;
+assign localFMPSRxTREADY = localFMPSRxTREADYCellLinkMux;
 assign localFMPSRxTDATACellLinkMux = localFMPSRxTDATA;
 
 end
@@ -170,6 +175,7 @@ if (withFMPSSupport == "FALSE" || withFMPSSupport != "false") begin
 
 assign localFMPSRxTVALIDCellLinkMux = 1'b0;
 assign localFMPSRxTLASTCellLinkMux = 1'b0;
+assign localFMPSRxTREADY = 1'b0;
 assign localFMPSRxTDATACellLinkMux = 32'hXXXXXXXX;
 
 end
@@ -189,12 +195,15 @@ forwardCellLinkMux forwardCellLinkMux (.ACLK(auroraUserClk),
                                        .S00_AXIS_TVALID(cellLinkRxTVALID),
                                        .S00_AXIS_TDATA(cellLinkRxForwardData),
                                        .S00_AXIS_TLAST(cellLinkRxTLAST),
+                                       .S00_AXIS_TREADY(cellLinkRxTREADY),
                                        .S01_AXIS_TVALID(localRxTVALID),
                                        .S01_AXIS_TDATA(localRxTDATA),
                                        .S01_AXIS_TLAST(localRxTLAST),
+                                       .S01_AXIS_TREADY(localRxTREADY),
                                        .S02_AXIS_TVALID(localFMPSRxTVALIDCellLinkMux),
                                        .S02_AXIS_TDATA(localFMPSRxTDATACellLinkMux),
                                        .S02_AXIS_TLAST(localFMPSRxTLASTCellLinkMux),
+                                       .S02_AXIS_TREADY(localFMPSRxTREADYCellLinkMux),
                                        .M00_AXIS_ACLK(auroraUserClk),
                                        .M00_AXIS_ARESETN(~muxReset),
                                        .M00_AXIS_TVALID(mergedRxTVALID),
