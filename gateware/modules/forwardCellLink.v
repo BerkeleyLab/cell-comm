@@ -160,7 +160,7 @@ wire        localFMPSRxTREADYCellLinkMux;
 wire [31:0] localFMPSRxTDATACellLinkMux;
 
 generate
-if (withFMPSSupport == "TRUE" || withFMPSSupport != "true") begin
+if (withFMPSSupport == "TRUE" || withFMPSSupport == "true") begin
 
 assign localFMPSRxTVALIDCellLinkMux = localFMPSRxTVALID;
 assign localFMPSRxTLASTCellLinkMux = localFMPSRxTLAST;
@@ -171,7 +171,7 @@ end
 endgenerate
 
 generate
-if (withFMPSSupport == "FALSE" || withFMPSSupport != "false") begin
+if (withFMPSSupport == "FALSE" || withFMPSSupport == "false") begin
 
 assign localFMPSRxTVALIDCellLinkMux = 1'b0;
 assign localFMPSRxTLASTCellLinkMux = 1'b0;
