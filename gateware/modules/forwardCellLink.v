@@ -164,7 +164,7 @@ if (withFMPSSupport == "TRUE" || withFMPSSupport == "true") begin
 
 assign localFMPSRxTVALIDCellLinkMux = localFMPSRxTVALID;
 assign localFMPSRxTLASTCellLinkMux = localFMPSRxTLAST;
-assign localFMPSRxTREADY = localFMPSRxTREADYCellLinkMux;
+assign localFMPSRxTREADY = localFMPSRxTREADYCellLinkMux && !muxReset;
 assign localFMPSRxTDATACellLinkMux = localFMPSRxTDATA;
 
 end
@@ -181,6 +181,9 @@ assign localFMPSRxTDATACellLinkMux = 32'hXXXXXXXX;
 end
 endgenerate
 
+wire cellLinkRxTREADYCellLinkMux;
+wire localRxTREADYCellLinkMux;
+
 // Merge incoming and local streams
 // 256-deep packet-mode FIFO on incoming cell stream and on local stream
 `ifndef SIMULATE
@@ -195,11 +198,11 @@ forwardCellLinkMux forwardCellLinkMux (.ACLK(auroraUserClk),
                                        .S00_AXIS_TVALID(cellLinkRxTVALID),
                                        .S00_AXIS_TDATA(cellLinkRxForwardData),
                                        .S00_AXIS_TLAST(cellLinkRxTLAST),
-                                       .S00_AXIS_TREADY(cellLinkRxTREADY),
+                                       .S00_AXIS_TREADY(cellLinkRxTREADYCellLinkMux),
                                        .S01_AXIS_TVALID(localRxTVALID),
                                        .S01_AXIS_TDATA(localRxTDATA),
                                        .S01_AXIS_TLAST(localRxTLAST),
-                                       .S01_AXIS_TREADY(localRxTREADY),
+                                       .S01_AXIS_TREADY(localRxTREADYCellLinkMux),
                                        .S02_AXIS_TVALID(localFMPSRxTVALIDCellLinkMux),
                                        .S02_AXIS_TDATA(localFMPSRxTDATACellLinkMux),
                                        .S02_AXIS_TLAST(localFMPSRxTLASTCellLinkMux),
@@ -214,5 +217,8 @@ forwardCellLinkMux forwardCellLinkMux (.ACLK(auroraUserClk),
                                        .S01_ARB_REQ_SUPPRESS(1'b0),
                                        .S02_ARB_REQ_SUPPRESS(1'b0));
 `endif
+
+assign cellLinkRxTREADY = cellLinkRxTREADYCellLinkMux && !muxReset;
+assign localRxTREADY = localRxTREADYCellLinkMux && !muxReset;
 
 endmodule
