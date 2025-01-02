@@ -301,9 +301,9 @@ wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = fmpsReadout[23:8];
 wire [7:0] FMPS_cycleCounter = fmpsReadout[7:0];
 
 // Tap into the CSR
-wire fofbReadoutActive = fmpsCSR[31];
-wire fofbReadoutValid = fmpsCSR[30];
-reg fofbReadoutActive_d, fofbReadoutValid_d = 0;
+wire fmpsReadoutActive = fmpsCSR[31];
+wire fmpsReadoutValid = fmpsCSR[30];
+reg fmpsReadoutActive_d, fmpsReadoutValid_d = 0;
 
 reg [INDEX_WIDTH-1:0] dataIndex = 0;
 reg [7:0] cycleCounter = 0;
@@ -314,14 +314,14 @@ always @(posedge sysClk) begin
         cycleCounter <= cycleCounter + 1;
     end
 
-    fofbReadoutActive_d <= fofbReadoutActive;
-    fofbReadoutValid_d <= fofbReadoutValid;
+    fmpsReadoutActive_d <= fmpsReadoutActive;
+    fmpsReadoutValid_d <= fmpsReadoutValid;
 
     case (state)
     ST_IDLE: begin
         // Wait for new data to arrive or acquisition interval to end
-        if ((fofbReadoutValid && !fofbReadoutValid_d)
-         || (!fofbReadoutActive && fofbReadoutActive_d)) begin
+        if ((fmpsReadoutValid && !fmpsReadoutValid_d)
+         || (!fmpsReadoutActive && fmpsReadoutActive_d)) begin
             fmpsReadoutAddress <= 0;
             state <= ST_READ_NEXT_PACKET;
         end
