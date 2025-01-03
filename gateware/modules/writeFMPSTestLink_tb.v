@@ -1,6 +1,9 @@
 `timescale 1ns / 100ps
 
-module writeFMPSTestLink_tb;
+module writeFMPSTestLink_tb #(
+    parameter CSR_DATA_BUS_WIDTH = 32,
+    parameter CSR_STROBE_BUS_WIDTH = 1
+);
 
 reg module_done = 0;
 reg fail = 0;
@@ -72,6 +75,50 @@ endtask // gen_strobe
 // Testbench
 //////////////////////////////////////////////////////////
 
+// Packet format
+localparam DATA_MAGIC_WIDTH = 16;
+localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
+localparam MAGIC_WIDTH = 16;
+localparam MAGIC_START_BIT = 16;
+localparam INDEX_WIDTH = 5;
+localparam INDEX_START_BIT = 10;
+localparam NUM_DATA_WORDS = 1;
+localparam real TREADY_PROB = 0.5;
+
+localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
+
+//
+// Register offsets
+//
+localparam WR_REG_OFFSET_CSR                    = 0;
+
+//
+// Write CSR fields
+//
+localparam WR_RW_CSR_FMPS_COUNT_SHIFT          = 24;
+localparam WR_RW_CSR_FMPS_COUNT_MASK           = (1<<INDEX_WIDTH)-1;
+
+//////////////////////////////////////////////////////////////
+// CSR
+//////////////////////////////////////////////////////////////
+
+csrTestMaster # (
+    .CSR_DATA_BUS_WIDTH(CSR_DATA_BUS_WIDTH),
+    .CSR_STROBE_BUS_WIDTH(CSR_STROBE_BUS_WIDTH)
+) CSR0 (
+    .clk(sysClk)
+);
+
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_IN[0:CSR_STROBE_BUS_WIDTH-1];
+wire [CSR_STROBE_BUS_WIDTH-1:0] GPIO_STROBES = CSR0.csr_stb_o;
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_OUT = CSR0.csr_data_o;
+
+genvar i;
+generate for(i = 0; i < CSR_STROBE_BUS_WIDTH; i = i + 1) begin
+    assign CSR0.csr_data_i[(i+1)*CSR_DATA_BUS_WIDTH-1:i*CSR_DATA_BUS_WIDTH] = GPIO_IN[i];
+end
+endgenerate
+
 reg module_ready = 0;
 reg auChannelUp = 0;
 
@@ -113,30 +160,18 @@ end
 //
 // FMPS test data streamer
 //
-wire [31:0] sysFMPSCSR;
-assign sysFMPSCSR[31:29] = 0;
-assign sysFMPSCSR[28:24] = 1;
-assign sysFMPSCSR[23:0] = 0;
-
-// Packet format
-localparam DATA_MAGIC_WIDTH = 16;
-localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
-localparam MAGIC_WIDTH = 16;
-localparam MAGIC_START_BIT = 16;
-localparam INDEX_WIDTH = 5;
-localparam INDEX_START_BIT = 10;
-localparam NUM_DATA_WORDS = 1;
-localparam real TREADY_PROB = 0.5;
-
-localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
+wire [31:0] sysCsr;
 
 writeFMPSTestLink #(
+    .INDEX_WIDTH(INDEX_WIDTH),
     .WITH_MULT_PACK_SUPPORT("true"),
     .DATA_MAGIC(DATA_MAGIC)
 )
   DUT(
     .sysClk(sysClk),
-    .sysFMPSCSR(sysFMPSCSR),
+    .sysCsrStrobe(GPIO_STROBES),
+    .GPIO_OUT(GPIO_OUT),
+    .sysCsr(sysCsr),
 
     .auroraUserClk(auClk),
     .genPacketStrobe(genPacketStrobe),
@@ -208,7 +243,7 @@ localparam ST_IDLE                  = 0,
            ST_MALFORMED_PACKET      = 2,
            ST_INVALID_PACKET_BITS   = 3,
            ST_INVALID_RESERVED_BITS = 4,
-           ST_INVALID_DATA_INDEX  = 5,
+           ST_INVALID_DATA_INDEX    = 5,
            ST_INVALID_DATA_MAGIC    = 6,
            ST_INVALID_CYCLE_COUNTER = 7,
            ST_FAIL                  = 8,
@@ -312,6 +347,17 @@ always @(posedge auClk) begin
 
         endcase
     end
+end
+
+// stimulus
+integer fmpsIndex = 1;
+initial begin
+    wait(CSR0.ready);
+    @(posedge sysClk);
+
+    CSR0.write32(WR_REG_OFFSET_CSR,
+        (fmpsIndex & WR_RW_CSR_FMPS_COUNT_MASK) << 24);
+    @(posedge sysClk);
 end
 
 // stimulus
