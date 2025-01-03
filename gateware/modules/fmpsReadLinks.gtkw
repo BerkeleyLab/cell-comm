@@ -56,10 +56,10 @@ fmpsReadLinks_tb.fmpsReadoutAddress[4:0]
 @23
 fmpsReadLinks_tb.fmpsReadout[31:0]
 @28
-fmpsReadLinks_tb.fofbReadoutActive
-fmpsReadLinks_tb.fofbReadoutActive_d
-fmpsReadLinks_tb.fofbReadoutValid
-fmpsReadLinks_tb.fofbReadoutValid_d
+fmpsReadLinks_tb.fmpsReadoutActive
+fmpsReadLinks_tb.fmpsReadoutActive_d
+fmpsReadLinks_tb.fmpsReadoutValid
+fmpsReadLinks_tb.fmpsReadoutValid_d
 fmpsReadLinks_tb.genPacketStrobe
 @420
 fmpsReadLinks_tb.j
