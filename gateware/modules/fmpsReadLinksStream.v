@@ -67,55 +67,56 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .fmpsCountDebug(fmpsCountDebug),
                 .readoutDebug(readoutDebug))
   fmpsReadLinks (
-       .sysClk(sysClk),
-       .csrStrobe(csrStrobe),
-       .GPIO_OUT(GPIO_OUT),
-       .csr(csr),
+    .sysClk(sysClk),
+    .csrStrobe(csrStrobe),
+    .GPIO_OUT(GPIO_OUT),
+    .csr(csr),
 
-       .fmpsBitmapAllFASnapshot(fmpsBitmapAllFASnapshot),
-       .fmpsEnableBitmapFASnapshot(fmpsEnableBitmapFASnapshot),
-       .fmpsEnabled(fmpsEnabled),
+    .fmpsBitmapAllFASnapshot(fmpsBitmapAllFASnapshot),
+    .fmpsEnableBitmapFASnapshot(fmpsEnableBitmapFASnapshot),
+    .fmpsEnabled(fmpsEnabled),
 
-       .fmpsBitmapAll(fmpsBitmapAll),
-       .fmpsBitmapEnabled(fmpsBitmapEnabled),
+    .fmpsBitmapAll(fmpsBitmapAll),
+    .fmpsBitmapEnabled(fmpsBitmapEnabled),
 
-       .FAstrobe(FAstrobe),
-       .auReset(auReset),
-       .sysStatusStrobe(sysStatusStrobe),
-       .sysStatusCode(sysStatusCode),
-       .sysTimeoutStrobe(sysTimeoutStrobe),
+    .FAstrobe(FAstrobe),
+    .auReset(auReset),
+    .sysStatusStrobe(sysStatusStrobe),
+    .sysStatusCode(sysStatusCode),
+    .sysTimeoutStrobe(sysTimeoutStrobe),
 
-       .fmpsReadoutAddress(fmpsReadoutAddress),
-       .fmpsReadout(fmpsReadout),
+    .fmpsReadoutAddress(fmpsReadoutAddress),
+    .fmpsReadout(fmpsReadout),
 
-       .uBreadoutStrobe(uBreadoutStrobe),
-       .uBreadout(uBreadout),
+    .uBreadoutStrobe(uBreadoutStrobe),
+    .uBreadout(uBreadout),
 
-       .auClk(auClk),
-       .auFAstrobe(auFAstrobe),
-       .auCCWfmpsInhibit(auCCWfmpsInhibit),
-       .auCWfmpsInhibit(auCWfmpsInhibit),
+    .auClk(auClk),
+    .auFAstrobe(auFAstrobe),
+    .auCCWfmpsInhibit(auCCWfmpsInhibit),
+    .auCWfmpsInhibit(auCWfmpsInhibit),
 
-       .auFMPSCCWlinkTVALID(auFMPSCCWlinkTVALID),
-       .auFMPSCCWlinkTLAST(auFMPSCCWlinkTLAST),
-       .auFMPSCCWlinkTDATA(auFMPSCCWlinkTDATA),
+    .auFMPSCCWlinkTVALID(auFMPSCCWlinkTVALID),
+    .auFMPSCCWlinkTLAST(auFMPSCCWlinkTLAST),
+    .auFMPSCCWlinkTDATA(auFMPSCCWlinkTDATA),
 
-       .auFMPSCWlinkTVALID(auFMPSCWlinkTVALID),
-       .auFMPSCWlinkTLAST(auFMPSCWlinkTLAST),
-       .auFMPSCWlinkTDATA(auFMPSCWlinkTDATA)
-   );
+    .auFMPSCWlinkTVALID(auFMPSCWlinkTVALID),
+    .auFMPSCWlinkTLAST(auFMPSCWlinkTLAST),
+    .auFMPSCWlinkTDATA(auFMPSCWlinkTDATA)
+);
 
-   fmpsReadoutStream fmpsReadoutStream (
-       .sysClk(sysClk),
-       .fmpsCSR(csr),
+fmpsReadoutStream
+  fmpsReadoutStream (
+    .sysClk(sysClk),
+    .fmpsCSR(csr),
 
-       .fmpsBitmapAll(fmpsBitmapAll),
-       .fmpsReadoutAddress(fmpsReadoutAddress),
-       .fmpsReadout(fmpsReadout),
+    .fmpsBitmapAll(fmpsBitmapAll),
+    .fmpsReadoutAddress(fmpsReadoutAddress),
+    .fmpsReadout(fmpsReadout),
 
-       .fmpsIndex(fmpsIndex),
-       .fmpsData(fmpsData),
-       .fmpsValid(fmpsValid)
-   );
+    .fmpsIndex(fmpsIndex),
+    .fmpsData(fmpsData),
+    .fmpsValid(fmpsValid)
+);
 
 endmodule
