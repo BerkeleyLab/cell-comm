@@ -105,7 +105,8 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
     .auFMPSCWlinkTDATA(auFMPSCWlinkTDATA)
 );
 
-fmpsReadoutStream
+fmpsReadoutStream #(
+    .INDEX_WIDTH(INDEX_WIDTH))
   fmpsReadoutStream (
     .sysClk(sysClk),
     .fmpsCSR(csr),
