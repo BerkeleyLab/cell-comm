@@ -4,6 +4,7 @@
 // All other nets are in the Aurora user clock domain.
 //
 module writeFMPSTestLink #(
+    parameter INDEX_WIDTH            = 5,
     parameter WITH_MULT_PACK_SUPPORT = "false",
     parameter [15:0] HEADER_MAGIC    = 16'hB6CF,
     parameter [15:0] DATA_PATTERN    = 16'hCACA,
@@ -12,7 +13,9 @@ module writeFMPSTestLink #(
     parameter testInDebug            = "false") (
 
     input wire         sysClk,
-    input wire [31:0]  sysFMPSCSR,
+    input wire         sysCsrStrobe,
+    input wire  [31:0] GPIO_OUT,
+    output wire [31:0] sysCsr,
 
     // Start of Aurora user clock domain nets
     input  wire         auroraUserClk,
@@ -62,18 +65,30 @@ localparam MAX_FMPSS          = 32;
 parameter FMPS_COUNT_WIDTH    = $clog2(MAX_FMPSS + 1);
 parameter FMPS_INDEX_WIDTH    = $clog2(MAX_FMPSS);
 
-// Get CSR from FMPS
-wire [31:0] auFMPSCSR;
+//
+// CSR
+//
+reg  [INDEX_WIDTH-1:0] sysCsrFMPSIndex = 0;
+assign sysCsr ={{8-INDEX_WIDTH{1'b0}}, sysCsrFMPSIndex,
+                {24{1'b0}}};
+
+always @(posedge sysClk) begin
+    if (sysCsrStrobe) begin
+        sysCsrFMPSIndex <= GPIO_OUT[24+:INDEX_WIDTH];
+    end
+end
+
+// CSR sys clock to Aurora
+wire [INDEX_WIDTH-1:0] auCsrFMPSIndex;
+
 forwardData #(
-    .DATA_WIDTH(32)
+    .DATA_WIDTH(INDEX_WIDTH)
   )
   forwardCmd(
     .inClk(sysClk),
-    .inData(sysFMPSCSR),
+    .inData(sysCsrFMPSIndex),
     .outClk(auroraUserClk),
-    .outData(auFMPSCSR));
-
-wire [FMPS_INDEX_WIDTH-1:0] auCsrFmpsIndex = auFMPSCSR[24+:FMPS_INDEX_WIDTH];
+    .outData(auCsrFMPSIndex));
 
 reg [FMPS_INDEX_WIDTH-1:0] fmpsIndex = 0;
 
@@ -143,7 +158,7 @@ reg [7:0] FAcycleCounter = 0;
 always @(posedge auroraUserClk) begin
     if (auroraFAstrobe) begin
         // Start a new readout session
-        fmpsIndex <= auCsrFmpsIndex;
+        fmpsIndex <= auCsrFMPSIndex;
         FAcycleCounter <= FAcycleCounter + 1;
         fwState <= FWST_EMPTY_FIFO;
     end
