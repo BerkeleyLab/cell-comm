@@ -5,12 +5,12 @@ module fmpsReadoutStream #(
     input wire                 [31:0] fmpsCSR,
 
     input wire [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAll,
-    output reg      [INDEX_WIDTH-1:0] fmpsReadoutAddress,
+    output reg      [INDEX_WIDTH-1:0] fmpsReadoutAddress = 0,
     input wire                 [31:0] fmpsReadout,
 
-    output reg      [INDEX_WIDTH-1:0] fmpsIndex,
-    output reg                 [31:0] fmpsData,
-    output reg                        fmpsValid
+    output reg      [INDEX_WIDTH-1:0] fmpsIndex = 0,
+    output reg                 [31:0] fmpsData = 0,
+    output reg                        fmpsValid = 0
 );
 
 // Tap into the CSR
@@ -24,7 +24,7 @@ localparam ST_IDLE             = 2'd0,
            ST_READ_NEXT_PACKET = 2'd1,
            ST_READ_SETTLE      = 2'd2,
            ST_READ_PACKET      = 2'd3;
-reg [1:0] state;
+reg [1:0] state = ST_IDLE;
 
 always @(posedge sysClk) begin
     fmpsReadoutActive_d <= fmpsReadoutActive;
