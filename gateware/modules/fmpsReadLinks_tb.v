@@ -323,7 +323,7 @@ always @(posedge sysClk) begin
         if ((fmpsReadoutValid && !fmpsReadoutValid_d)
          || (!fmpsReadoutActive && fmpsReadoutActive_d)) begin
             fmpsReadoutAddress <= 0;
-            state <= ST_READ_NEXT_PACKET;
+            state <= ST_READ_SETTLE;
         end
     end
 
@@ -342,17 +342,17 @@ always @(posedge sysClk) begin
         state <= ST_READ_PACKET;
     end
 
-   ST_READ_PACKET: begin
-       // we have that packet and it's ready to be checked
-       if (fmpsPacketPresent) begin
-           // dataIndex field must be the same as the
-           // FMPS index for this test
-           dataIndex <= fmpsReadoutAddress;
-           state <= ST_CHECK_PACKET;
-       end else begin
-           state <= ST_READ_NEXT_PACKET;
-       end
-   end
+    ST_READ_PACKET: begin
+        // we have that packet and it's ready to be checked
+        if (fmpsPacketPresent) begin
+            // dataIndex field must be the same as the
+            // FMPS index for this test
+            dataIndex <= fmpsReadoutAddress;
+            state <= ST_CHECK_PACKET;
+        end else begin
+            state <= ST_READ_NEXT_PACKET;
+        end
+    end
 
     ST_CHECK_PACKET: begin
         if (FMPS_invalidFMPS2CC || FMPS_invalidCC2CC) begin
