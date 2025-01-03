@@ -1,9 +1,12 @@
 `timescale 1ns / 100ps
 
-module axisMux_tb;
+module axisMux_tb #(
+    parameter CSR_DATA_BUS_WIDTH = 32
+);
 
 parameter NUM_SOURCES = 4;
 parameter NUM_PACKETS_PER_FMPS = 4;
+parameter CSR_STROBE_BUS_WIDTH = NUM_SOURCES;
 
 reg module_done = 0;
 reg fail = 0;
@@ -74,6 +77,37 @@ endtask // gen_strobe
 //////////////////////////////////////////////////////////
 // Testbench
 //////////////////////////////////////////////////////////
+
+//
+// Register offsets
+//
+localparam WR_REG_OFFSET_CSR                    = 0;
+
+//
+// Write CSR fields
+//
+localparam WR_RW_CSR_FMPS_COUNT_SHIFT          = 24;
+localparam WR_RW_CSR_FMPS_COUNT_MASK           = (1<<INDEX_WIDTH)-1;
+
+//////////////////////////////////////////////////////////////
+// CSR
+//////////////////////////////////////////////////////////////
+
+csrTestMaster # (
+    .CSR_DATA_BUS_WIDTH(CSR_DATA_BUS_WIDTH),
+    .CSR_STROBE_BUS_WIDTH(CSR_STROBE_BUS_WIDTH)
+) CSR0 (
+    .clk(sysClk)
+);
+
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_IN[0:CSR_STROBE_BUS_WIDTH-1];
+wire [CSR_STROBE_BUS_WIDTH-1:0] GPIO_STROBES = CSR0.csr_stb_o;
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_OUT = CSR0.csr_data_o;
+
+generate for(i = 0; i < CSR_STROBE_BUS_WIDTH; i = i + 1) begin
+    assign CSR0.csr_data_i[(i+1)*CSR_DATA_BUS_WIDTH-1:i*CSR_DATA_BUS_WIDTH] = GPIO_IN[i];
+end
+endgenerate
 
 reg module_ready = 0;
 reg auChannelUp = 0;
@@ -152,19 +186,18 @@ genvar i;
 generate
 for (i = 0; i < NUM_SOURCES; i = i + 1) begin
 
-wire [31:0] sysFMPSCSR;
-assign sysFMPSCSR[31:29] = 0;
-// fmpsIndex start
-assign sysFMPSCSR[28:24] = i*NUM_PACKETS_PER_FMPS;
-assign sysFMPSCSR[23:0] = 0;
+wire [31:0] sysCsr;
 
 writeFMPSTestLink #(
+    .INDEX_WIDTH(INDEX_WIDTH),
     .WITH_MULT_PACK_SUPPORT("true"),
     .DATA_PATTERN(DATA_PATTERN)
 )
   fmpsDataGen(
     .sysClk(sysClk),
-    .sysFMPSCSR(sysFMPSCSR),
+    .sysCsrStrobe(GPIO_STROBES[i]),
+    .GPIO_OUT(GPIO_OUT),
+    .sysCsr(sysCsr),
 
     .auroraUserClk(auClk),
     .genPacketStrobe(genPacketStrobe),
@@ -360,6 +393,20 @@ always @(posedge sysClk) begin
         default: ;
 
         endcase
+    end
+end
+
+// stimulus
+integer fmpsIndex = 0;
+initial begin
+    wait(CSR0.ready);
+    @(posedge sysClk);
+
+    for (idx = 0; idx < NUM_SOURCES; idx = idx + 1)begin
+        fmpsIndex = idx*NUM_PACKETS_PER_FMPS;
+        CSR0.write32(WR_REG_OFFSET_CSR + idx,
+            (fmpsIndex & WR_RW_CSR_FMPS_COUNT_MASK) << 24);
+        @(posedge sysClk);
     end
 end
 

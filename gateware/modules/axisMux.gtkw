@@ -1,14 +1,14 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Sat Dec 14 00:57:12 2024
+[*] Fri Jan  3 23:29:52 2025
 [*]
-[dumpfile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.vcd"
-[dumpfile_mtime] "Sat Dec 14 00:56:59 2024"
-[dumpfile_size] 349270
-[savefile] "/home/lerwys/Repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.gtkw"
+[dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.vcd"
+[dumpfile_mtime] "Fri Jan  3 23:29:38 2025"
+[dumpfile_size] 351916
+[savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/axisMux.gtkw"
 [timestart] 1226000
 [size] 1276 1344
-[pos] -1281 -1
+[pos] -1 -1
 *-18.349998 1728000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] axisMux_tb.
 [treeopen] axisMux_tb.DUT.
@@ -165,8 +165,6 @@ axisMux_tb.FMPS_TEST_AXI_STREAM_TX_tvalid_flatten[3:0]
 @24
 axisMux_tb.FMPS_cycleCounter[7:0]
 axisMux_tb.FMPS_dataCounter[4:0]
-@22
-axisMux_tb.FMPS_dataMagic[15:0]
 @28
 axisMux_tb.FMPS_invalidCC2CC
 axisMux_tb.FMPS_invalidFMPS2CC
