@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Tue Nov 26 00:23:06 2024
+[*] Sat Jan  4 00:14:37 2025
 [*]
 [dumpfile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLink.vcd"
-[dumpfile_mtime] "Tue Nov 26 00:20:30 2024"
-[dumpfile_size] 130700
+[dumpfile_mtime] "Sat Jan  4 00:14:34 2025"
+[dumpfile_size] 265746
 [savefile] "/home/lrusso/repos/cell-controller/gateware/submodules/cell-comm/gateware/modules/fmpsReadLink.gtkw"
 [timestart] 0
 [size] 1716 1344
@@ -25,7 +25,6 @@ fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tready
 fmpsReadLink_tb.FMPS_TEST_AXI_STREAM_TX_tvalid
 @24
 fmpsReadLink_tb.FMPS_cycleCounter[7:0]
-fmpsReadLink_tb.FMPS_dataCounter[4:0]
 @22
 fmpsReadLink_tb.FMPS_dataMagic[15:0]
 @28
@@ -38,7 +37,6 @@ fmpsReadLink_tb.auClk
 fmpsReadLink_tb.auFAStrobe
 @22
 fmpsReadLink_tb.cycleCounter[7:0]
-fmpsReadLink_tb.dataCounter[4:0]
 @28
 fmpsReadLink_tb.fmpsBitmap[31:0]
 fmpsReadLink_tb.fmpsPacketPresent
@@ -54,8 +52,6 @@ fmpsReadLink_tb.statusCode[1:0]
 fmpsReadLink_tb.statusFMPSenabled
 fmpsReadLink_tb.statusStrobe
 fmpsReadLink_tb.sysClk
-@22
-fmpsReadLink_tb.sysFMPSCSR[31:0]
 @200
 -DUT
 @28

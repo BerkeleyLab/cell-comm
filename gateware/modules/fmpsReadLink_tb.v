@@ -1,6 +1,9 @@
 `timescale 1ns / 100ps
 
-module fmpsReadLink_tb;
+module fmpsReadLink_tb #(
+    parameter CSR_DATA_BUS_WIDTH = 32,
+    parameter CSR_STROBE_BUS_WIDTH = 1
+);
 
 reg module_done = 0;
 reg fail = 0;
@@ -70,6 +73,37 @@ endtask // gen_strobe
 //////////////////////////////////////////////////////////
 // Testbench
 //////////////////////////////////////////////////////////
+//
+// Register offsets
+//
+localparam WR_REG_OFFSET_CSR                    = 0;
+
+//
+// Write CSR fields
+//
+localparam WR_RW_CSR_FMPS_INDEX_SHIFT          = 24;
+localparam WR_RW_CSR_FMPS_INDEX_MASK           = (1<<INDEX_WIDTH)-1;
+
+//////////////////////////////////////////////////////////////
+// CSR
+//////////////////////////////////////////////////////////////
+
+csrTestMaster # (
+    .CSR_DATA_BUS_WIDTH(CSR_DATA_BUS_WIDTH),
+    .CSR_STROBE_BUS_WIDTH(CSR_STROBE_BUS_WIDTH)
+) CSR0 (
+    .clk(sysClk)
+);
+
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_IN[0:CSR_STROBE_BUS_WIDTH-1];
+wire [CSR_STROBE_BUS_WIDTH-1:0] GPIO_STROBES = CSR0.csr_stb_o;
+wire [CSR_DATA_BUS_WIDTH-1:0] GPIO_OUT = CSR0.csr_data_o;
+
+genvar i;
+generate for(i = 0; i < CSR_STROBE_BUS_WIDTH; i = i + 1) begin
+    assign CSR0.csr_data_i[(i+1)*CSR_DATA_BUS_WIDTH-1:i*CSR_DATA_BUS_WIDTH] = GPIO_IN[i];
+end
+endgenerate
 
 reg module_ready = 0;
 reg auChannelUp = 0;
@@ -114,10 +148,7 @@ end
 //
 // FMPS test data streamer
 //
-wire [31:0] sysFMPSCSR;
-assign sysFMPSCSR[31:29] = 0;
-assign sysFMPSCSR[28:24] = 1;
-assign sysFMPSCSR[23:0] = 0;
+wire [31:0] sysCsr;
 
 // Packet format
 localparam DATA_MAGIC_WIDTH                        = 16;
@@ -136,7 +167,9 @@ writeFMPSTestLink #(
 )
   packetGen (
     .sysClk(sysClk),
-    .sysFMPSCSR(sysFMPSCSR),
+    .sysCsrStrobe(GPIO_STROBES[WR_REG_OFFSET_CSR]),
+    .GPIO_OUT(GPIO_OUT),
+    .sysCsr(sysCsr),
 
     .auroraUserClk(auClk),
     .genPacketStrobe(genPacketStrobe),
@@ -185,10 +218,10 @@ fmpsReadLink #(
 assign FMPS_TEST_AXI_STREAM_TX_tready = 1'b1;
 
 // Dump DPRAM
-integer i = 0;
+integer idx = 0;
 initial begin
-    for (i = 0; i < (1<<INDEX_WIDTH)-1; i = i + 1)
-        $dumpvars(0, DUT.dpram[i]);
+    for (idx = 0; idx < (1<<INDEX_WIDTH)-1; idx = idx + 1)
+        $dumpvars(0, DUT.dpram[idx]);
 end
 
 // Data Packet has the format described in writeFMPSTestLink_tb.v
@@ -328,6 +361,17 @@ always @(posedge auClk) begin
 
         endcase
     end
+end
+
+// stimulus
+integer fmpsIndex = 1;
+initial begin
+    wait(CSR0.ready);
+    @(posedge sysClk);
+
+    CSR0.write32(WR_REG_OFFSET_CSR,
+        (fmpsIndex & WR_RW_CSR_FMPS_INDEX_MASK) << WR_RW_CSR_FMPS_INDEX_SHIFT);
+    @(posedge sysClk);
 end
 
 // stimulus
