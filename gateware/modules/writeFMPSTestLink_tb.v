@@ -95,8 +95,8 @@ localparam WR_REG_OFFSET_CSR                    = 0;
 //
 // Write CSR fields
 //
-localparam WR_RW_CSR_FMPS_COUNT_SHIFT          = 24;
-localparam WR_RW_CSR_FMPS_COUNT_MASK           = (1<<INDEX_WIDTH)-1;
+localparam WR_RW_CSR_FMPS_INDEX_SHIFT          = 24;
+localparam WR_RW_CSR_FMPS_INDEX_MASK           = (1<<INDEX_WIDTH)-1;
 
 //////////////////////////////////////////////////////////////
 // CSR
@@ -356,7 +356,7 @@ initial begin
     @(posedge sysClk);
 
     CSR0.write32(WR_REG_OFFSET_CSR,
-        (fmpsIndex & WR_RW_CSR_FMPS_COUNT_MASK) << 24);
+        (fmpsIndex & WR_RW_CSR_FMPS_INDEX_MASK) << WR_RW_CSR_FMPS_INDEX_SHIFT);
     @(posedge sysClk);
 end
 
