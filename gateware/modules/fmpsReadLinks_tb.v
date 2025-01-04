@@ -1,9 +1,11 @@
 `timescale 1ns / 100ps
 
 module fmpsReadLinks_tb #(
-    parameter CSR_DATA_BUS_WIDTH = 32,
-    parameter CSR_STROBE_BUS_WIDTH = 1
+    parameter CSR_DATA_BUS_WIDTH = 32
 );
+
+localparam NUM_FMPS_GENERATORS = 2;
+localparam CSR_STROBE_BUS_WIDTH = 1 + NUM_FMPS_GENERATORS;
 
 reg module_done = 0;
 reg fail = 0;
@@ -90,7 +92,8 @@ localparam [MAGIC_WIDTH-1:0] EXPECTED_HEADER_MAGIC = 16'hB6CF;
 //
 // Register offsets
 //
-localparam WR_REG_OFFSET_CSR                   = 0;
+localparam WR_REG_FMPS_CSR                   = 0;
+localparam WR_REG_FMPS_GEN_BASE_CSR          = 1;
 
 //
 // Write CSR fields
@@ -98,6 +101,9 @@ localparam WR_REG_OFFSET_CSR                   = 0;
 localparam WR_W_CSR_FMPS_COUNT_MASK            = 2**FMPS_COUNT_WIDTH-1;
 localparam WR_W_CSR_FMPS_CCW_INHIBIT           = 3*FMPS_COUNT_WIDTH;
 localparam WR_W_CSR_FMPS_CW_INHIBIT            = 3*FMPS_COUNT_WIDTH+1;
+
+localparam WR_RW_CSR_FMPS_INDEX_SHIFT          = 24;
+localparam WR_RW_CSR_FMPS_INDEX_MASK           = (1<<INDEX_WIDTH)-1;
 
 //////////////////////////////////////////////////////////////
 // CSR
@@ -168,7 +174,6 @@ end
 // FMPS test data streamer
 //////////////////////////////////////////////////////////////
 
-localparam NUM_FMPS_GENERATORS = 2;
 wire  [31:0] FMPS_TEST_AXI_STREAM_TX_tdata[0:NUM_FMPS_GENERATORS-1];
 wire         FMPS_TEST_AXI_STREAM_TX_tvalid[0:NUM_FMPS_GENERATORS-1];
 wire         FMPS_TEST_AXI_STREAM_TX_tlast[0:NUM_FMPS_GENERATORS-1];
@@ -176,17 +181,16 @@ wire         FMPS_TEST_AXI_STREAM_TX_tready[0:NUM_FMPS_GENERATORS-1];
 
 generate for(i = 0; i < NUM_FMPS_GENERATORS; i = i + 1) begin
 
-wire [31:0] sysFMPSCSR;
-assign sysFMPSCSR[31:29] = 0;
-assign sysFMPSCSR[28:24] = i*NUM_FMPS_PKTS_PER_CYCLE;
-assign sysFMPSCSR[23:0] = 0;
+wire [31:0] sysCsr;
 
 writeFMPSTestLink #(
     .WITH_MULT_PACK_SUPPORT("true")
 )
   packetGen (
     .sysClk(sysClk),
-    .sysFMPSCSR(sysFMPSCSR),
+    .sysCsrStrobe(GPIO_STROBES[WR_REG_FMPS_GEN_BASE_CSR+i]),
+    .GPIO_OUT(GPIO_OUT),
+    .sysCsr(sysCsr),
 
     .auroraUserClk(auClk),
     .genPacketStrobe(genPacketStrobe),
@@ -217,7 +221,7 @@ reg uBreadoutStrobe = 0;
 wire [31:0] uBreadout;
 
 wire [31:0] fmpsCSR;
-assign GPIO_IN[WR_REG_OFFSET_CSR] = fmpsCSR;
+assign GPIO_IN[WR_REG_FMPS_CSR] = fmpsCSR;
 
 fmpsReadLinks #(
     .INDEX_WIDTH(INDEX_WIDTH),
@@ -226,7 +230,7 @@ fmpsReadLinks #(
   DUT (
     .sysClk(sysClk),
 
-    .csrStrobe(GPIO_STROBES),
+    .csrStrobe(GPIO_STROBES[WR_REG_FMPS_CSR]),
     .GPIO_OUT(GPIO_OUT),
     .csr(fmpsCSR),
 
@@ -420,17 +424,23 @@ always @(posedge sysClk) begin
 end
 
 // stimulus
-
-// stimulus
+integer idx = 0;
+integer fmpsIndex = 0;
 initial begin
     wait(CSR0.ready);
     @(posedge sysClk);
 
-    CSR0.write32(WR_REG_OFFSET_CSR,
+    CSR0.write32(WR_REG_FMPS_CSR,
         NUM_FMPS_GENERATORS*NUM_FMPS_PKTS_PER_CYCLE);
     @(posedge sysClk);
-end
 
+    for (idx = 0; idx < NUM_FMPS_GENERATORS; idx = idx + 1) begin
+        fmpsIndex = idx*NUM_FMPS_PKTS_PER_CYCLE;
+        CSR0.write32(WR_REG_FMPS_GEN_BASE_CSR + idx,
+            (fmpsIndex & WR_RW_CSR_FMPS_INDEX_MASK) << WR_RW_CSR_FMPS_INDEX_SHIFT);
+        @(posedge sysClk);
+    end
+end
 initial begin
     @(posedge auClk);
     module_ready = 1;
