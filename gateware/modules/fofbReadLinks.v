@@ -53,8 +53,8 @@ module fofbReadLinks #(
     input  wire                              auClk,
     (*mark_debug=FAstrobeDebug*) input  wire auFAstrobe,
     input  wire                              auReset,
-    output reg                               auCCWcellInhibit = 0,
-    output reg                               auCWcellInhibit = 0,
+    output wire                              auCCWcellInhibit,
+    output wire                              auCWcellInhibit,
 
     // Tap of outging cell links
     (*mark_debug=rawDataDebug*) input  wire        auCellCCWlinkTVALID,
@@ -74,7 +74,7 @@ localparam READOUT_TIMER_WIDTH = 5;
 reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
 reg readoutActive = 0, readoutValid = 0, readTimeout = 0;
-reg auReadoutValid_m, auReadoutValid;
+(*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
         cellCount <= GPIO_OUT[0+:CELL_COUNT_WIDTH];
@@ -178,7 +178,8 @@ fofbReadLinksMux fofbReadLinksMux (
 reg [CELL_COUNT_WIDTH-1:0] auCCWpacketCount, auCWpacketCount;
 reg [CELL_COUNT_WIDTH-1:0] ccwPacketCount, cwPacketCount;
 reg auPkCountToggle = 0;
-reg sysPkCountToggle_m = 0, sysPkCountToggle = 0, sysPkCountToggle_d = 0;
+(*ASYNC_REG="true"*) reg sysPkCountToggle_m = 0, sysPkCountToggle = 0;
+reg sysPkCountToggle_d = 0;
 always @(posedge auClk) begin
     if (auFAstrobe) begin
         auCCWpacketCount <= auCCWpacketCounter;
@@ -274,15 +275,18 @@ end
 //
 // Keep track of which buffers contain valid data from a particular BPM.
 //
-reg auCCWcellInhibit_m, auCWcellInhibit_m;
+(*ASYNC_REG="true"*) reg auCCWcellInhibit_m, auCCWcellInhibit_m2,
+                         auCWcellInhibit_m, auCWcellInhibit_m2;
+assign auCCWcellInhibit = auCCWcellInhibit_m2;
+assign auCWcellInhibit = auCWcellInhibit_m2;
 always @(posedge auClk)begin
     auReadoutValid_m <= readoutValid;
     auReadoutValid   <= auReadoutValid_m;
     auCCWcellInhibit_m <= ccwInhibit;
     auCWcellInhibit_m  <= cwInhibit;
     if (auFAstrobe) begin
-        auCCWcellInhibit <= auCCWcellInhibit_m;
-        auCWcellInhibit  <= auCWcellInhibit_m;
+        auCCWcellInhibit_m2 <= auCCWcellInhibit_m;
+        auCWcellInhibit_m2  <= auCWcellInhibit_m;
     end
 end
 
