@@ -9,6 +9,9 @@ __cell_comm_SRCS = \
 	forwardData.v \
 	readBPMlink.v \
 	readBPMlinks.v \
+	auroraLink.v \
+	auroraMGT.v \
+	auroraMMCM.v \
 	axiDataUpconverter.v \
 	axiDataDownconverter.v
 
