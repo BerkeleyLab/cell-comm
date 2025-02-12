@@ -56,6 +56,8 @@ module fmpsReadLinksStream #(
 
 wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress;
 wire                [31:0] fmpsReadout;
+wire                       readoutActive;
+wire                       readoutValid;
 
 fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .INDEX_WIDTH(INDEX_WIDTH),
@@ -85,6 +87,9 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
     .sysStatusCode(sysStatusCode),
     .sysTimeoutStrobe(sysTimeoutStrobe),
 
+    .readoutActive(readoutActive),
+    .readoutValid(readoutValid),
+
     .fmpsReadoutAddress(fmpsReadoutAddress),
     .fmpsReadout(fmpsReadout),
 
@@ -109,11 +114,13 @@ fmpsReadoutStream #(
     .INDEX_WIDTH(INDEX_WIDTH))
   fmpsReadoutStream (
     .sysClk(sysClk),
-    .fmpsCSR(csr),
 
     .fmpsBitmapAll(fmpsBitmapAll),
     .fmpsReadoutAddress(fmpsReadoutAddress),
     .fmpsReadout(fmpsReadout),
+
+    .fmpsReadoutActive(readoutActive),
+    .fmpsReadoutValid(readoutValid),
 
     .fmpsIndex(fmpsIndex),
     .fmpsData(fmpsData),
