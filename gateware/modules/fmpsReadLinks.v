@@ -31,6 +31,9 @@ module fmpsReadLinks #(
     (*mark_debug=statusDebug*) output wire [2:0] sysStatusCode,
     (*mark_debug=statusDebug*) output reg        sysTimeoutStrobe = 0,
 
+    (*mark_debug=statusDebug*) output reg  readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg  readoutValid = 0,
+
     // Data Readout, mostly for debug/checking. The FMPS data is
     // actually used by the Mitigation Node
     (*mark_debug=readoutDebug*)
@@ -66,7 +69,7 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0;
 reg [FMPS_COUNT_WIDTH-1:0] fmpsCount = 0;
-reg readoutActive = 0, readoutValid = 0, readTimeout = 0;
+reg readTimeout = 0;
 reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin

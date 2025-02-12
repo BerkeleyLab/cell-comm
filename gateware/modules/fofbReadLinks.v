@@ -33,6 +33,9 @@ module fofbReadLinks #(
     (*mark_debug=statusDebug*) output wire [2:0] sysStatusCode,
     (*mark_debug=statusDebug*) output reg        sysTimeoutStrobe = 0,
 
+    (*mark_debug=statusDebug*) output reg  readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg  readoutValid = 0,
+
     // Fast orbit feedback correction DSP
     (*mark_debug=dspReadoutDebug*)
     input wire [FOFB_INDEX_WIDTH-1:0] fofbDSPreadoutAddress,
@@ -73,7 +76,7 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
-reg readoutActive = 0, readoutValid = 0, readTimeout = 0;
+reg readTimeout = 0;
 (*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
