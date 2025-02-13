@@ -56,6 +56,7 @@ module fmpsReadLinksStream #(
 
 wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress;
 wire                [31:0] fmpsReadout;
+wire                        readoutPresent;
 
 fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .INDEX_WIDTH(INDEX_WIDTH),
@@ -87,6 +88,7 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
 
     .fmpsReadoutAddress(fmpsReadoutAddress),
     .fmpsReadout(fmpsReadout),
+    .fmpsReadoutPresent(readoutPresent),
 
     .uBreadoutStrobe(uBreadoutStrobe),
     .uBreadout(uBreadout),
@@ -105,19 +107,21 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
     .auFMPSCWlinkTDATA(auFMPSCWlinkTDATA)
 );
 
-fmpsReadoutStream #(
-    .INDEX_WIDTH(INDEX_WIDTH))
-  fmpsReadoutStream (
-    .sysClk(sysClk),
-    .fmpsCSR(csr),
+readoutStream #(
+    .READOUT_WIDTH(INDEX_WIDTH),
+    .DATA_WIDTH(32)
+) fmpsReadoutStream (
+    .clk(sysClk),
+    .readoutActive(csr[31]),
+    .readoutValid(csr[30]),
 
-    .fmpsBitmapAll(fmpsBitmapAll),
-    .fmpsReadoutAddress(fmpsReadoutAddress),
-    .fmpsReadout(fmpsReadout),
+    .readoutPresent(readoutPresent),
+    .readoutAddress(fmpsReadoutAddress),
+    .readoutData(fmpsReadout),
 
-    .fmpsIndex(fmpsIndex),
-    .fmpsData(fmpsData),
-    .fmpsValid(fmpsValid)
+    .index(fmpsIndex),
+    .data(fmpsData),
+    .valid(fmpsValid)
 );
 
 endmodule
