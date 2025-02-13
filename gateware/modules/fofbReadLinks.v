@@ -42,6 +42,8 @@ module fofbReadLinks #(
     output wire                [31:0] fofbDSPreadoutY,
     (*mark_debug=dspReadoutDebug*)
     output wire                [31:0] fofbDSPreadoutS,
+    (*mark_debug=dspReadoutDebug*)
+    output wire                       fofbDSPreadoutPresent,
 
     // Values to microBlaze
     input  wire                       uBreadoutStrobe,
@@ -307,6 +309,7 @@ end
 assign fofbDSPreadoutX = ccwHasBPM ? ccwX : (cwHasBPM ? cwX : saveBPMx);
 assign fofbDSPreadoutY = ccwHasBPM ? ccwY : (cwHasBPM ? cwY : saveBPMy);
 assign fofbDSPreadoutS = ccwHasBPM ? ccwS : (cwHasBPM ? cwS : 0);
+assign fofbDSPreadoutPresent = cwHasBPM | ccwHasBPM;
 
 //
 // Store values so we can use them next cycle if no new data arrive
