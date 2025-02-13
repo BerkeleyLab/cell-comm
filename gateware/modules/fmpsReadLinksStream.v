@@ -1,13 +1,13 @@
 module fmpsReadLinksStream #(
-    parameter SYSCLK_RATE       = 100000000,
-    parameter INDEX_WIDTH       = 5,
+    parameter      SYSCLK_RATE  = 100000000,
+    parameter      INDEX_WIDTH  = 5,
     parameter    FAstrobeDebug  = "false",
     parameter      statusDebug  = "false",
     parameter     rawDataDebug  = "false",
     parameter     ccwLinkDebug  = "false",
     parameter      cwLinkDebug  = "false",
     parameter   fmpsCountDebug  = "false",
-    parameter  readoutDebug  = "false"
+    parameter     readoutDebug  = "false"
     ) (
     input  wire        sysClk,
 
@@ -55,7 +55,7 @@ module fmpsReadLinksStream #(
     (*mark_debug=rawDataDebug*) input  wire [31:0] auFMPSCWlinkTDATA);
 
 wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress;
-wire                [31:0] fmpsReadout;
+wire                 [31:0] fmpsReadout;
 wire                        readoutPresent;
 
 fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
@@ -66,8 +66,8 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .ccwLinkDebug(ccwLinkDebug),
                 .cwLinkDebug(cwLinkDebug),
                 .fmpsCountDebug(fmpsCountDebug),
-                .readoutDebug(readoutDebug))
-  fmpsReadLinks (
+                .readoutDebug(readoutDebug)
+) fmpsReadLinks (
     .sysClk(sysClk),
     .csrStrobe(csrStrobe),
     .GPIO_OUT(GPIO_OUT),
