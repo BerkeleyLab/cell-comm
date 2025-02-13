@@ -37,6 +37,8 @@ module fmpsReadLinks #(
     input wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress,
     (*mark_debug=readoutDebug*)
     output wire                [31:0] fmpsReadout,
+    (*mark_debug=readoutDebug*)
+    output wire                       fmpsReadoutPresent,
 
     // Values to microBlaze
     input  wire                       uBreadoutStrobe,
@@ -292,6 +294,7 @@ always @(posedge sysClk) begin
     cwHasFMPS <= readoutValid && auCW_FMPSbitmap[fmpsReadoutAddress];
 end
 assign fmpsReadout = ccwHasFMPS ? ccwData : (cwHasFMPS ? cwData : 0);
+assign fmpsReadoutPresent = cwHasFMPS | ccwHasFMPS;
 
 //
 // MicroBlaze status
