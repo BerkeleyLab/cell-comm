@@ -130,20 +130,21 @@ fofbReadLinksInst (
 );
 
 readoutStream #(
-    .READOUT_WIDTH(FOFB_INDEX_WIDTH),
+    .ADDR_WIDTH(FOFB_INDEX_WIDTH),
     .DATA_WIDTH(96)
 ) fmpsReadoutStream (
     .clk(sysClk),
     .readoutActive(csr[31]),
     .readoutValid(csr[30]),
+    .reset(1'b0),
 
     .readoutPresent(readoutPresent),
     .readoutAddress(readoutAddress),
     .readoutData(fofbReadout),
 
-    .index(fofbDSPreadoutIndex),
-    .data(fofbData),
-    .valid(fofbDSPreadoutValid)
+    .packetIndex(fofbDSPreadoutIndex),
+    .packetData(fofbData),
+    .packetValid(fofbDSPreadoutValid)
 );
 
 endmodule
