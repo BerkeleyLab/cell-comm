@@ -108,20 +108,21 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
 );
 
 readoutStream #(
-    .READOUT_WIDTH(INDEX_WIDTH),
+    .ADDR_WIDTH(INDEX_WIDTH),
     .DATA_WIDTH(32)
 ) fmpsReadoutStream (
     .clk(sysClk),
     .readoutActive(csr[31]),
     .readoutValid(csr[30]),
+    .reset(1'b0),
 
     .readoutPresent(readoutPresent),
     .readoutAddress(fmpsReadoutAddress),
     .readoutData(fmpsReadout),
 
-    .index(fmpsIndex),
-    .data(fmpsData),
-    .valid(fmpsValid)
+    .packetIndex(fmpsIndex),
+    .packetData(fmpsData),
+    .packetValid(fmpsValid)
 );
 
 endmodule
