@@ -66,6 +66,7 @@ module fofbReadLinksStream #(
 wire [FOFB_INDEX_WIDTH-1:0] readoutAddress;
 wire                 [31:0] readoutX, readoutY, readoutS;
 wire                        readoutPresent;
+wire                        readoutActive, readoutValid, readTimeout;
 wire                 [95:0] fofbReadout = {readoutX,
                                            readoutY,
                                            readoutS};
@@ -94,9 +95,14 @@ fofbReadLinksInst (
     .csr(csr),
     .fofbBitmapAllFASnapshot(fofbBitmapAllFASnapshot),
     .fofbEnableBitmapFASnapshot(fofbEnableBitmapFASnapshot),
+    .fofbEnabled(fofbEnabled),
+
     .fofbBitmapAll(fofbBitmapAll),
     .fofbBitmapEnabled(fofbBitmapEnabled),
-    .fofbEnabled(fofbEnabled),
+
+    .readoutActive(readoutActive),
+    .readoutValid(readoutValid),
+    .readTimeout(readTimeout),
 
     .FAstrobe(FAstrobe),
     .auReset(auReset),
@@ -134,8 +140,8 @@ readoutStream #(
     .DATA_WIDTH(96)
 ) fmpsReadoutStream (
     .clk(sysClk),
-    .readoutActive(csr[31]),
-    .readoutValid(csr[30]),
+    .readoutActive(readoutActive),
+    .readoutValid(readoutValid),
     .reset(1'b0),
 
     .readoutPresent(readoutPresent),
