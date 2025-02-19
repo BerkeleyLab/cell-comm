@@ -23,6 +23,10 @@ module fmpsReadLinks #(
     (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                        fmpsEnabled,
 
+    (*mark_debug=statusDebug*) output reg readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg readoutValid = 0,
+    (*mark_debug=statusDebug*) output reg readTimeout = 0,
+
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire FAstrobe,
 
@@ -68,7 +72,6 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0;
 reg [FMPS_COUNT_WIDTH-1:0] fmpsCount = 0;
-reg readoutActive = 0, readoutValid = 0, readTimeout = 0;
 reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
