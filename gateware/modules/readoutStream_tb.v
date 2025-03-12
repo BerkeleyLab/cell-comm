@@ -36,7 +36,7 @@ reg fail = 0;
 integer errors = 0;
 initial begin
     if ($test$plusargs("vcd")) begin
-        $dumpfile("readoutStream_tb.vcd");
+        $dumpfile("readoutStream.vcd");
         $dumpvars(3, readoutStream_tb);
     end
     wait(module_done);
