@@ -32,17 +32,22 @@ readoutStream # (
 
 /////////////////////////////// TESTBENCH RESULT ///////////////////////////////
 reg module_done = 0;
-reg fail = 0;
 integer errors = 0;
 initial begin
     if ($test$plusargs("vcd")) begin
         $dumpfile("readoutStream.vcd");
         $dumpvars(3, readoutStream_tb);
     end
+
     wait(module_done);
-    if (fail || errors > 0) $display("FAIL");
-    else $display("PASS");
-    $finish(0);
+
+    if (errors > 0) begin
+    	$display("FAIL");
+    	$stop(0);
+    end else begin
+    	$display("PASS");
+    	$finish(0);
+    end
 end
 
 ///////////////////////////////// DPRAM CONTENT ////////////////////////////////
