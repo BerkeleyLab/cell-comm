@@ -1,13 +1,13 @@
 module fmpsReadLinksStream #(
-    parameter SYSCLK_RATE       = 100000000,
-    parameter INDEX_WIDTH       = 5,
+    parameter      SYSCLK_RATE  = 100000000,
+    parameter      INDEX_WIDTH  = 5,
     parameter    FAstrobeDebug  = "false",
     parameter      statusDebug  = "false",
     parameter     rawDataDebug  = "false",
     parameter     ccwLinkDebug  = "false",
     parameter      cwLinkDebug  = "false",
     parameter   fmpsCountDebug  = "false",
-    parameter  readoutDebug  = "false"
+    parameter     readoutDebug  = "false"
     ) (
     input  wire        sysClk,
 
@@ -55,7 +55,9 @@ module fmpsReadLinksStream #(
     (*mark_debug=rawDataDebug*) input  wire [31:0] auFMPSCWlinkTDATA);
 
 wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress;
-wire                [31:0] fmpsReadout;
+wire                 [31:0] fmpsReadout;
+wire                        readoutPresent;
+wire                        readoutActive, readoutValid, readTimeout;
 
 fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .INDEX_WIDTH(INDEX_WIDTH),
@@ -65,8 +67,8 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
                 .ccwLinkDebug(ccwLinkDebug),
                 .cwLinkDebug(cwLinkDebug),
                 .fmpsCountDebug(fmpsCountDebug),
-                .readoutDebug(readoutDebug))
-  fmpsReadLinks (
+                .readoutDebug(readoutDebug)
+) fmpsReadLinks (
     .sysClk(sysClk),
     .csrStrobe(csrStrobe),
     .GPIO_OUT(GPIO_OUT),
@@ -79,6 +81,10 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
     .fmpsBitmapAll(fmpsBitmapAll),
     .fmpsBitmapEnabled(fmpsBitmapEnabled),
 
+    .readoutActive(readoutActive),
+    .readoutValid(readoutValid),
+    .readTimeout(readTimeout),
+
     .FAstrobe(FAstrobe),
     .auReset(auReset),
     .sysStatusStrobe(sysStatusStrobe),
@@ -87,6 +93,7 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
 
     .fmpsReadoutAddress(fmpsReadoutAddress),
     .fmpsReadout(fmpsReadout),
+    .fmpsReadoutPresent(readoutPresent),
 
     .uBreadoutStrobe(uBreadoutStrobe),
     .uBreadout(uBreadout),
@@ -105,19 +112,22 @@ fmpsReadLinks #(.SYSCLK_RATE(SYSCLK_RATE),
     .auFMPSCWlinkTDATA(auFMPSCWlinkTDATA)
 );
 
-fmpsReadoutStream #(
-    .INDEX_WIDTH(INDEX_WIDTH))
-  fmpsReadoutStream (
-    .sysClk(sysClk),
-    .fmpsCSR(csr),
+readoutStream #(
+    .ADDR_WIDTH(INDEX_WIDTH),
+    .DATA_WIDTH(32)
+) fmpsReadoutStream (
+    .clk(sysClk),
+    .readoutActive(readoutActive),
+    .readoutValid(readoutValid),
+    .reset(1'b0),
 
-    .fmpsBitmapAll(fmpsBitmapAll),
-    .fmpsReadoutAddress(fmpsReadoutAddress),
-    .fmpsReadout(fmpsReadout),
+    .readoutPresent(readoutPresent),
+    .readoutAddress(fmpsReadoutAddress),
+    .readoutData(fmpsReadout),
 
-    .fmpsIndex(fmpsIndex),
-    .fmpsData(fmpsData),
-    .fmpsValid(fmpsValid)
+    .packetIndex(fmpsIndex),
+    .packetData(fmpsData),
+    .packetValid(fmpsValid)
 );
 
 endmodule

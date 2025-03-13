@@ -76,8 +76,8 @@ endtask // gen_strobe
 //////////////////////////////////////////////////////////
 
 // Packet format
-localparam DATA_MAGIC_WIDTH = 16;
-localparam [DATA_MAGIC_WIDTH-1:0] DATA_MAGIC = 'hCACA;
+localparam DATA_PATTERN_WIDTH = 16;
+localparam [DATA_PATTERN_WIDTH-1:0] DATA_PATTERN = 'hCACA;
 localparam MAGIC_WIDTH = 16;
 localparam MAGIC_START_BIT = 16;
 localparam INDEX_WIDTH = 5;
@@ -165,7 +165,7 @@ wire [31:0] sysCsr;
 writeFMPSTestLink #(
     .INDEX_WIDTH(INDEX_WIDTH),
     .WITH_MULT_PACK_SUPPORT("true"),
-    .DATA_MAGIC(DATA_MAGIC)
+    .DATA_PATTERN(DATA_PATTERN)
 )
   DUT(
     .sysClk(sysClk),
@@ -234,7 +234,7 @@ wire FMPS_invalidFMPS2CC = packetData[31];
 wire FMPS_invalidCC2CC = packetData[30];
 wire FMPS_reserved = packetData[29];
 wire [INDEX_WIDTH-1:0] FMPS_dataIndex = packetData[28:24];
-wire [DATA_MAGIC_WIDTH-1:0] FMPS_dataMagic = packetData[23:8];
+wire [DATA_PATTERN_WIDTH-1:0] FMPS_dataPattern = packetData[23:8];
 wire [7:0] FMPS_cycleCounter = packetData[7:0];
 
 // Test data
@@ -244,7 +244,7 @@ localparam ST_IDLE                  = 0,
            ST_INVALID_PACKET_BITS   = 3,
            ST_INVALID_RESERVED_BITS = 4,
            ST_INVALID_DATA_INDEX    = 5,
-           ST_INVALID_DATA_MAGIC    = 6,
+           ST_INVALID_DATA_PATTERN  = 6,
            ST_INVALID_CYCLE_COUNTER = 7,
            ST_FAIL                  = 8,
            ST_HALT                  = 9;
@@ -287,8 +287,8 @@ always @(posedge auClk) begin
                     else if (FMPS_dataIndex != packetIndex) begin
                         state <= ST_INVALID_DATA_INDEX;
                     end
-                    else if (FMPS_dataMagic != DATA_MAGIC) begin
-                        state <= ST_INVALID_DATA_MAGIC;
+                    else if (FMPS_dataPattern != DATA_PATTERN) begin
+                        state <= ST_INVALID_DATA_PATTERN;
                     end
                     else if (FMPS_cycleCounter != cycleCounter) begin
                         state <= ST_INVALID_CYCLE_COUNTER;
@@ -323,9 +323,9 @@ always @(posedge auClk) begin
             state <= ST_FAIL;
         end
 
-        ST_INVALID_DATA_MAGIC: begin
-            $display("@%0d: Invalid data magic: dataMagic: 0x%04X, expected: 0x%04X",
-                $time, FMPS_dataMagic, DATA_MAGIC);
+        ST_INVALID_DATA_PATTERN: begin
+            $display("@%0d: Invalid data magic: dataPattern: 0x%04X, expected: 0x%04X",
+                $time, FMPS_dataPattern, DATA_PATTERN);
             state <= ST_FAIL;
         end
 
