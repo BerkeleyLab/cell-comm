@@ -28,6 +28,11 @@ module axisMux #(
     output wire                     [DATA_WIDTH-1:0] m_tdata
 );
 
+// Avoiding to use this module for synthesis (Vivado only)
+`ifdef SYNTHESIS
+    $error("axisMux should be used for simulation purpose only.");
+`endif
+
 generate
 if (NUM_SOURCES > 8) begin
     NUM_SOURCES_bigger_than_8_not_supported();

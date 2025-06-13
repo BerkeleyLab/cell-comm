@@ -42,11 +42,11 @@ initial begin
     wait(module_done);
 
     if (errors > 0) begin
-    	$display("FAIL");
-    	$stop(0);
+        $display("FAIL");
+        $stop(0);
     end else begin
-    	$display("PASS");
-    	$finish(0);
+        $display("PASS");
+        $finish(0);
     end
 end
 
@@ -119,7 +119,7 @@ always @(posedge clk) case(readoutAddress)
     9'h5d: readoutData <= 32'h085d;
     9'h5e: readoutData <= 32'h085e;
     9'h5f: readoutData <= 32'h085f;
-	default: readoutData <= 0;
+    default: readoutData <= 0;
 endcase
 assign readoutPresent = readoutData == 0 ? 0 : 1;
 

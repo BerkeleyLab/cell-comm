@@ -79,13 +79,15 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
+reg stopUBreadoutReq = 0, stopUBreadout = 0;
 (*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
         cellCount <= GPIO_OUT[0+:CELL_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+1];
-        useFakeData <= GPIO_OUT[20];
+        useFakeData <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
+        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+3];
     end
 end
 
@@ -153,7 +155,6 @@ wire mergedFOFBenabled = mergedTUSER[0];
 localparam LINK_CCW = 1'b0, LINK_CW = 1'b1;
 localparam ST_SUCCESS = 2'd0;
 
-`ifndef SIMULATE
 fofbReadLinksMux fofbReadLinksMux (
     .ACLK(auClk),
     .ARESETN(~auReset),
@@ -175,7 +176,6 @@ fofbReadLinksMux fofbReadLinksMux (
     .M00_AXIS_TUSER(mergedTUSER),
     .S00_ARB_REQ_SUPPRESS(1'b0),
     .S01_ARB_REQ_SUPPRESS(1'b0));
-`endif
 
 //
 // Forward link packet counts to system clock domain
@@ -231,6 +231,7 @@ always @(posedge sysClk) begin
         timeoutFlag <= 0;
         fofbBitmapAllFASnapshot <= fofbBitmapAll;
         fofbEnableBitmapFASnapshot <= fofbBitmapEnabled;
+        stopUBreadout <= stopUBreadoutReq;
     end
     else if (readoutActive) begin
         if (cellCounter == cellCount) begin
@@ -332,8 +333,8 @@ end
 // MicroBlaze status
 //
 assign csr = { readoutActive, readoutValid, readoutTime, seqno,
-            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*CELL_COUNT_WIDTH){1'b0}},
-                                     useFakeData, cwInhibit, ccwInhibit,
+            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-4-(3*CELL_COUNT_WIDTH){1'b0}},
+                            stopUBreadout, useFakeData, cwInhibit, ccwInhibit,
                                      cwPacketCount, ccwPacketCount, cellCount };
 
 //
@@ -348,7 +349,7 @@ reg [FOFB_INDEX_WIDTH-1:0] uBreadoutAddress;
 always @(posedge sysClk) begin
     if (uBreadoutStrobe) uBreadoutAddress <= GPIO_OUT[FOFB_INDEX_WIDTH-1:0];
     uBq <= uBdpram[uBreadoutAddress];
-    if (fofbDSPreadoutValid) begin
+    if (fofbDSPreadoutValid && !stopUBreadout) begin
         uBdpram[fofbDSPreadoutAddress_d] <=
                             {fofbDSPreadoutS, fofbDSPreadoutY, fofbDSPreadoutX};
     end
