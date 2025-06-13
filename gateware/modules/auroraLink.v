@@ -54,9 +54,8 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
 
     /* Async assertion and sync deassertion reset */
     reg [2:0] auResetSync = 0;
-    wire      mgtClk = USE_INTERNAL_MMCM == "true" ? auMGTclkOut : auMGTclkIn;
     wire      resetOut;
-    always @(posedge mgtClk or posedge resetOut) begin
+    always @(posedge auMGTclkOut or posedge resetOut) begin
         if (resetOut) auResetSync <= 3'b111;
         else auResetSync <= {auResetSync[1:0], 1'b0};
     end
@@ -138,7 +137,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
     `ifndef SIMULATE
         if (CONVERSION_DEBUG == "true") begin
             ila_td400_s4096_cap ila_aurora_link_inst (
-                .clk(mgtClk),
+                .clk(auMGTclkOut),
                 .probe0({
                     axiRxTdata,
                     axiRxTkeep,
