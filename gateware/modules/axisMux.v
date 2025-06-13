@@ -30,9 +30,7 @@ module axisMux #(
 
 // Avoiding to use this module for synthesis (Vivado only)
 `ifdef SYNTHESIS
-    $warning("[!] FATAL ERROR - the module axiMux should be used \
-for simulation purpose only. Synthesis aborted.");
-    $error(1);
+    $error("axisMux should be used for simulation purpose only.");
 `endif
 
 generate
