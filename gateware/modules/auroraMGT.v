@@ -68,12 +68,12 @@ wire txOutClk, userClkMMCM, syncClkMMCM, sysClkBuf;
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
 // Errors and status
 wire gtPllLock, hardErr, softErr, laneUp, channelUP, sysCrcPass,
-     crcReadable, gtCrcPass, txResetDone, rxResetDone;
+     gtCrcValid, gtCrcPass, txResetDone, rxResetDone;
 (*ASYNC_REG="true"*) reg sysHardErr, sysHardErr_m,
                          sysSoftErr,  sysSoftErr_m,
                          sysLaneUp,  sysLaneUp_m,
                          sysChannelUP,  sysChannelUP_m,
-                         sysCrcReadable,  sysCrcReadable_m,
+                         sysCrcValid,  sysCrcValid_m,
                          sysGtCrcPass,  sysGtCrcPass_m,
                          sysTxResetDone,  sysTxResetDone_m,
                          sysRxResetDone,  sysRxResetDone_m,
@@ -137,8 +137,8 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 | GPIO_IN[9]  | (0x00000200) |    mgtCSR[9]     | laneUp          |
 | GPIO_IN[8]  | (0x00000100) |    mgtCSR[8]     | channelUP       |
 |-------------|--------------|------------------|-----------------|
-| GPIO_IN[7]  | (0x00000080) |    mgtCSR[7]     | crcPass         |
-| GPIO_IN[6]  | (0x00000040) |    mgtCSR[6]     | crcReadable     |
+| GPIO_IN[7]  | (0x00000080) |    mgtCSR[7]     |    ---          |
+| GPIO_IN[6]  | (0x00000040) |    mgtCSR[6]     | gtCrcValid      |
 | GPIO_IN[5]  | (0x00000020) |    mgtCSR[5]     | gtCrcPass       |
 | GPIO_IN[4]  | (0x00000010) |    mgtCSR[4]     | txResetDone     |
 |-------------|--------------|------------------|-----------------|
@@ -149,9 +149,9 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 '-----------------------------------------------------------------'
 */
 
-assign sysCrcPass = sysCrcReadable? sysGtCrcPass : 1'b0;
+assign sysCrcPass = sysCrcValid? sysGtCrcPass : 1'b0;
 assign axiCrcPass = gtCrcPass;
-assign axiCrcValid = crcReadable;
+assign axiCrcValid = gtCrcValid;
 assign mgtResetOut = reset;
 
 reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {POWER_DOWN_INIT_STATE,
@@ -172,7 +172,7 @@ assign mgtStatus = {sysHardErr,
                     sysLaneUp,
                     sysChannelUP,
                     sysCrcPass,
-                    sysCrcReadable,
+                    sysCrcValid,
                     sysGtCrcPass,
                     sysTxResetDone,
                     sysRxResetDone,
@@ -199,8 +199,8 @@ always @(posedge sysClkBuf) begin
     sysLaneUp_m <= laneUp;
     sysChannelUP <= sysChannelUP_m;
     sysChannelUP_m <= channelUP;
-    sysCrcReadable <= sysCrcReadable_m;
-    sysCrcReadable_m <= crcReadable;
+    sysCrcValid <= sysCrcValid_m;
+    sysCrcValid_m <= gtCrcValid;
     sysGtCrcPass <= sysGtCrcPass_m;
     sysGtCrcPass_m <= gtCrcPass;
     sysTxResetDone <= sysTxResetDone_m;
@@ -239,7 +239,7 @@ if (DEBUG == "true") begin
             softErr,
             laneUp,
             channelUP,
-            crcReadable,
+            gtCrcValid,
             gtCrcPass,
             txResetDone,
             rxResetDone,
@@ -280,7 +280,7 @@ aurora64b66b aurora64b66bInst (
     .channel_up(channelUP),             // output
     .lane_up(laneUp),                   // output
     .crc_pass_fail_n(gtCrcPass),        // output
-    .crc_valid(crcReadable),            // output
+    .crc_valid(gtCrcValid),             // output
     // System Interface
     .mmcm_not_locked(mmcmNotLocked),    // input
     .user_clk(userClkOut),              // input
