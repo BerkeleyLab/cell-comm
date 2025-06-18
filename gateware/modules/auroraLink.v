@@ -10,20 +10,24 @@ module auroraLink #(
     output wire [31:0] mgtCSR,
     input  wire        mgtCSRstrobe,
     output wire        auResetOut,
+
     /* MGT clock and IO */
     input  wire        refClk,
     output wire        MGT_TX_P,
     output wire        MGT_TX_N,
     input  wire        MGT_RX_P,
     input  wire        MGT_RX_N,
+
     /* Clocks in case of external MMCMM */
     input  wire        auMGTclkIn,
     input  wire        auUserClkIn,
     input  wire        mmcmLockedIn,
+
     /* Clocks in case of internal MMCMM */
     output wire        auMGTclkOut,
     output wire        auUserClkOut,
     output wire        mmcmLockedOut,
+
     /* Axi stream 32 bit interface */
     output wire [31:0] axiRxTdata,
     output wire [3:0]  axiRxTkeep,
@@ -34,7 +38,16 @@ module auroraLink #(
     input  wire [31:0] axiTxTdata,
     output wire        axiTxTready,
     input  wire        axiTxTlast,
-    input  wire        axiTxTvalid
+    input  wire        axiTxTvalid,
+
+    /* Status from aurora core */
+    output             mgtHardErr,
+    output             mgtSoftErr,
+    output             mgtLaneUp,
+    output             mgtChannelUP,
+    output             mgtTxResetDone,
+    output             mgtRxResetDone,
+    output             mgtMmcmNotLocked
 );
 
 if(MGT_PROTOCOL == "AURORA_64B66B") begin
@@ -75,9 +88,9 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .refClkIn(refClk),                                      // input
         .syncClkIn(auUserClkIn),                                // input
         .userClkIn(auMGTclkIn),                                 // input
-        .mmcmNotLockedIn(mmcmLockedIn),                         // input
         .userClkOut(auMGTclkOut),                               // output
         .syncClkOut(auUserClkOut),                              // output
+        .mmcmNotLockedIn(mmcmLockedIn),                         // input
         .mmcmNotLockedOut(mmcmLockedOut),                       // output
 
         .tx_p(MGT_TX_P),                                        // output
@@ -96,7 +109,16 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .axiTXtlast(axiTxTlast64b),                             // input
         .axiTXtready(axiTxTready64b),                           // output
         .axiCrcPass(axiCrcPass),                                // output
-        .axiCrcValid(axiCrcValid));                             // output
+        .axiCrcValid(axiCrcValid),                              // output
+
+        .mgtHardErr(mgtHardErr),                                // output
+        .mgtSoftErr(mgtSoftErr),                                // output
+        .mgtLaneUp(mgtLaneUp),                                  // output
+        .mgtChannelUP(mgtChannelUP),                            // output
+        .mgtTxResetDone(mgtTxResetDone),                        // output
+        .mgtRxResetDone(mgtRxResetDone),                        // output
+        .mgtMmcmNotLocked(mgtMmcmNotLocked)                     // output
+    );
 
     wire [7:0] axiTuser = {6'b0, axiCrcValid, axiCrcPass};
 
