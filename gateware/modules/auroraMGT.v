@@ -75,7 +75,7 @@ localparam TX_PMA_RESET_INIT_STATE = 1'b0;
 localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
-wire txOutClk, userClkMMCM, syncClkMMCM, sysClkBuf;
+wire txOutClk, userClkMMCM, syncClkMMCM;
 // Controls
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
 // Errors and status
@@ -105,8 +105,6 @@ if (INTERNAL_MMCM == "true") begin
     end
     auroraMMCM #()
         auroraCWmmcm (
-        .INIT_CLK(sysClk),
-        .INIT_CLK_O(sysClkBuf),
         .TX_CLK(txOutClk),              // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
@@ -118,7 +116,6 @@ if (INTERNAL_MMCM == "true") begin
 end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
     assign syncClkOut = syncClkIn;
-    assign sysClkBuf =  sysClk;
     assign mmcmNotLocked = mmcmNotLockedIn;
 end else begin
     ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
@@ -203,14 +200,14 @@ assign mgtStatus = {sysHardErr,
 assign mgtCSR = {{32-GT_CONTROL_REG_WIDTH-GT_STATUS_REG_WIDTH{1'b0}},
                   mgtControl, mgtStatus};
 
-always @(posedge sysClkBuf) begin
+always @(posedge sysClk) begin
     if (mgtCSRstrobe) begin
         mgtControl <= GPIO_OUT[GT_CONTROL_REG_WIDTH-1:0];
     end
 end
 
 /* MGT Control CDC from userClk to sysClk */
-always @(posedge sysClkBuf) begin
+always @(posedge sysClk) begin
     sysHardErr <= sysHardErr_m;
     sysHardErr_m <= hardErr;
     sysSoftErr <= sysSoftErr_m;
@@ -236,7 +233,7 @@ end
 `ifndef SIMULATE
 if (DEBUG == "true") begin
     ila_td400_s4096_cap ila_auroraMGT_inst (
-        .clk(sysClkBuf),
+        .clk(sysClk),
         .probe0({
             axiTXtdata,
             axiRXtdata,
@@ -311,7 +308,7 @@ aurora64b66b aurora64b66bInst (
     .loopback(3'b0),                    // input [2:0]
     .pma_init(gtReset),                 // input
     .gt_pll_lock(gtPllLock),            // output
-    .drp_clk_in(sysClkBuf),             // input
+    .drp_clk_in(sysClk),                // input
     // GT quad assignment
     .gt_qpllclk_quad1_in(1'b0),         // input
     .gt_qpllrefclk_quad1_in(1'b0),      // input
@@ -322,7 +319,7 @@ aurora64b66b aurora64b66bInst (
     .drpwe_in(1'b0),                    // input
     .drpdo_out(),                       // output [15:0]
     .drprdy_out(),                      // output
-    .init_clk(sysClkBuf),               // input
+    .init_clk(sysClk),                  // input
     .link_reset_out(),                  // output
     .gt_rxusrclk_out(),                 // output
     //------------------------ RX Margin Analysis Ports ------------------------
