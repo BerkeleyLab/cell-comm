@@ -11,8 +11,6 @@ module auroraMMCM # (
     parameter   OUT2_DIVIDE     =   20,
     parameter   OUT3_DIVIDE     =   8
     ) (
-    input  INIT_CLK,
-    output INIT_CLK_O,
     input  TX_CLK,
     input  CLK_LOCKED,
     output USER_CLK,
@@ -20,7 +18,6 @@ module auroraMMCM # (
     output MMCM_NOT_LOCKED);
 
 (* KEEP = "TRUE" *)    wire             clk_not_locked_i;
-wire                                    INIT_CLK_IBUF;
 wire                                    sync_clk_i;
 wire                                    user_clk_i;
 wire                                    clkfbout_i;
@@ -117,11 +114,6 @@ BUFG user_clk_net_i
     .O(USER_CLK)
 );
 
-BUFG initclk_net_i
-(
-    .I  (INIT_CLK),
-    .O  (INIT_CLK_O)
-);
 `endif // SIMULATE
 
 endmodule
