@@ -23,19 +23,22 @@ module auroraMGT #(
     output     [31:0]   mgtCSR,
     input      [31:0]   GPIO_OUT,
     output              mgtResetOut,
-    input               mmcmNotLockedIn,
-    output              mmcmNotLockedOut,
+
     /* MGT Clocks */
     input               refClkIn,
     input               syncClkIn,
     input               userClkIn,
     output              userClkOut,
     output              syncClkOut,
+    input               mmcmNotLockedIn,
+    output              mmcmNotLockedOut,
+
     /* MGT pins */
     output              tx_p,
     output              tx_n,
     input               rx_p,
     input               rx_n,
+
     /* AXI interface */
     output     [63:0]   axiRXtdata,
     output      [7:0]   axiRXtkeep,
@@ -47,7 +50,16 @@ module auroraMGT #(
     input               axiTXtlast,
     output              axiTXtready,
     output              axiCrcPass,
-    output              axiCrcValid);
+    output              axiCrcValid,
+
+    /* Status from aurora core */
+    output              mgtHardErr,
+    output              mgtSoftErr,
+    output              mgtLaneUp,
+    output              mgtChannelUP,
+    output              mgtTxResetDone,
+    output              mgtRxResetDone,
+    output              mgtMmcmNotLocked);
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -152,7 +164,15 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 assign sysCrcPass = sysCrcValid? sysGtCrcPass : 1'b0;
 assign axiCrcPass = gtCrcPass;
 assign axiCrcValid = gtCrcValid;
-assign mgtResetOut = reset;
+
+assign mgtHardErr         = hardErr;
+assign mgtSoftErr         = softErr;
+assign mgtLaneUp          = laneUp;
+assign mgtChannelUP       = channelUP;
+assign mgtTxResetDone     = txResetDone;
+assign mgtRxResetDone     = rxResetDone;
+assign mgtMmcmNotLocked   = mmcmNotLocked;
+assign mgtResetOut        = reset;
 
 reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {POWER_DOWN_INIT_STATE,
                                              RESET_INIT_STATE,
