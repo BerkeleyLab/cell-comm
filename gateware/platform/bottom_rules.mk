@@ -1,1 +1,3 @@
-include $(CELL_COMM_PLATFORM_DIR)xilinx/7series/marble/bottom_rules.mk
+TARGET_PLATFORM_DIR = $(CELL_COMM_PLATFORM_DIR)/$(FPGA_VENDOR)/$(FPGA_PLATFORM)/$(HARDWARE)
+
+include $(TARGET_PLATFORM_DIR)/bottom_rules.mk
