@@ -9,7 +9,6 @@ module auroraLink #(
     input  wire [31:0] GPIO_OUT,
     output wire [31:0] mgtCSR,
     input  wire        mgtCSRstrobe,
-    output wire        auResetOut,
 
     /* MGT clock and IO */
     input  wire        refClk,
@@ -25,7 +24,9 @@ module auroraLink #(
 
     /* Clocks in case of internal MMCMM */
     output wire        auMGTclkOut,
+    output wire        auMGTResetOut,
     output wire        auUserClkOut,
+    output wire        auUserResetOut,
     output wire        mmcmLockedOut,
 
     /* Axi stream 32 bit interface */
@@ -65,14 +66,21 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
     wire          axiCrcPass;
     wire          axiCrcValid;
 
-    /* Async assertion and sync deassertion reset */
-    reg [2:0] auResetSync = 0;
-    wire      resetOut;
-    always @(posedge auMGTclkOut or posedge resetOut) begin
-        if (resetOut) auResetSync <= 3'b111;
-        else auResetSync <= {auResetSync[1:0], 1'b0};
+    wire          resetOut;
+
+    (* ASYNC_REG="TRUE" *) reg  auMGTReset_m = 0, auMGTReset = 0;
+    always @(posedge auMGTclkOut) begin
+        auMGTReset_m <= resetOut;
+        auMGTReset <= auMGTReset_m;
     end
-    assign auResetOut = auResetSync[2];
+    assign auMGTResetOut = auMGTReset;
+
+    (* ASYNC_REG="TRUE" *) reg  auUserReset_m = 0, auUserReset = 0;
+    always @(posedge auUserClkOut) begin
+        auUserReset_m <= resetOut;
+        auUserReset <= auUserReset_m;
+    end
+    assign auUserResetOut = auUserReset;
 
     auroraMGT #(
         .DEBUG(MGT_DEBUG),
@@ -136,7 +144,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mAxiStreamTready(axiTxTready64b),                      // input
         .mAxiStreamTvalid(axiTxTvalid64b),                      // output
         .mClk(auMGTclkOut),                                     // input
-        .resetN(~auResetOut));                                    // input
+        .resetN(~auMGTResetOut));                               // input
 
     axiDataDownconverter axiDataDownconverterInst(
         /* Input stage 64-bit */
@@ -153,7 +161,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mAxiStreamTlast(axiRxTlast),                           // output
         .mAxiStreamTvalid(axiRxTvalid),                         // output
         .mClk(auUserClkOut),                                    // input
-        .resetN(~auResetOut));                                    // input
+        .resetN(~auMGTResetOut));                               // input
 
     // Debugging
     `ifndef SIMULATE
@@ -180,7 +188,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
                     axiTxTlast64b,
                     axiTxTready64b,
                     resetOut,
-                    auResetOut,
+                    auMGTResetOut,
                     axiTuser}) // [399:0]
                 );
             end
