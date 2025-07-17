@@ -1,3 +1,3 @@
 # clean generate IP cores files, but the source ones (.xci or .bd)
 clean::
-	$(foreach ipcore, $(cell_comm_IP_CORES), find $(cell_comm_marble_platform_DIR)$(ipcore) -mindepth 1 -not \( -name \*$(ipcore).xci -o -name \*$(ipcore).bd \) -delete ;)
+	$(foreach ipcore, $(cell_comm_IP_CORES), find $(cell_comm_lbl208_platform_DIR)$(ipcore) -mindepth 1 -not \( -name \*$(ipcore).xci -o -name \*$(ipcore).bd \) -delete ;)

@@ -1,4 +1,4 @@
-cell_comm_marble_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/7series/marble/
+cell_comm_zcu208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu48/zcu208/
 
 cell_comm_IP_CORES = \
 	axisDataFifo32 \
@@ -11,7 +11,7 @@ cell_comm_IP_CORES = \
 	axiStreamSubConvOutDowncon \
 	aurora64b66b
 
-cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_marble_platform_DIR), $(cell_comm_IP_CORES))
+cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_zcu208_platform_DIR), $(cell_comm_IP_CORES))
 
 # For top-level makefile
 IP_CORES_XCIS += $(addsuffix .xci, $(cell_comm_IP_CORES))
