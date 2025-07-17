@@ -1,4 +1,5 @@
 module auroraLink #(
+    parameter FPGA_FAMILY       = "7series",
     parameter MGT_DEBUG         = "false",
     parameter CONVERSION_DEBUG  = "false",
     parameter USE_INTERNAL_MMCM = "false",
@@ -83,6 +84,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
     assign auUserResetOut = auUserReset;
 
     auroraMGT #(
+        .FPGA_FAMILY(FPGA_FAMILY),
         .DEBUG(MGT_DEBUG),
         .INTERNAL_MMCM(USE_INTERNAL_MMCM)
     ) auroraMGTInst (

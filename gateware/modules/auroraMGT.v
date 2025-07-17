@@ -13,6 +13,7 @@
  */
 
 module auroraMGT #(
+    parameter  FPGA_FAMILY          = "7series",
     parameter  DEBUG                = "false",
     parameter  INTERNAL_MMCM        = "false",
     parameter  ALLOW_MMCM_RESET     = "false"
@@ -60,6 +61,12 @@ module auroraMGT #(
     output              mgtTxResetDone,
     output              mgtRxResetDone,
     output              mgtMmcmNotLocked);
+
+generate
+    if (FPGA_FAMILY != "7series" && FPGA_FAMILY != "ultrascaleplus") begin
+    FPGA_FAMILY_unsupported error();
+end
+endgenerate
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -272,6 +279,10 @@ end
 ////////////////////////////////////////////////////////////////////////////////
 // Aurora IP instance
 `ifndef SIMULATE
+
+generate
+if (FPGA_FAMILY == "7series") begin
+
 aurora64b66b aurora64b66bInst (
     // TX AXI4-S Interface
     .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -365,5 +376,100 @@ aurora64b66b aurora64b66bInst (
     .sys_reset_out(),                   // output
     .tx_out_clk(txOutClk)               // output
 );
+
+end
+
+if (FPGA_FAMILY == "ultrascaleplus") begin
+
+aurora64b66b aurora64b66bInst (
+    // TX AXI4-S Interface
+    .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
+    .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
+    .s_axi_tx_tlast(axiTXtlast),        // input
+    .s_axi_tx_tvalid(axiTXtvalid),      // input
+    .s_axi_tx_tready(axiTXtready),      // output
+    // RX AXI4-S Interface
+    .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
+    .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
+    .m_axi_rx_tlast(axiRXtlast),        // output
+    .m_axi_rx_tvalid(axiRXtValid),      // output
+    // GTX Serial I/O
+    .rxp(rx_p),                         // input
+    .rxn(rx_n),                         // input
+    .txp(tx_p),                         // output
+    .txn(tx_n),                         // output
+    //GTX Reference Clock Interface
+    .refclk1_in(refClkIn),              // input
+    .hard_err(hardErr),                 // output
+    .soft_err(softErr),                 // output
+    // Status
+    .channel_up(channelUP),             // output
+    .lane_up(laneUp),                   // output
+    .crc_pass_fail_n(gtCrcPass),        // output
+    .crc_valid(gtCrcValid),             // output
+    // System Interface
+    .mmcm_not_locked(mmcmNotLocked),    // input
+    .user_clk(userClkOut),              // input
+    .sync_clk(syncClkOut),              // input
+    .reset_pb(reset),                   // input
+    .gt_rxcdrovrden_in(1'b0),           // input
+    .power_down(powerDown),             // input
+    .loopback(3'b0),                    // input [2:0]
+    .pma_init(gtReset),                 // input
+    // GT DRP Ports
+    .gt0_drpaddr(10'b0),                // input  [9:0]
+    .gt0_drpdi(16'b0),                  // input  [15:0]
+    .gt0_drpen(1'b0),                   // input
+    .gt0_drpwe(1'b0),                   // input
+    .gt0_drpdo(),                       // output [15:0]
+    .gt0_drprdy(),                      // output
+    .init_clk(sysClk),                  // input
+    .link_reset_out(),                  // output
+    .gt_rxusrclk_out(),                 // output
+    //------------------------ RX Margin Analysis Ports ------------------------
+    .gt_eyescandataerror(),             // output
+    .gt_eyescanreset(1'b0),             // input
+    .gt_eyescantrigger(1'b0),           // input
+    //------------------- Receive Ports - RX Equalizer Ports -------------------
+    .gt_rxcdrhold(1'b0),                // input  [0:0]
+    .gt_rxdfelpmreset(1'b0),            // input  [0:0]
+    .gt_rxlpmen(1'b0),                  // input  [0:0]
+    .gt_rxpmareset(1'b0),               // input  [0:0]
+    .gt_rxpcsreset(1'b0),               // input  [0:0]
+    .gt_rxrate(2'b0),                   // input  [2:0]
+    .gt_rxbufreset(1'b0),               // input  [0:0]
+    .gt_rxpmaresetdone(),               // output [0:0]
+    .gt_rxprbssel(4'b0),                // input  [3:0]
+    .gt_rxprbscntreset(1'b0),           // input  [0:0]
+    .gt_rxprbserr(),                    // output [0:0]
+    .gt_rxresetdone(rxResetDone),       // output [0:0]
+    .gt_rxbufstatus(rxBufStatus),       // output [2:0]
+    //---------------------- TX Configurable Driver Ports ----------------------
+    .gt_txpostcursor(5'b0),             // input  [4:0]
+    .gt_txdiffctrl(5'b11000),           // input  [4:0]
+    .gt_txprecursor(5'b0),              // input  [4:0]
+    //--------------- Transmit Ports - TX Polarity Control Ports ---------------
+    .gt_txpolarity(1'b0),               // input
+    .gt_txinhibit(1'b0),                // input
+    .gt_txpmareset(txPMAreset),         // input
+    .gt_txpcsreset(txPCSreset),         // input
+    .gt_txprbssel(4'b0),                // input  [3:0]
+    .gt_txprbsforceerr(1'b0),           // input
+    .gt_txbufstatus(txBufStatus),       // output [1:0]
+    .gt_txresetdone(txResetDone),       // output
+    .gt_pcsrsvdin(16'b0),               // input  [15:0]
+    .gt_dmonitorout(),                  // output [15:0]
+    .gt_cplllock(cpllLock),             // output
+    .gt_qplllock(),                     // output
+    .gt_powergood(),                    // output [0:0]
+    .gt_pll_lock(gtPllLock),            // output
+    .bufg_gt_clr_out(),                 // output
+    .sys_reset_out(),                   // output
+    .tx_out_clk(txOutClk)               // output
+);
+
+end
+endgenerate
+
 `endif // `ifndef SIMULATE
 endmodule
