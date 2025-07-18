@@ -1,4 +1,11 @@
 module auroraLink #(
+    parameter MMCM_MULT         = 14,
+    parameter MMCM_DIVIDE       = 1,
+    parameter MMCM_CLK_PERIOD   = 10.240,
+    parameter MMCM_OUT0_DIVIDE  = 28,
+    parameter MMCM_OUT1_DIVIDE  = 14,
+    parameter MMCM_OUT2_DIVIDE  = 20,
+    parameter MMCM_OUT3_DIVIDE  = 8,
     parameter FPGA_FAMILY       = "7series",
     parameter MGT_DEBUG         = "false",
     parameter CONVERSION_DEBUG  = "false",
@@ -84,6 +91,13 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
     assign auUserResetOut = auUserReset;
 
     auroraMGT #(
+        .MMCM_MULT(MMCM_MULT),
+        .MMCM_DIVIDE(MMCM_DIVIDE),
+        .MMCM_CLK_PERIOD(MMCM_CLK_PERIOD),
+        .MMCM_OUT0_DIVIDE(MMCM_OUT0_DIVIDE),
+        .MMCM_OUT1_DIVIDE(MMCM_OUT1_DIVIDE),
+        .MMCM_OUT2_DIVIDE(MMCM_OUT2_DIVIDE),
+        .MMCM_OUT3_DIVIDE(MMCM_OUT3_DIVIDE),
         .FPGA_FAMILY(FPGA_FAMILY),
         .DEBUG(MGT_DEBUG),
         .INTERNAL_MMCM(USE_INTERNAL_MMCM)

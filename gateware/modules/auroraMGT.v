@@ -13,6 +13,13 @@
  */
 
 module auroraMGT #(
+    parameter  MMCM_MULT            = 14,
+    parameter  MMCM_DIVIDE          = 1,
+    parameter  MMCM_CLK_PERIOD      = 10.240,
+    parameter  MMCM_OUT0_DIVIDE     = 28,
+    parameter  MMCM_OUT1_DIVIDE     = 14,
+    parameter  MMCM_OUT2_DIVIDE     = 20,
+    parameter  MMCM_OUT3_DIVIDE     = 8,
     parameter  FPGA_FAMILY          = "7series",
     parameter  DEBUG                = "false",
     parameter  INTERNAL_MMCM        = "false",
@@ -110,7 +117,15 @@ if (INTERNAL_MMCM == "true") begin
     end else begin
         ERROR_ALLOW_MMCM_RESET_IS_NEITHER_TRUE_OR_FALSE();
     end
-    auroraMMCM #()
+    auroraMMCM #(
+        .MULT         (MMCM_MULT),
+        .DIVIDE       (MMCM_DIVIDE),
+        .CLK_PERIOD   (MMCM_CLK_PERIOD),
+        .OUT0_DIVIDE  (MMCM_OUT0_DIVIDE),
+        .OUT1_DIVIDE  (MMCM_OUT1_DIVIDE),
+        .OUT2_DIVIDE  (MMCM_OUT2_DIVIDE),
+        .OUT3_DIVIDE  (MMCM_OUT3_DIVIDE)
+    )
         auroraCWmmcm (
         .TX_CLK(txOutClk),              // input
         .CLK_LOCKED(mmcmClkInLock),     // input
