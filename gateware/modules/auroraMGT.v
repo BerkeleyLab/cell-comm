@@ -106,6 +106,7 @@ wire gtPllLock, hardErr, softErr, laneUp, channelUP, sysCrcPass,
                          sysMmcmNotLocked, sysMmcmNotLocked_m;
 wire [1:0] txBufStatus;
 wire [2:0] rxBufStatus;
+wire txOutClkClr;
 
 //////////////////////////////////////////////////////////////////////////////
 // Sync clock and User clock generation
@@ -118,6 +119,7 @@ if (INTERNAL_MMCM == "true") begin
         ERROR_ALLOW_MMCM_RESET_IS_NEITHER_TRUE_OR_FALSE();
     end
     auroraMMCM #(
+        .FPGA_FAMILY  (FPGA_FAMILY),
         .MULT         (MMCM_MULT),
         .DIVIDE       (MMCM_DIVIDE),
         .CLK_PERIOD   (MMCM_CLK_PERIOD),
@@ -128,6 +130,7 @@ if (INTERNAL_MMCM == "true") begin
     )
         auroraCWmmcm (
         .TX_CLK(txOutClk),              // input
+        .TX_CLK_CLR(txOutClkClr),       // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
         .SYNC_CLK(syncClkMMCM),         // output
@@ -392,6 +395,8 @@ aurora64b66b aurora64b66bInst (
     .tx_out_clk(txOutClk)               // output
 );
 
+assign txOutClkClr = 1'b0;
+
 end
 
 if (FPGA_FAMILY == "ultrascaleplus") begin
@@ -478,7 +483,7 @@ aurora64b66b aurora64b66bInst (
     .gt_qplllock(),                     // output
     .gt_powergood(),                    // output [0:0]
     .gt_pll_lock(gtPllLock),            // output
-    .bufg_gt_clr_out(),                 // output
+    .bufg_gt_clr_out(txOutClkClr),      // output
     .sys_reset_out(),                   // output
     .tx_out_clk(txOutClk)               // output
 );
