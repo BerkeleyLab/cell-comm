@@ -1,6 +1,8 @@
 cell_comm_lbl208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu47/lbl208/
 
 cell_comm_IP_CORES = \
+	ila_td400_s16384_cap \
+	ila_td400_s4096_cap \
 	axisDataFifo32 \
 	axiStreamDwUpcon \
 	axiStreamSubConvUpcon \
