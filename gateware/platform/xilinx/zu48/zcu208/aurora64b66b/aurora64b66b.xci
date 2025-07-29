@@ -1354,9 +1354,9 @@
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK5_LOC_N">AA34</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK5_LOC_P">AA33</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK5_SOURCE">none</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_LOC_N">AA34</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_LOC_P">AA33</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_SOURCE">X0Y4 clk0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_LOC_N">Y32</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_LOC_P">Y31</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_REFCLK_SOURCE">X0Y4 clk1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_START_LANE">X0Y4</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_START_QUAD">Quad_X0Y1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_active_transceiverquads">1</spirit:configurableElementValue>
@@ -1549,7 +1549,7 @@
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_REFCLK_FREQUENCY">156.25</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_REFCLK_FREQUENCY_ACTUAL">156.250</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_REFCLK_FREQUENCY_VERSAL">156.250</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_REFCLK_SOURCE">MGTREFCLK0_of_Quad_X0Y1</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_REFCLK_SOURCE">MGTREFCLK1_of_Quad_X0Y1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_START_LANE">X0Y4</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_START_QUAD">Quad_X0Y1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.C_UCOLUMN_USED">left</spirit:configurableElementValue>
