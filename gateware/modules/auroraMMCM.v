@@ -17,6 +17,7 @@ module auroraMMCM # (
     input  CLK_LOCKED,
     output USER_CLK,
     output SYNC_CLK,
+    output TX_CLK_OUT,
     output MMCM_NOT_LOCKED);
 
 generate
@@ -31,7 +32,6 @@ wire                                    user_clk_i;
 wire                                    clkfbout_i;
 wire                                    clkfbout;
 wire                                    locked_i;
-wire                                    clk_in_i;
 assign clk_not_locked_i = !CLK_LOCKED;
 assign MMCM_NOT_LOCKED  = !locked_i;
 
@@ -51,7 +51,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
         .CLRMASK (1'b0),
         .DIV     (P_USRCLK_DIV),
         .I       (TX_CLK),
-        .O       (clk_in_i)
+        .O       (TX_CLK_OUT)
     );
 
     MMCME4_ADV #(.BANDWIDTH            ("OPTIMIZED"),
@@ -96,7 +96,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .CLKOUT6             (),
             // Input clock control
             .CLKFBIN             (clkfbout),
-            .CLKIN1              (clk_in_i),
+            .CLKIN1              (TX_CLK_OUT),
             .CLKIN2              (1'b0),
             // Tied to always select the primary input clock
             .CLKINSEL            (1'b1),
@@ -126,7 +126,7 @@ if (FPGA_FAMILY == "7series") begin
     BUFG txout_clock_net_i
     (
         .I(TX_CLK),
-        .O(clk_in_i)
+        .O(TX_CLK_OUT)
     );
 
     MMCME2_ADV #(.BANDWIDTH            ("OPTIMIZED"),
@@ -171,7 +171,7 @@ if (FPGA_FAMILY == "7series") begin
             .CLKOUT6             (),
             // Input clock control
             .CLKFBIN             (clkfbout),
-            .CLKIN1              (clk_in_i),
+            .CLKIN1              (TX_CLK_OUT),
             .CLKIN2              (1'b0),
             // Tied to always select the primary input clock
             .CLKINSEL            (1'b1),
