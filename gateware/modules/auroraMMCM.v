@@ -46,9 +46,9 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     localparam   [2:0] P_USRCLK_DIV      = P_USRCLK_INT_DIV[2:0];
     BUFG_GT bufg_gt_usrclk_inst (
         .CE      (1'b1),
-        .CEMASK  (1'b0),
+        .CEMASK  (1'b1),
         .CLR     (TX_CLK_CLR),
-        .CLRMASK (1'b0),
+        .CLRMASK (1'b1),
         .DIV     (P_USRCLK_DIV),
         .I       (TX_CLK),
         .O       (TX_CLK_OUT)
