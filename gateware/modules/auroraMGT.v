@@ -67,7 +67,11 @@ module auroraMGT #(
     output              mgtChannelUp,
     output              mgtTxResetDone,
     output              mgtRxResetDone,
-    output              mgtMmcmNotLocked);
+    output              mgtMmcmNotLocked,
+
+    output              txOutClk,
+    output              txOutClkClr
+);
 
 generate
     if (FPGA_FAMILY != "7series" && FPGA_FAMILY != "ultrascaleplus") begin
@@ -106,7 +110,6 @@ wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
                          sysMmcmNotLocked, sysMmcmNotLocked_m;
 wire [1:0] txBufStatus;
 wire [2:0] rxBufStatus;
-wire txOutClkClr;
 
 //////////////////////////////////////////////////////////////////////////////
 // Sync clock and User clock generation

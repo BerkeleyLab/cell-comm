@@ -56,7 +56,10 @@ module auroraLink #(
     output             mgtChannelUp,
     output             mgtTxResetDone,
     output             mgtRxResetDone,
-    output             mgtMmcmNotLocked
+    output             mgtMmcmNotLocked,
+
+    output             txOutClk,
+    output             txOutClkClr
 );
 
 if(MGT_PROTOCOL == "AURORA_64B66B") begin
@@ -141,7 +144,10 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mgtChannelUp(mgtChannelUp),                            // output
         .mgtTxResetDone(mgtTxResetDone),                        // output
         .mgtRxResetDone(mgtRxResetDone),                        // output
-        .mgtMmcmNotLocked(mgtMmcmNotLocked)                     // output
+        .mgtMmcmNotLocked(mgtMmcmNotLocked),                    // output
+
+        .txOutClk(txOutClk),
+        .txOutClkClr(txOutClkClr)
     );
 
     wire [7:0] axiTuser = {6'b0, axiCrcValid, axiCrcPass};
