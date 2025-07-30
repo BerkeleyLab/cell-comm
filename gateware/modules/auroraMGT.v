@@ -64,7 +64,7 @@ module auroraMGT #(
     output              mgtHardErr,
     output              mgtSoftErr,
     output              mgtLaneUp,
-    output              mgtChannelUP,
+    output              mgtChannelUp,
     output              mgtTxResetDone,
     output              mgtRxResetDone,
     output              mgtMmcmNotLocked);
@@ -89,11 +89,11 @@ localparam TX_PMA_RESET_INIT_STATE = 1'b0;
 localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
-wire txOutClk, userClkMMCM, syncClkMMCM;
+wire userClkMMCM, syncClkMMCM;
 // Controls
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
 // Errors and status
-wire gtPllLock, hardErr, softErr, laneUp, channelUP, sysCrcPass,
+wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
      gtCrcValid, gtCrcPass, txResetDone, rxResetDone;
 (*ASYNC_REG="true"*) reg sysHardErr, sysHardErr_m,
                          sysSoftErr,  sysSoftErr_m,
@@ -169,7 +169,7 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 | GPIO_IN[11] | (0x00000800) |    mgtCSR[11]    | hardErr         |
 | GPIO_IN[10] | (0x00000400) |    mgtCSR[10]    | softErr         |
 | GPIO_IN[9]  | (0x00000200) |    mgtCSR[9]     | laneUp          |
-| GPIO_IN[8]  | (0x00000100) |    mgtCSR[8]     | channelUP       |
+| GPIO_IN[8]  | (0x00000100) |    mgtCSR[8]     | channelUp       |
 |-------------|--------------|------------------|-----------------|
 | GPIO_IN[7]  | (0x00000080) |    mgtCSR[7]     |    ---          |
 | GPIO_IN[6]  | (0x00000040) |    mgtCSR[6]     | gtCrcValid      |
@@ -190,7 +190,7 @@ assign axiCrcValid = gtCrcValid;
 assign mgtHardErr         = hardErr;
 assign mgtSoftErr         = softErr;
 assign mgtLaneUp          = laneUp;
-assign mgtChannelUP       = channelUP;
+assign mgtChannelUp       = channelUp;
 assign mgtTxResetDone     = txResetDone;
 assign mgtRxResetDone     = rxResetDone;
 assign mgtMmcmNotLocked   = mmcmNotLocked;
@@ -240,7 +240,7 @@ always @(posedge sysClk) begin
     sysLaneUp <= sysLaneUp_m;
     sysLaneUp_m <= laneUp;
     sysChannelUP <= sysChannelUP_m;
-    sysChannelUP_m <= channelUP;
+    sysChannelUP_m <= channelUp;
     sysCrcValid <= sysCrcValid_m;
     sysCrcValid_m <= gtCrcValid;
     sysGtCrcPass <= sysGtCrcPass_m;
@@ -280,7 +280,7 @@ if (DEBUG == "true") begin
             hardErr,
             softErr,
             laneUp,
-            channelUP,
+            channelUp,
             gtCrcValid,
             gtCrcPass,
             txResetDone,
@@ -323,7 +323,7 @@ aurora64b66b aurora64b66bInst (
     .hard_err(hardErr),                 // output
     .soft_err(softErr),                 // output
     // Status
-    .channel_up(channelUP),             // output
+    .channel_up(channelUp),             // output
     .lane_up(laneUp),                   // output
     .crc_pass_fail_n(gtCrcPass),        // output
     .crc_valid(gtCrcValid),             // output
@@ -423,7 +423,7 @@ aurora64b66b aurora64b66bInst (
     .hard_err(hardErr),                 // output
     .soft_err(softErr),                 // output
     // Status
-    .channel_up(channelUP),             // output
+    .channel_up(channelUp),             // output
     .lane_up(laneUp),                   // output
     .crc_pass_fail_n(gtCrcPass),        // output
     .crc_valid(gtCrcValid),             // output

@@ -53,7 +53,7 @@ module auroraLink #(
     output             mgtHardErr,
     output             mgtSoftErr,
     output             mgtLaneUp,
-    output             mgtChannelUP,
+    output             mgtChannelUp,
     output             mgtTxResetDone,
     output             mgtRxResetDone,
     output             mgtMmcmNotLocked
@@ -138,7 +138,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mgtHardErr(mgtHardErr),                                // output
         .mgtSoftErr(mgtSoftErr),                                // output
         .mgtLaneUp(mgtLaneUp),                                  // output
-        .mgtChannelUP(mgtChannelUP),                            // output
+        .mgtChannelUp(mgtChannelUp),                            // output
         .mgtTxResetDone(mgtTxResetDone),                        // output
         .mgtRxResetDone(mgtRxResetDone),                        // output
         .mgtMmcmNotLocked(mgtMmcmNotLocked)                     // output
