@@ -93,7 +93,7 @@ localparam TX_PMA_RESET_INIT_STATE = 1'b0;
 localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
-wire txOutClkUnbuf, userClkMMCM, syncClkMMCM;
+wire txOutClkClrUnbuf, txOutClkUnbuf, userClkMMCM, syncClkMMCM;
 // Controls
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
 // Errors and status
@@ -133,19 +133,22 @@ if (INTERNAL_MMCM == "true") begin
     )
         auroraCWmmcm (
         .TX_CLK(txOutClkUnbuf),         // input
-        .TX_CLK_CLR(txOutClkClr),       // input
+        .TX_CLK_CLR(txOutClkClrUnbuf),  // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
-        .TX_CLK_OUT(txOutClk),
+        .TX_CLK_OUT(txOutClk),          // output
         .SYNC_CLK(syncClkMMCM),         // output
         .MMCM_NOT_LOCKED(mmcmNotLocked) // output
     );
     assign userClkOut = userClkMMCM;
     assign syncClkOut = syncClkMMCM;
+    assign txOutClkClr = txOutClkClrUnbuf;
 end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
+    assign txOutClk = 1'b0;
+    assign txOutClkClr = 1'b0;
 end else begin
     ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
 end
@@ -399,7 +402,7 @@ aurora64b66b aurora64b66bInst (
     .tx_out_clk(txOutClkUnbuf)          // output
 );
 
-assign txOutClkClr = 1'b0;
+assign txOutClkClrUnbuf = 1'b0;
 
 end
 
@@ -487,7 +490,7 @@ aurora64b66b aurora64b66bInst (
     .gt_qplllock(),                     // output
     .gt_powergood(),                    // output [0:0]
     .gt_pll_lock(gtPllLock),            // output
-    .bufg_gt_clr_out(txOutClkClr),      // output
+    .bufg_gt_clr_out(txOutClkClrUnbuf), // output
     .sys_reset_out(),                   // output
     .tx_out_clk(txOutClkUnbuf)          // output
 );
