@@ -33,6 +33,7 @@ module auroraMGT #(
     output              mgtResetOut,
 
     /* MGT Clocks */
+    input               initClkIn,
     input               refClkIn,
     input               syncClkIn,
     input               userClkIn,
@@ -94,8 +95,11 @@ localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
 wire txOutClkClrUnbuf, txOutClkUnbuf, userClkMMCM, syncClkMMCM;
+wire refClk = refClkIn;
+wire initClk;
 // Controls
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
+wire sysReset, sysGtReset, sysPowerDown, sysTxPolarity, sysTxPMAreset, sysTxPCSreset;
 // Errors and status
 wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
      gtCrcValid, gtCrcPass, txResetDone, rxResetDone;
@@ -203,18 +207,42 @@ assign mgtRxResetDone     = rxResetDone;
 assign mgtMmcmNotLocked   = mmcmNotLocked;
 assign mgtResetOut        = reset;
 
-reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {POWER_DOWN_INIT_STATE,
-                                             RESET_INIT_STATE,
-                                             GT_RESET_INIT_STATE,
-                                             TX_POLARITY_INIT_STATE,
+reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {TX_POLARITY_INIT_STATE,
                                              TX_PMA_RESET_INIT_STATE,
-                                             TX_PCS_RESET_INIT_STATE};
-assign {txPolarity,
+                                             TX_PCS_RESET_INIT_STATE,
+                                             GT_RESET_INIT_STATE,
+                                             RESET_INIT_STATE,
+                                             POWER_DOWN_INIT_STATE};
+assign {sysTxPolarity,
+        sysTxPMAreset,
+        sysTxPCSreset,
+        sysGtReset,
+        sysReset,
+        sysPowerDown} = mgtControl;
+
+forwardMultiCDC #(
+    .DATA_WIDTH(GT_CONTROL_REG_WIDTH)
+)
+  forwardSysToInitClk (
+    .dataIn({
+        sysTxPolarity,
+        sysTxPMAreset,
+        sysTxPCSreset,
+        sysGtReset,
+        sysReset,
+        sysPowerDown
+    }),
+    .clk(initClk),
+    .dataOut({
+        txPolarity,
         txPMAreset,
         txPCSreset,
         gtReset,
         reset,
-        powerDown} = mgtControl;
+        powerDown
+    })
+);
+
 wire [GT_STATUS_REG_WIDTH-1:0] mgtStatus;
 assign mgtStatus = {sysHardErr,
                     sysSoftErr,
@@ -308,6 +336,8 @@ end
 generate
 if (FPGA_FAMILY == "7series") begin
 
+assign initClk = sysClk;
+
 aurora64b66b aurora64b66bInst (
     // TX AXI4-S Interface
     .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -326,7 +356,7 @@ aurora64b66b aurora64b66bInst (
     .txp(tx_p),                         // output
     .txn(tx_n),                         // output
     //GTX Reference Clock Interface
-    .refclk1_in(refClkIn),              // input
+    .refclk1_in(refClk),                // input
     .hard_err(hardErr),                 // output
     .soft_err(softErr),                 // output
     // Status
@@ -344,7 +374,7 @@ aurora64b66b aurora64b66bInst (
     .loopback(3'b0),                    // input [2:0]
     .pma_init(gtReset),                 // input
     .gt_pll_lock(gtPllLock),            // output
-    .drp_clk_in(sysClk),                // input
+    .drp_clk_in(initClkIn),             // input
     // GT quad assignment
     .gt_qpllclk_quad1_in(1'b0),         // input
     .gt_qpllrefclk_quad1_in(1'b0),      // input
@@ -355,7 +385,7 @@ aurora64b66b aurora64b66bInst (
     .drpwe_in(1'b0),                    // input
     .drpdo_out(),                       // output [15:0]
     .drprdy_out(),                      // output
-    .init_clk(sysClk),                  // input
+    .init_clk(initClkIn),               // input
     .link_reset_out(),                  // output
     .gt_rxusrclk_out(),                 // output
     //------------------------ RX Margin Analysis Ports ------------------------
@@ -408,6 +438,8 @@ end
 
 if (FPGA_FAMILY == "ultrascaleplus") begin
 
+assign initClk = initClkIn;
+
 aurora64b66b aurora64b66bInst (
     // TX AXI4-S Interface
     .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -426,7 +458,7 @@ aurora64b66b aurora64b66bInst (
     .txp(tx_p),                         // output
     .txn(tx_n),                         // output
     //GTX Reference Clock Interface
-    .refclk1_in(refClkIn),              // input
+    .refclk1_in(refClk),                // input
     .hard_err(hardErr),                 // output
     .soft_err(softErr),                 // output
     // Status
@@ -450,7 +482,7 @@ aurora64b66b aurora64b66bInst (
     .gt0_drpwe(1'b0),                   // input
     .gt0_drpdo(),                       // output [15:0]
     .gt0_drprdy(),                      // output
-    .init_clk(sysClk),                  // input
+    .init_clk(initClkIn),               // input
     .link_reset_out(),                  // output
     .gt_rxusrclk_out(),                 // output
     //------------------------ RX Margin Analysis Ports ------------------------

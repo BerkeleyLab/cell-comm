@@ -19,6 +19,8 @@ module auroraLink #(
     input  wire        mgtCSRstrobe,
 
     /* MGT clock and IO */
+    input  wire        initClk,
+
     input  wire        refClk,
     output wire        MGT_TX_P,
     output wire        MGT_TX_N,
@@ -111,6 +113,8 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mgtCSRstrobe(mgtCSRstrobe),                            // input
         .mgtCSR(mgtCSR),                                        // output [31:0]
         .mgtResetOut(resetOut),                                 // output
+
+        .initClkIn(initClk),
 
         .refClkIn(refClk),                                      // input
         .syncClkIn(auUserClkIn),                                // input
