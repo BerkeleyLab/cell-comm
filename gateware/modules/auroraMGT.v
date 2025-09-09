@@ -216,7 +216,7 @@ end
 `ifndef SIMULATE
 if (DEBUG == "true") begin
     ila_td400_s4096_cap ila_auroraMGT_inst (
-        .clk(sysClkBuf),
+        .clk(syncClkOut),
         .probe0({
             axiTXtdata,
             axiRXtdata,
