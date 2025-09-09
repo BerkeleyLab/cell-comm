@@ -137,7 +137,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
     `ifndef SIMULATE
         if (CONVERSION_DEBUG == "true") begin
             ila_td400_s4096_cap ila_aurora_link_inst (
-                .clk(auMGTclkOut),
+                .clk(auUserClkOut),
                 .probe0({
                     axiRxTdata,
                     axiRxTkeep,
