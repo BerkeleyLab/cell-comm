@@ -13,7 +13,9 @@ cell_comm_IP_CORES = \
 	axiStreamDwDowncon \
 	axiStreamSubConvInDowncon \
 	axiStreamSubConvOutDowncon \
-	aurora64b66b
+	aurora64b66b \
+	aurora8b10b \
+	ila_td400_s4096_cap
 
 cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_marble_platform_DIR), $(cell_comm_IP_CORES))
 
