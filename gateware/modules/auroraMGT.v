@@ -13,6 +13,14 @@
  */
 
 module auroraMGT #(
+    parameter  MMCM_MULT            = 14,
+    parameter  MMCM_DIVIDE          = 1,
+    parameter  MMCM_CLK_PERIOD      = 10.240,
+    parameter  MMCM_OUT0_DIVIDE     = 28,
+    parameter  MMCM_OUT1_DIVIDE     = 14,
+    parameter  MMCM_OUT2_DIVIDE     = 20,
+    parameter  MMCM_OUT3_DIVIDE     = 8,
+    parameter  FPGA_FAMILY          = "7series",
     parameter  DEBUG                = "false",
     parameter  INTERNAL_MMCM        = "false",
     parameter  ALLOW_MMCM_RESET     = "false"
@@ -23,19 +31,23 @@ module auroraMGT #(
     output     [31:0]   mgtCSR,
     input      [31:0]   GPIO_OUT,
     output              mgtResetOut,
-    input               mmcmNotLockedIn,
-    output              mmcmNotLockedOut,
+
     /* MGT Clocks */
+    input               initClkIn,
     input               refClkIn,
     input               syncClkIn,
     input               userClkIn,
     output              userClkOut,
     output              syncClkOut,
+    input               mmcmNotLockedIn,
+    output              mmcmNotLockedOut,
+
     /* MGT pins */
     output              tx_p,
     output              tx_n,
     input               rx_p,
     input               rx_n,
+
     /* AXI interface */
     output     [63:0]   axiRXtdata,
     output      [7:0]   axiRXtkeep,
@@ -47,7 +59,26 @@ module auroraMGT #(
     input               axiTXtlast,
     output              axiTXtready,
     output              axiCrcPass,
-    output              axiCrcValid);
+    output              axiCrcValid,
+
+    /* Status from aurora core */
+    output              mgtHardErr,
+    output              mgtSoftErr,
+    output              mgtLaneUp,
+    output              mgtChannelUp,
+    output              mgtTxResetDone,
+    output              mgtRxResetDone,
+    output              mgtMmcmNotLocked,
+
+    output              txOutClk,
+    output              txOutClkClr
+);
+
+generate
+    if (FPGA_FAMILY != "7series" && FPGA_FAMILY != "ultrascaleplus") begin
+    FPGA_FAMILY_unsupported error();
+end
+endgenerate
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -63,17 +94,20 @@ localparam TX_PMA_RESET_INIT_STATE = 1'b0;
 localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
-wire txOutClk, userClkMMCM, syncClkMMCM, sysClkBuf;
+wire txOutClkClrUnbuf, txOutClkUnbuf, userClkMMCM, syncClkMMCM;
+wire refClk = refClkIn;
+wire initClk;
 // Controls
 wire reset, gtReset, powerDown, txPolarity, txPMAreset, txPCSreset;
+wire sysReset, sysGtReset, sysPowerDown, sysTxPolarity, sysTxPMAreset, sysTxPCSreset;
 // Errors and status
-wire gtPllLock, hardErr, softErr, laneUp, channelUP, sysCrcPass,
-     crcReadable, gtCrcPass, txResetDone, rxResetDone;
+wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
+     gtCrcValid, gtCrcPass, txResetDone, rxResetDone;
 (*ASYNC_REG="true"*) reg sysHardErr, sysHardErr_m,
                          sysSoftErr,  sysSoftErr_m,
                          sysLaneUp,  sysLaneUp_m,
                          sysChannelUP,  sysChannelUP_m,
-                         sysCrcReadable,  sysCrcReadable_m,
+                         sysCrcValid,  sysCrcValid_m,
                          sysGtCrcPass,  sysGtCrcPass_m,
                          sysTxResetDone,  sysTxResetDone_m,
                          sysRxResetDone,  sysRxResetDone_m,
@@ -91,23 +125,34 @@ if (INTERNAL_MMCM == "true") begin
     end else begin
         ERROR_ALLOW_MMCM_RESET_IS_NEITHER_TRUE_OR_FALSE();
     end
-    auroraMMCM #()
+    auroraMMCM #(
+        .FPGA_FAMILY  (FPGA_FAMILY),
+        .MULT         (MMCM_MULT),
+        .DIVIDE       (MMCM_DIVIDE),
+        .CLK_PERIOD   (MMCM_CLK_PERIOD),
+        .OUT0_DIVIDE  (MMCM_OUT0_DIVIDE),
+        .OUT1_DIVIDE  (MMCM_OUT1_DIVIDE),
+        .OUT2_DIVIDE  (MMCM_OUT2_DIVIDE),
+        .OUT3_DIVIDE  (MMCM_OUT3_DIVIDE)
+    )
         auroraCWmmcm (
-        .INIT_CLK(sysClk),
-        .INIT_CLK_O(sysClkBuf),
-        .TX_CLK(txOutClk),              // input
+        .TX_CLK(txOutClkUnbuf),         // input
+        .TX_CLK_CLR(txOutClkClrUnbuf),  // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
+        .TX_CLK_OUT(txOutClk),          // output
         .SYNC_CLK(syncClkMMCM),         // output
         .MMCM_NOT_LOCKED(mmcmNotLocked) // output
     );
     assign userClkOut = userClkMMCM;
     assign syncClkOut = syncClkMMCM;
+    assign txOutClkClr = txOutClkClrUnbuf;
 end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
     assign syncClkOut = syncClkIn;
-    assign sysClkBuf =  sysClk;
     assign mmcmNotLocked = mmcmNotLockedIn;
+    assign txOutClk = 1'b0;
+    assign txOutClkClr = 1'b0;
 end else begin
     ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
 end
@@ -135,10 +180,10 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 | GPIO_IN[11] | (0x00000800) |    mgtCSR[11]    | hardErr         |
 | GPIO_IN[10] | (0x00000400) |    mgtCSR[10]    | softErr         |
 | GPIO_IN[9]  | (0x00000200) |    mgtCSR[9]     | laneUp          |
-| GPIO_IN[8]  | (0x00000100) |    mgtCSR[8]     | channelUP       |
+| GPIO_IN[8]  | (0x00000100) |    mgtCSR[8]     | channelUp       |
 |-------------|--------------|------------------|-----------------|
-| GPIO_IN[7]  | (0x00000080) |    mgtCSR[7]     | crcPass         |
-| GPIO_IN[6]  | (0x00000040) |    mgtCSR[6]     | crcReadable     |
+| GPIO_IN[7]  | (0x00000080) |    mgtCSR[7]     |    ---          |
+| GPIO_IN[6]  | (0x00000040) |    mgtCSR[6]     | gtCrcValid      |
 | GPIO_IN[5]  | (0x00000020) |    mgtCSR[5]     | gtCrcPass       |
 | GPIO_IN[4]  | (0x00000010) |    mgtCSR[4]     | txResetDone     |
 |-------------|--------------|------------------|-----------------|
@@ -149,30 +194,62 @@ assign mmcmNotLockedOut = mmcmNotLocked;
 '-----------------------------------------------------------------'
 */
 
-assign sysCrcPass = sysCrcReadable? sysGtCrcPass : 1'b0;
+assign sysCrcPass = sysCrcValid? sysGtCrcPass : 1'b0;
 assign axiCrcPass = gtCrcPass;
-assign axiCrcValid = crcReadable;
-assign mgtResetOut = reset;
+assign axiCrcValid = gtCrcValid;
 
-reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {POWER_DOWN_INIT_STATE,
-                                             RESET_INIT_STATE,
-                                             GT_RESET_INIT_STATE,
-                                             TX_POLARITY_INIT_STATE,
+assign mgtHardErr         = hardErr;
+assign mgtSoftErr         = softErr;
+assign mgtLaneUp          = laneUp;
+assign mgtChannelUp       = channelUp;
+assign mgtTxResetDone     = txResetDone;
+assign mgtRxResetDone     = rxResetDone;
+assign mgtMmcmNotLocked   = mmcmNotLocked;
+assign mgtResetOut        = reset;
+
+reg [GT_CONTROL_REG_WIDTH-1:0] mgtControl = {TX_POLARITY_INIT_STATE,
                                              TX_PMA_RESET_INIT_STATE,
-                                             TX_PCS_RESET_INIT_STATE};
-assign {txPolarity,
+                                             TX_PCS_RESET_INIT_STATE,
+                                             GT_RESET_INIT_STATE,
+                                             RESET_INIT_STATE,
+                                             POWER_DOWN_INIT_STATE};
+assign {sysTxPolarity,
+        sysTxPMAreset,
+        sysTxPCSreset,
+        sysGtReset,
+        sysReset,
+        sysPowerDown} = mgtControl;
+
+forwardMultiCDC #(
+    .DATA_WIDTH(GT_CONTROL_REG_WIDTH)
+)
+  forwardSysToInitClk (
+    .dataIn({
+        sysTxPolarity,
+        sysTxPMAreset,
+        sysTxPCSreset,
+        sysGtReset,
+        sysReset,
+        sysPowerDown
+    }),
+    .clk(initClk),
+    .dataOut({
+        txPolarity,
         txPMAreset,
         txPCSreset,
         gtReset,
         reset,
-        powerDown} = mgtControl;
+        powerDown
+    })
+);
+
 wire [GT_STATUS_REG_WIDTH-1:0] mgtStatus;
 assign mgtStatus = {sysHardErr,
                     sysSoftErr,
                     sysLaneUp,
                     sysChannelUP,
                     sysCrcPass,
-                    sysCrcReadable,
+                    sysCrcValid,
                     sysGtCrcPass,
                     sysTxResetDone,
                     sysRxResetDone,
@@ -183,14 +260,14 @@ assign mgtStatus = {sysHardErr,
 assign mgtCSR = {{32-GT_CONTROL_REG_WIDTH-GT_STATUS_REG_WIDTH{1'b0}},
                   mgtControl, mgtStatus};
 
-always @(posedge sysClkBuf) begin
+always @(posedge sysClk) begin
     if (mgtCSRstrobe) begin
         mgtControl <= GPIO_OUT[GT_CONTROL_REG_WIDTH-1:0];
     end
 end
 
 /* MGT Control CDC from userClk to sysClk */
-always @(posedge sysClkBuf) begin
+always @(posedge sysClk) begin
     sysHardErr <= sysHardErr_m;
     sysHardErr_m <= hardErr;
     sysSoftErr <= sysSoftErr_m;
@@ -198,9 +275,9 @@ always @(posedge sysClkBuf) begin
     sysLaneUp <= sysLaneUp_m;
     sysLaneUp_m <= laneUp;
     sysChannelUP <= sysChannelUP_m;
-    sysChannelUP_m <= channelUP;
-    sysCrcReadable <= sysCrcReadable_m;
-    sysCrcReadable_m <= crcReadable;
+    sysChannelUP_m <= channelUp;
+    sysCrcValid <= sysCrcValid_m;
+    sysCrcValid_m <= gtCrcValid;
     sysGtCrcPass <= sysGtCrcPass_m;
     sysGtCrcPass_m <= gtCrcPass;
     sysTxResetDone <= sysTxResetDone_m;
@@ -216,7 +293,7 @@ end
 `ifndef SIMULATE
 if (DEBUG == "true") begin
     ila_td400_s4096_cap ila_auroraMGT_inst (
-        .clk(syncClkOut),
+        .clk(sysClk),
         .probe0({
             axiTXtdata,
             axiRXtdata,
@@ -238,8 +315,8 @@ if (DEBUG == "true") begin
             hardErr,
             softErr,
             laneUp,
-            channelUP,
-            crcReadable,
+            channelUp,
+            gtCrcValid,
             gtCrcPass,
             txResetDone,
             rxResetDone,
@@ -255,6 +332,12 @@ end
 ////////////////////////////////////////////////////////////////////////////////
 // Aurora IP instance
 `ifndef SIMULATE
+
+generate
+if (FPGA_FAMILY == "7series") begin
+
+assign initClk = sysClk;
+
 aurora64b66b aurora64b66bInst (
     // TX AXI4-S Interface
     .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -273,14 +356,14 @@ aurora64b66b aurora64b66bInst (
     .txp(tx_p),                         // output
     .txn(tx_n),                         // output
     //GTX Reference Clock Interface
-    .refclk1_in(refClkIn),              // input
+    .refclk1_in(refClk),                // input
     .hard_err(hardErr),                 // output
     .soft_err(softErr),                 // output
     // Status
-    .channel_up(channelUP),             // output
+    .channel_up(channelUp),             // output
     .lane_up(laneUp),                   // output
     .crc_pass_fail_n(gtCrcPass),        // output
-    .crc_valid(crcReadable),            // output
+    .crc_valid(gtCrcValid),             // output
     // System Interface
     .mmcm_not_locked(mmcmNotLocked),    // input
     .user_clk(userClkOut),              // input
@@ -291,7 +374,7 @@ aurora64b66b aurora64b66bInst (
     .loopback(3'b0),                    // input [2:0]
     .pma_init(gtReset),                 // input
     .gt_pll_lock(gtPllLock),            // output
-    .drp_clk_in(sysClkBuf),             // input
+    .drp_clk_in(initClkIn),             // input
     // GT quad assignment
     .gt_qpllclk_quad1_in(1'b0),         // input
     .gt_qpllrefclk_quad1_in(1'b0),      // input
@@ -302,7 +385,7 @@ aurora64b66b aurora64b66bInst (
     .drpwe_in(1'b0),                    // input
     .drpdo_out(),                       // output [15:0]
     .drprdy_out(),                      // output
-    .init_clk(sysClkBuf),               // input
+    .init_clk(initClkIn),               // input
     .link_reset_out(),                  // output
     .gt_rxusrclk_out(),                 // output
     //------------------------ RX Margin Analysis Ports ------------------------
@@ -346,7 +429,106 @@ aurora64b66b aurora64b66bInst (
     .gt0_cplllock_out(cpllLock),        // output
     .gt_qplllock(),                     // output
     .sys_reset_out(),                   // output
-    .tx_out_clk(txOutClk)               // output
+    .tx_out_clk(txOutClkUnbuf)          // output
 );
+
+assign txOutClkClrUnbuf = 1'b0;
+
+end
+
+if (FPGA_FAMILY == "ultrascaleplus") begin
+
+assign initClk = initClkIn;
+
+aurora64b66b aurora64b66bInst (
+    // TX AXI4-S Interface
+    .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
+    .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
+    .s_axi_tx_tlast(axiTXtlast),        // input
+    .s_axi_tx_tvalid(axiTXtvalid),      // input
+    .s_axi_tx_tready(axiTXtready),      // output
+    // RX AXI4-S Interface
+    .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
+    .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
+    .m_axi_rx_tlast(axiRXtlast),        // output
+    .m_axi_rx_tvalid(axiRXtValid),      // output
+    // GTX Serial I/O
+    .rxp(rx_p),                         // input
+    .rxn(rx_n),                         // input
+    .txp(tx_p),                         // output
+    .txn(tx_n),                         // output
+    //GTX Reference Clock Interface
+    .refclk1_in(refClk),                // input
+    .hard_err(hardErr),                 // output
+    .soft_err(softErr),                 // output
+    // Status
+    .channel_up(channelUp),             // output
+    .lane_up(laneUp),                   // output
+    .crc_pass_fail_n(gtCrcPass),        // output
+    .crc_valid(gtCrcValid),             // output
+    // System Interface
+    .mmcm_not_locked(mmcmNotLocked),    // input
+    .user_clk(userClkOut),              // input
+    .sync_clk(syncClkOut),              // input
+    .reset_pb(reset),                   // input
+    .gt_rxcdrovrden_in(1'b0),           // input
+    .power_down(powerDown),             // input
+    .loopback(3'b0),                    // input [2:0]
+    .pma_init(gtReset),                 // input
+    // GT DRP Ports
+    .gt0_drpaddr(10'b0),                // input  [9:0]
+    .gt0_drpdi(16'b0),                  // input  [15:0]
+    .gt0_drpen(1'b0),                   // input
+    .gt0_drpwe(1'b0),                   // input
+    .gt0_drpdo(),                       // output [15:0]
+    .gt0_drprdy(),                      // output
+    .init_clk(initClkIn),               // input
+    .link_reset_out(),                  // output
+    .gt_rxusrclk_out(),                 // output
+    //------------------------ RX Margin Analysis Ports ------------------------
+    .gt_eyescandataerror(),             // output
+    .gt_eyescanreset(1'b0),             // input
+    .gt_eyescantrigger(1'b0),           // input
+    //------------------- Receive Ports - RX Equalizer Ports -------------------
+    .gt_rxcdrhold(1'b0),                // input  [0:0]
+    .gt_rxdfelpmreset(1'b0),            // input  [0:0]
+    .gt_rxlpmen(1'b0),                  // input  [0:0]
+    .gt_rxpmareset(1'b0),               // input  [0:0]
+    .gt_rxpcsreset(1'b0),               // input  [0:0]
+    .gt_rxrate(2'b0),                   // input  [2:0]
+    .gt_rxbufreset(1'b0),               // input  [0:0]
+    .gt_rxpmaresetdone(),               // output [0:0]
+    .gt_rxprbssel(4'b0),                // input  [3:0]
+    .gt_rxprbscntreset(1'b0),           // input  [0:0]
+    .gt_rxprbserr(),                    // output [0:0]
+    .gt_rxresetdone(rxResetDone),       // output [0:0]
+    .gt_rxbufstatus(rxBufStatus),       // output [2:0]
+    //---------------------- TX Configurable Driver Ports ----------------------
+    .gt_txpostcursor(5'b0),             // input  [4:0]
+    .gt_txdiffctrl(5'b11000),           // input  [4:0]
+    .gt_txprecursor(5'b0),              // input  [4:0]
+    //--------------- Transmit Ports - TX Polarity Control Ports ---------------
+    .gt_txpolarity(1'b0),               // input
+    .gt_txinhibit(1'b0),                // input
+    .gt_txpmareset(txPMAreset),         // input
+    .gt_txpcsreset(txPCSreset),         // input
+    .gt_txprbssel(4'b0),                // input  [3:0]
+    .gt_txprbsforceerr(1'b0),           // input
+    .gt_txbufstatus(txBufStatus),       // output [1:0]
+    .gt_txresetdone(txResetDone),       // output
+    .gt_pcsrsvdin(16'b0),               // input  [15:0]
+    .gt_dmonitorout(),                  // output [15:0]
+    .gt_cplllock(cpllLock),             // output
+    .gt_qplllock(),                     // output
+    .gt_powergood(),                    // output [0:0]
+    .gt_pll_lock(gtPllLock),            // output
+    .bufg_gt_clr_out(txOutClkClrUnbuf), // output
+    .sys_reset_out(),                   // output
+    .tx_out_clk(txOutClkUnbuf)          // output
+);
+
+end
+endgenerate
+
 `endif // `ifndef SIMULATE
 endmodule

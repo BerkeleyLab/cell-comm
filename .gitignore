@@ -100,6 +100,10 @@ work/
 !/gateware/platform/xilinx/*/*/system_aurora_64b66b/*.bd
 /gateware/platform/xilinx/*/*/ila_td256_s4096_cap/*
 !/gateware/platform/xilinx/*/*/ila_td256_s4096_cap/ila_td256_s4096_cap.xci
+/gateware/platform/xilinx/*/*/ila_td400_s4096_cap/*
+!/gateware/platform/xilinx/*/*/ila_td400_s4096_cap/ila_td400_s4096_cap.xci
+/gateware/platform/xilinx/*/*/ila_td400_s16384_cap/*
+!/gateware/platform/xilinx/*/*/ila_td400_s16384_cap/ila_td400_s16384_cap.xci
 /gateware/platform/xilinx/*/*/axisDataFifo32/*
 !/gateware/platform/xilinx/*/*/axisDataFifo32/axisDataFifo32.xci
 /gateware/platform/xilinx/*/*/axiStreamDwUpcon/*
