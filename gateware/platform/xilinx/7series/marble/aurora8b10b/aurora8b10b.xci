@@ -9,62 +9,70 @@
       <spirit:instanceName>aurora8b10b</spirit:instanceName>
       <spirit:componentRef spirit:vendor="xilinx.com" spirit:library="ip" spirit:name="aurora_8b10b" spirit:version="11.1"/>
       <spirit:configurableElementValues>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.DRPCLK.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT0_QPLLRESET_OUT.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DIFF_REFCLK1.CAN_DEBUG">false</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DIFF_REFCLK1.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DIFF_REFCLK2.CAN_DEBUG">false</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DIFF_REFCLK2.FREQ_HZ">100000000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_DRP_CLK_IN.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK1_OUT.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_REFCLK2_OUT.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_RESET.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.GT_RESET_OUT.INSERT_VIP">0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_IN.PHASE">0.0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_CLK_OUT.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_DIFF_CLK.CAN_DEBUG">false</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.INIT_DIFF_CLK.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.LINK_RESET_OUT.INSERT_VIP">0</spirit:configurableElementValue>
@@ -76,7 +84,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.TDATA_NUM_BYTES">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_M_AXI_RX.TID_WIDTH">0</spirit:configurableElementValue>
@@ -89,7 +97,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TDATA_NUM_BYTES">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.NFC_S_AXI_TX.TID_WIDTH">0</spirit:configurableElementValue>
@@ -97,27 +105,30 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.RESET.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.RX_SYSTEM_RESET.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYNC_CLK_OUT.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.SYS_RESET_OUT.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.ASSOCIATED_BUSIF"/>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.ASSOCIATED_RESET"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_OUT_CLK.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.TX_SYSTEM_RESET.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.FREQ_HZ">100000000</spirit:configurableElementValue>
@@ -127,7 +138,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TDATA_NUM_BYTES">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_M_AXI_RX.TID_WIDTH">0</spirit:configurableElementValue>
@@ -140,21 +151,23 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TDATA_NUM_BYTES">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TID_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.UFC_S_AXI_TX.TUSER_WIDTH">0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK.PHASE">0.0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.ASSOCIATED_PORT"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.FREQ_TOLERANCE_HZ">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.INSERT_VIP">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_CLK_OUT.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.CLK_DOMAIN"/>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.FREQ_HZ">100000000</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.HAS_TKEEP">1</spirit:configurableElementValue>
@@ -163,7 +176,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.TDATA_NUM_BYTES">4</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_M_AXI_RX.TID_WIDTH">0</spirit:configurableElementValue>
@@ -176,7 +189,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.HAS_TSTRB">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.INSERT_VIP">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.LAYERED_METADATA">undef</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.PHASE">0.000</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.PHASE">0.0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.TDATA_NUM_BYTES">4</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.TDEST_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.USER_DATA_S_AXI_TX.TID_WIDTH">0</spirit:configurableElementValue>
@@ -403,12 +416,12 @@
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.USE_RDI_CUSTOMIZATION">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.USE_RDI_GENERATION">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPCONTEXT">IP_Flow</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPREVISION">10</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.IPREVISION">14</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.MANAGED">TRUE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.OUTPUTDIR">.</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SELECTEDSIMMODEL"/>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SHAREDDIR">.</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2020.2.2</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2022.1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SYNTHESISFLOW">OUT_OF_CONTEXT</spirit:configurableElementValue>
       </spirit:configurableElementValues>
       <spirit:vendorExtensions>
@@ -467,38 +480,455 @@
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.TransceiverControl" xilinx:valueSource="user"/>
           </xilinx:configElementInfos>
           <xilinx:boundaryDescriptionInfo>
-            <xilinx:boundaryDescription xilinx:boundaryDescriptionJSON="{&quot;ip_boundary&quot;:{&quot;ports&quot;:{&quot;s_axi_tx_tdata&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;31&quot;},&quot;s_axi_tx_tkeep&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;3&quot;},&quot;s_axi_tx_tlast&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;s_axi_tx_tvalid&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;s_axi_tx_tready&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;m_axi_rx_tdata&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;31&quot;},&quot;m_axi_rx_tkeep&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;3&quot;},&quot;m_axi_rx_tlast&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;m_axi_rx_tvalid&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;hard_err&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;soft_err&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;frame_err&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;channel_up&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;p
-hysical_right&quot;:&quot;0&quot;},&quot;lane_up&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;txp&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;txn&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;reset&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt_reset&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;loopback&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;rxp&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;rxn&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;crc_valid&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;crc_pass_fail_n&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpclk_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpaddr_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;8&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpen_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpdi_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;15&quot;,&quot;physical_righ
-t&quot;:&quot;0&quot;},&quot;drprdy_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpdo_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;15&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;drpwe_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;power_down&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;tx_lock&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;tx_resetdone_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;rx_resetdone_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;link_reset_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_qplllock_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_qpllrefclklost_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_qpllreset_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt_qpllclk_quad1_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt_qpllrefclk_quad1_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;p
-hysical_right&quot;:&quot;0&quot;},&quot;init_clk_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;pll_not_locked&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;tx_out_clk&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;sys_reset_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;user_clk&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;sync_clk&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt_refclk1&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxlpmen_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxcdrovrden_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxdfelpmreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxmonitorout_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;6&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxmonitorsel_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;1&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_eyescanreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;
-:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_eyescandataerror_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxbyteisaligned_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxcommadet_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rx_realign_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rx_buf_err_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rx_disp_err_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rx_not_in_table_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_tx_buf_err_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txpolarity_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txchardispmode_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txchardispval_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txpostcursor_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_le
-ft&quot;:&quot;4&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txprecursor_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;4&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txdiffctrl_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txmaincursor_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;6&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_eyescantrigger_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_cplllock_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txprbsforceerr_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txprbssel_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txpcsreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txpmareset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txinhibit_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txresetdone_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxresetdone_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;
-:&quot;0&quot;},&quot;gt0_rxcdrhold_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxprbserr_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxprbssel_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxprbscntreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxpcsreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxpmareset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxbufreset_in&quot;:{&quot;direction&quot;:&quot;in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_dmonitorout_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;7&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_txbufstatus_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;1&quot;,&quot;physical_right&quot;:&quot;0&quot;},&quot;gt0_rxbufstatus_out&quot;:{&quot;direction&quot;:&quot;out&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;}},&quot;interfaces&quot;:{&quot;USER_DATA_S_AXI_TX&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:interface:axis:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:interface:axis_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;TDATA_NUM_BYTES&quot;:[{&quot;
-value&quot;:&quot;4&quot;},{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TDEST_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TID_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TUSER_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TREADY&quot;:[{&quot;value&quot;:&quot;1&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TSTRB&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TKEEP&quot;:[{&quot;value&quot;:&quot;1&quot;},{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TLAST&quot;:[{&quot;value&quot;:&quot;1&quot;},{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},
-{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;LAYERED_METADATA&quot;:[{&quot;value&quot;:&quot;undef&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;TDATA&quot;:{&quot;physical_name&quot;:&quot;s_axi_tx_tdata&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;31&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;31&quot;},&quot;TKEEP&quot;:{&quot;physical_name&quot;:&quot;s_axi_tx_tkeep&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;3&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;3&quot;},&quot;TLAST&quot;:{&quot;physical_name&quot;:&quot;s_axi_tx_tlast&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TREADY&quot;:{&quot;physical_name&quot;:&quot;s_axi_tx_tready&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TVALID&quot;:{&quot;physical_name&quot;:&quot;s_axi_tx_tvalid&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical
-_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;USER_DATA_M_AXI_RX&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:interface:axis:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:interface:axis_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{&quot;TDATA_NUM_BYTES&quot;:[{&quot;value&quot;:&quot;4&quot;},{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TDEST_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TID_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;TUSER_WIDTH&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TREADY&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TSTRB&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TKEEP&quot;:[{&quot;value&quot;:&quot;1&quot;},{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;HAS_TLAST&quot;:[{&quot;value&quot;:&quot;1&quot;}
-,{&quot;value_src&quot;:&quot;auto&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;LAYERED_METADATA&quot;:[{&quot;value&quot;:&quot;undef&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;TDATA&quot;:{&quot;physical_name&quot;:&quot;m_axi_rx_tdata&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;31&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;31&quot;},&quot;TKEEP&quot;:{&quot;physical_name&quot;:&quot;m_axi_rx_tkeep&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;3&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;3&quot;},&quot;TLAST&quot;:{&quot;physical_name&quot;:&quot;m_axi_rx_tlast&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;
-0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TVALID&quot;:{&quot;physical_name&quot;:&quot;m_axi_rx_tvalid&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;gt0_qpllreset_out&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:reset:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:reset_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{&quot;POLARITY&quot;:[{&quot;value&quot;:&quot;ACTIVE_HIGH&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;RST&quot;:{&quot;physical_name&quot;:&quot;gt0_qpllreset_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;reset&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:reset:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:reset_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;POLARITY&quot;:[{&quot;value&quot;:&quot;ACTIVE_HIGH&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:
-&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;RST&quot;:{&quot;physical_name&quot;:&quot;reset&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;tx_out_clk&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default
-&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;tx_out_clk&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;user_clk&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;USER_DATA_S_AXI_TX:USER_DATA_M_AXI_RX:UFC_S_AXI_TX:UFC_M_AXI_RX:NFC_S_AXI_TX:NFC_M_AXI_RX&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;sys_reset_out&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK
-_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;user_clk&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;sync_clk&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:
-&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;sync_clk&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;sys_reset_out&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:reset:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:reset_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{&quot;POLARITY&quot;:[{&quot;value&quot;:&quot;ACTIVE_HIGH&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;RST&quot;:{&quot;physical_name&quot;:&quot;sys_reset_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;gt_reset&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:reset:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:reset_rtl:1.0&quot;,&quot;mode&quot;:&quot;sla
-ve&quot;,&quot;parameters&quot;:{&quot;POLARITY&quot;:[{&quot;value&quot;:&quot;ACTIVE_HIGH&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;RST&quot;:{&quot;physical_name&quot;:&quot;gt_reset&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;link_reset_out&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:reset:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:reset_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{&quot;POLARITY&quot;:[{&quot;value&quot;:&quot;ACTIVE_HIGH&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;RST&quot;:{&quot;physical_name&quot;:&quot;link_reset_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;init_clk_in&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parame
-ters&quot;:{&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;gt_reset&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;init_clk_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;gt_refclk1&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_
-type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;gt_refclk1&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;gt_drp_clk_
-in&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;GT0_DRP_IF:GT1_DRP_IF:GT2_DRP_IF:GT3_DRP_IF:GT4_DRP_IF:GT5_DRP_IF:GT6_DRP_IF:GT7_DRP_IF:GT8_DRP_IF:GT9_DRP_IF:GT10_DRP_IF:GT11_DRP_IF:GT12_DRP_IF:GT13_DRP_IF:GT14_DRP_IF:GT15_DRP_IF&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:
-[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;drpclk_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;drpclk&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:signal:clock:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:signal:clock_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{&quot;ASSOCIATED_BUSIF&quot;:[{&quot;value&quot;:&quot;GT0_DRP:GT1_DRP:GT2_DRP:GT3_DRP:GT4_DRP:GT5_DRP:GT6_DRP:GT7_DRP:GT8_DRP:GT9_DRP:GT10_DRP:GT11_DRP:GT12_DRP:GT13_DRP:GT14_DRP:GT15_DRP&quot;},{&quot;value_src&quot;:&quot;constant&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;immediate&quot;}],&quot;FREQ_HZ&quot;:[{&quot;value&quot;:&quot;100000000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;FREQ_TOLERANCE_HZ&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;PHASE&quot;:[{&quot;value&quot;:&quot;0.000&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;CLK_DOMAIN&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;val
-ue_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;ASSOCIATED_RESET&quot;:[{&quot;value&quot;:&quot;&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;generated&quot;}],&quot;INSERT_VIP&quot;:[{&quot;value&quot;:&quot;0&quot;},{&quot;value_src&quot;:&quot;default&quot;},{&quot;value_permission&quot;:&quot;user&quot;},{&quot;resolve_type&quot;:&quot;user&quot;}]},&quot;port_maps&quot;:{&quot;CLK&quot;:{&quot;physical_name&quot;:&quot;init_clk_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;GT0_DRP_IF&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:interface:drp:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:interface:drp_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;DADDR&quot;:{&quot;physical_name&quot;:&quot;drpaddr_in&quot;,&quot;physical_left&quot;:&quot;8&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;8&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;DEN&quot;:{&quot;physical_name&quot;:&quot;drpen_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;DI&quot;:{&quot;physical_name&quot;:&quot;drpdi_in&quot;,&quot;physical_left&quot;:&quot;15&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;15&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;DO&quot;:{&quot;physical_name&quot;:&quot;drpdo_out&quot;,&quot;physical_left&quot;:&quot;15&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;
-15&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;DRDY&quot;:{&quot;physical_name&quot;:&quot;drprdy_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;DWE&quot;:{&quot;physical_name&quot;:&quot;drpwe_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;TRANSCEIVER_DEBUG0&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:transceiver_debug:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:transceiver_debug_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;cplllock&quot;:{&quot;physical_name&quot;:&quot;gt0_cplllock_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;dmonitorout&quot;:{&quot;physical_name&quot;:&quot;gt0_dmonitorout_out&quot;,&quot;physical_left&quot;:&quot;7&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;7&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;eyescandataerror&quot;:{&quot;physical_name&quot;:&quot;gt0_eyescandataerror_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;eyescanreset&quot;:{&quot;physical_name&quot;:&quot;gt0_eyescanreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;
-eyescantrigger&quot;:{&quot;physical_name&quot;:&quot;gt0_eyescantrigger_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxbuferr&quot;:{&quot;physical_name&quot;:&quot;gt0_rx_buf_err_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxbufreset&quot;:{&quot;physical_name&quot;:&quot;gt0_rxbufreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxbufstatus&quot;:{&quot;physical_name&quot;:&quot;gt0_rxbufstatus_out&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;2&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxbyteisaligned&quot;:{&quot;physical_name&quot;:&quot;gt0_rxbyteisaligned_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxcdrhold&quot;:{&quot;physical_name&quot;:&quot;gt0_rxcdrhold_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxcdrovrden&quot;:{&quot;physical_name&quot;:&quot;gt0_rxcdrovrden_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxcommadet&quot;:{&quot;physical_name&quot;:&quot;gt0_rxcommadet_out&quot;,&quot;physical_l
-eft&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxdfelpmreset&quot;:{&quot;physical_name&quot;:&quot;gt0_rxdfelpmreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxdisperr&quot;:{&quot;physical_name&quot;:&quot;gt0_rx_disp_err_out&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;3&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxlpmen&quot;:{&quot;physical_name&quot;:&quot;gt0_rxlpmen_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxmonitorout&quot;:{&quot;physical_name&quot;:&quot;gt0_rxmonitorout_out&quot;,&quot;physical_left&quot;:&quot;6&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;6&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxmonitorsel&quot;:{&quot;physical_name&quot;:&quot;gt0_rxmonitorsel_in&quot;,&quot;physical_left&quot;:&quot;1&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;1&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxnotintable&quot;:{&quot;physical_name&quot;:&quot;gt0_rx_not_in_table_out&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;3&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxpcsreset&quot;:{&quot;physical_name&quot;:&quot;gt0_rxpcsreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;
-:&quot;0&quot;},&quot;rxpmareset&quot;:{&quot;physical_name&quot;:&quot;gt0_rxpmareset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxprbscntreset&quot;:{&quot;physical_name&quot;:&quot;gt0_rxprbscntreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxprbserr&quot;:{&quot;physical_name&quot;:&quot;gt0_rxprbserr_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxprbssel&quot;:{&quot;physical_name&quot;:&quot;gt0_rxprbssel_in&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;2&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxrealign&quot;:{&quot;physical_name&quot;:&quot;gt0_rx_realign_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;rxresetdone&quot;:{&quot;physical_name&quot;:&quot;gt0_rxresetdone_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txbuferr&quot;:{&quot;physical_name&quot;:&quot;gt0_tx_buf_err_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txbufstatus&quot;:{&quot;physical_name&quot;:&quot;gt0_txbufstatus_out&quot;,&quot;physical_left&quot;:
-&quot;1&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;1&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txchardispmode&quot;:{&quot;physical_name&quot;:&quot;gt0_txchardispmode_in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;3&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txchardispval&quot;:{&quot;physical_name&quot;:&quot;gt0_txchardispval_in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;3&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txdiffctrl&quot;:{&quot;physical_name&quot;:&quot;gt0_txdiffctrl_in&quot;,&quot;physical_left&quot;:&quot;3&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;3&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txinhibit&quot;:{&quot;physical_name&quot;:&quot;gt0_txinhibit_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txmaincursor&quot;:{&quot;physical_name&quot;:&quot;gt0_txmaincursor_in&quot;,&quot;physical_left&quot;:&quot;6&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;6&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txpcsreset&quot;:{&quot;physical_name&quot;:&quot;gt0_txpcsreset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txpmareset&quot;:{&quot;physical_name&quot;:&quot;gt0_txpmareset_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;
-txpolarity&quot;:{&quot;physical_name&quot;:&quot;gt0_txpolarity_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txpostcursor&quot;:{&quot;physical_name&quot;:&quot;gt0_txpostcursor_in&quot;,&quot;physical_left&quot;:&quot;4&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;4&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txprbsforceerr&quot;:{&quot;physical_name&quot;:&quot;gt0_txprbsforceerr_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txprbssel&quot;:{&quot;physical_name&quot;:&quot;gt0_txprbssel_in&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;2&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txprecursor&quot;:{&quot;physical_name&quot;:&quot;gt0_txprecursor_in&quot;,&quot;physical_left&quot;:&quot;4&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;4&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;txresetdone&quot;:{&quot;physical_name&quot;:&quot;gt0_txresetdone_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;CORE_STATUS&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:core_status_out:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:core_status_out_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;CHANNEL_UP
-&quot;:{&quot;physical_name&quot;:&quot;channel_up&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;CRC_PASS_FAIL&quot;:{&quot;physical_name&quot;:&quot;crc_pass_fail_n&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;CRC_VALID&quot;:{&quot;physical_name&quot;:&quot;crc_valid&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;FRAME_ERR&quot;:{&quot;physical_name&quot;:&quot;frame_err&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;HARD_ERR&quot;:{&quot;physical_name&quot;:&quot;hard_err&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;LANE_UP&quot;:{&quot;physical_name&quot;:&quot;lane_up&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;RX_RESETDONE_OUT&quot;:{&quot;physical_name&quot;:&quot;rx_resetdone_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;SOFT_ERR&quot;:{&quot;physical_name&quot;:&quot;soft_err&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TX_LOCK&quot;:{&quot;phys
-ical_name&quot;:&quot;tx_lock&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TX_RESETDONE_OUT&quot;:{&quot;physical_name&quot;:&quot;tx_resetdone_out&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;CORE_CONTROL&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:core_control_in:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:core_control_in_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;LOOPBACK&quot;:{&quot;physical_name&quot;:&quot;loopback&quot;,&quot;physical_left&quot;:&quot;2&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;2&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;PLL_NOT_LOCKED&quot;:{&quot;physical_name&quot;:&quot;pll_not_locked&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;Power_down&quot;:{&quot;physical_name&quot;:&quot;power_down&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;GT_SERIAL_TX&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_TX:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_TX_rtl:1.0&quot;,&quot;mode&quot;:&quot;master&quot;,&quot;paramete
-rs&quot;:{},&quot;port_maps&quot;:{&quot;TXN&quot;:{&quot;physical_name&quot;:&quot;txn&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;TXP&quot;:{&quot;physical_name&quot;:&quot;txp&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;GT_SERIAL_RX&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_RX:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_RX_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;RXN&quot;:{&quot;physical_name&quot;:&quot;rxn&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;},&quot;RXP&quot;:{&quot;physical_name&quot;:&quot;rxp&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}},&quot;QPLL_CONTROL_IN&quot;:{&quot;vlnv&quot;:&quot;xilinx.com:display_aurora:QPLL_CONTROL_IN:1.0&quot;,&quot;abstraction_type&quot;:&quot;xilinx.com:display_aurora:QPLL_CONTROL_IN_rtl:1.0&quot;,&quot;mode&quot;:&quot;slave&quot;,&quot;parameters&quot;:{},&quot;port_maps&quot;:{&quot;QPLLLOCK_QUAD1_IN&quot;:{&quot;physical_name&quot;:&quot;gt0_qplllock_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;
-0&quot;},&quot;QPLLREFCLKLOST_QUAD1_IN&quot;:{&quot;physical_name&quot;:&quot;gt0_qpllrefclklost_in&quot;,&quot;physical_left&quot;:&quot;0&quot;,&quot;physical_right&quot;:&quot;0&quot;,&quot;logical_left&quot;:&quot;0&quot;,&quot;logical_right&quot;:&quot;0&quot;}}}}}}"/>
+            <xilinx:boundaryDescription xilinx:boundaryDescriptionJSON="{
+              &quot;schema&quot;: &quot;xilinx.com:schema:json_boundary:1.0&quot;,
+              &quot;boundary&quot;: {
+                &quot;ports&quot;: {
+                  &quot;s_axi_tx_tdata&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;31&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;s_axi_tx_tkeep&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;3&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;s_axi_tx_tlast&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;s_axi_tx_tvalid&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;s_axi_tx_tready&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;m_axi_rx_tdata&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;31&quot; } ],
+                  &quot;m_axi_rx_tkeep&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;3&quot; } ],
+                  &quot;m_axi_rx_tlast&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;m_axi_rx_tvalid&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;hard_err&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;soft_err&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;frame_err&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;channel_up&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;lane_up&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;txp&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;txn&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;reset&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt_reset&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;loopback&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;2&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;rxp&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;rxn&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;0&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;crc_valid&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;crc_pass_fail_n&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;drpclk_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;drpaddr_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;8&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;drpen_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;drpdi_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;15&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;drprdy_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;drpdo_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;15&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;drpwe_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;power_down&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;tx_lock&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;tx_resetdone_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;rx_resetdone_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;link_reset_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_qplllock_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_qpllrefclklost_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_qpllreset_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt_qpllclk_quad1_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt_qpllrefclk_quad1_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;init_clk_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;pll_not_locked&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;tx_out_clk&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;sys_reset_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;user_clk&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;sync_clk&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt_refclk1&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxlpmen_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxcdrovrden_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxdfelpmreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxmonitorout_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;6&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxmonitorsel_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;1&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_eyescanreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_eyescandataerror_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rxbyteisaligned_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rxcommadet_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rx_realign_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rx_buf_err_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rx_disp_err_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;3&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rx_not_in_table_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;3&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;gt0_tx_buf_err_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_txpolarity_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txchardispmode_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;3&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txchardispval_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;3&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txpostcursor_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;4&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txprecursor_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;4&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txdiffctrl_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;3&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txmaincursor_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;6&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_eyescantrigger_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_cplllock_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_txprbsforceerr_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txprbssel_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;2&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txpcsreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txpmareset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txinhibit_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txresetdone_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rxresetdone_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rxcdrhold_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxprbserr_out&quot;: [ { &quot;direction&quot;: &quot;out&quot; } ],
+                  &quot;gt0_rxprbssel_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;size_left&quot;: &quot;2&quot;, &quot;size_right&quot;: &quot;0&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxprbscntreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxpcsreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxpmareset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxbufreset_in&quot;: [ { &quot;direction&quot;: &quot;in&quot;, &quot;driver_value&quot;: &quot;0&quot; } ],
+                  &quot;gt0_dmonitorout_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;7&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;gt0_txbufstatus_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;1&quot;, &quot;size_right&quot;: &quot;0&quot; } ],
+                  &quot;gt0_rxbufstatus_out&quot;: [ { &quot;direction&quot;: &quot;out&quot;, &quot;size_left&quot;: &quot;2&quot;, &quot;size_right&quot;: &quot;0&quot; } ]
+                },
+                &quot;interfaces&quot;: {
+                  &quot;USER_DATA_S_AXI_TX&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:interface:axis:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:interface:axis_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;TDATA_NUM_BYTES&quot;: [ { &quot;value&quot;: &quot;4&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TDEST_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TID_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TUSER_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TREADY&quot;: [ { &quot;value&quot;: &quot;1&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TSTRB&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TKEEP&quot;: [ { &quot;value&quot;: &quot;1&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TLAST&quot;: [ { &quot;value&quot;: &quot;1&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;LAYERED_METADATA&quot;: [ { &quot;value&quot;: &quot;undef&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;TDATA&quot;: [ { &quot;physical_name&quot;: &quot;s_axi_tx_tdata&quot; } ],
+                      &quot;TKEEP&quot;: [ { &quot;physical_name&quot;: &quot;s_axi_tx_tkeep&quot; } ],
+                      &quot;TLAST&quot;: [ { &quot;physical_name&quot;: &quot;s_axi_tx_tlast&quot; } ],
+                      &quot;TREADY&quot;: [ { &quot;physical_name&quot;: &quot;s_axi_tx_tready&quot; } ],
+                      &quot;TVALID&quot;: [ { &quot;physical_name&quot;: &quot;s_axi_tx_tvalid&quot; } ]
+                    }
+                  },
+                  &quot;USER_DATA_M_AXI_RX&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:interface:axis:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:interface:axis_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;TDATA_NUM_BYTES&quot;: [ { &quot;value&quot;: &quot;4&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TDEST_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TID_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;TUSER_WIDTH&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TREADY&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TSTRB&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TKEEP&quot;: [ { &quot;value&quot;: &quot;1&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;HAS_TLAST&quot;: [ { &quot;value&quot;: &quot;1&quot;, &quot;value_src&quot;: &quot;auto&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;LAYERED_METADATA&quot;: [ { &quot;value&quot;: &quot;undef&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;TDATA&quot;: [ { &quot;physical_name&quot;: &quot;m_axi_rx_tdata&quot; } ],
+                      &quot;TKEEP&quot;: [ { &quot;physical_name&quot;: &quot;m_axi_rx_tkeep&quot; } ],
+                      &quot;TLAST&quot;: [ { &quot;physical_name&quot;: &quot;m_axi_rx_tlast&quot; } ],
+                      &quot;TVALID&quot;: [ { &quot;physical_name&quot;: &quot;m_axi_rx_tvalid&quot; } ]
+                    }
+                  },
+                  &quot;gt0_qpllreset_out&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:reset:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:reset_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;POLARITY&quot;: [ { &quot;value&quot;: &quot;ACTIVE_HIGH&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;RST&quot;: [ { &quot;physical_name&quot;: &quot;gt0_qpllreset_out&quot; } ]
+                    }
+                  },
+                  &quot;reset&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:reset:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:reset_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;POLARITY&quot;: [ { &quot;value&quot;: &quot;ACTIVE_HIGH&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;RST&quot;: [ { &quot;physical_name&quot;: &quot;reset&quot; } ]
+                    }
+                  },
+                  &quot;tx_out_clk&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;tx_out_clk&quot; } ]
+                    }
+                  },
+                  &quot;user_clk&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;USER_DATA_S_AXI_TX:USER_DATA_M_AXI_RX:UFC_S_AXI_TX:UFC_M_AXI_RX:NFC_S_AXI_TX:NFC_M_AXI_RX&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;sys_reset_out&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;user_clk&quot; } ]
+                    }
+                  },
+                  &quot;sync_clk&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;sync_clk&quot; } ]
+                    }
+                  },
+                  &quot;sys_reset_out&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:reset:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:reset_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;POLARITY&quot;: [ { &quot;value&quot;: &quot;ACTIVE_HIGH&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;RST&quot;: [ { &quot;physical_name&quot;: &quot;sys_reset_out&quot; } ]
+                    }
+                  },
+                  &quot;gt_reset&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:reset:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:reset_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;POLARITY&quot;: [ { &quot;value&quot;: &quot;ACTIVE_HIGH&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;RST&quot;: [ { &quot;physical_name&quot;: &quot;gt_reset&quot; } ]
+                    }
+                  },
+                  &quot;link_reset_out&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:reset:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:reset_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;POLARITY&quot;: [ { &quot;value&quot;: &quot;ACTIVE_HIGH&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;RST&quot;: [ { &quot;physical_name&quot;: &quot;link_reset_out&quot; } ]
+                    }
+                  },
+                  &quot;init_clk_in&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;gt_reset&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;init_clk_in&quot; } ]
+                    }
+                  },
+                  &quot;gt_refclk1&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;gt_refclk1&quot; } ]
+                    }
+                  },
+                  &quot;gt_drp_clk_in&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;GT0_DRP_IF:GT1_DRP_IF:GT2_DRP_IF:GT3_DRP_IF:GT4_DRP_IF:GT5_DRP_IF:GT6_DRP_IF:GT7_DRP_IF:GT8_DRP_IF:GT9_DRP_IF:GT10_DRP_IF:GT11_DRP_IF:GT12_DRP_IF:GT13_DRP_IF:GT14_DRP_IF:GT15_DRP_IF&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;drpclk_in&quot; } ]
+                    }
+                  },
+                  &quot;drpclk&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:signal:clock:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:signal:clock_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;parameters&quot;: {
+                      &quot;ASSOCIATED_BUSIF&quot;: [ { &quot;value&quot;: &quot;GT0_DRP:GT1_DRP:GT2_DRP:GT3_DRP:GT4_DRP:GT5_DRP:GT6_DRP:GT7_DRP:GT8_DRP:GT9_DRP:GT10_DRP:GT11_DRP:GT12_DRP:GT13_DRP:GT14_DRP:GT15_DRP&quot;, &quot;value_src&quot;: &quot;constant&quot;, &quot;usage&quot;: &quot;all&quot; } ],
+                      &quot;FREQ_HZ&quot;: [ { &quot;value&quot;: &quot;100000000&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;FREQ_TOLERANCE_HZ&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;long&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;PHASE&quot;: [ { &quot;value&quot;: &quot;0.0&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;format&quot;: &quot;float&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;CLK_DOMAIN&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_PORT&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;ASSOCIATED_RESET&quot;: [ { &quot;value&quot;: &quot;&quot;, &quot;resolve_type&quot;: &quot;generated&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ],
+                      &quot;INSERT_VIP&quot;: [ { &quot;value&quot;: &quot;0&quot;, &quot;resolve_type&quot;: &quot;user&quot;, &quot;format&quot;: &quot;long&quot;, &quot;usage&quot;: &quot;simulation.rtl&quot;, &quot;is_ips_inferred&quot;: true, &quot;is_static_object&quot;: false } ]
+                    },
+                    &quot;port_maps&quot;: {
+                      &quot;CLK&quot;: [ { &quot;physical_name&quot;: &quot;init_clk_in&quot; } ]
+                    }
+                  },
+                  &quot;GT0_DRP_IF&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:interface:drp:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:interface:drp_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;DADDR&quot;: [ { &quot;physical_name&quot;: &quot;drpaddr_in&quot; } ],
+                      &quot;DEN&quot;: [ { &quot;physical_name&quot;: &quot;drpen_in&quot; } ],
+                      &quot;DI&quot;: [ { &quot;physical_name&quot;: &quot;drpdi_in&quot; } ],
+                      &quot;DO&quot;: [ { &quot;physical_name&quot;: &quot;drpdo_out&quot; } ],
+                      &quot;DRDY&quot;: [ { &quot;physical_name&quot;: &quot;drprdy_out&quot; } ],
+                      &quot;DWE&quot;: [ { &quot;physical_name&quot;: &quot;drpwe_in&quot; } ]
+                    }
+                  },
+                  &quot;TRANSCEIVER_DEBUG0&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:transceiver_debug:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:transceiver_debug_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;cplllock&quot;: [ { &quot;physical_name&quot;: &quot;gt0_cplllock_out&quot; } ],
+                      &quot;dmonitorout&quot;: [ { &quot;physical_name&quot;: &quot;gt0_dmonitorout_out&quot; } ],
+                      &quot;eyescandataerror&quot;: [ { &quot;physical_name&quot;: &quot;gt0_eyescandataerror_out&quot; } ],
+                      &quot;eyescanreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_eyescanreset_in&quot; } ],
+                      &quot;eyescantrigger&quot;: [ { &quot;physical_name&quot;: &quot;gt0_eyescantrigger_in&quot; } ],
+                      &quot;rxbuferr&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rx_buf_err_out&quot; } ],
+                      &quot;rxbufreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxbufreset_in&quot; } ],
+                      &quot;rxbufstatus&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxbufstatus_out&quot; } ],
+                      &quot;rxbyteisaligned&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxbyteisaligned_out&quot; } ],
+                      &quot;rxcdrhold&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxcdrhold_in&quot; } ],
+                      &quot;rxcdrovrden&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxcdrovrden_in&quot; } ],
+                      &quot;rxcommadet&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxcommadet_out&quot; } ],
+                      &quot;rxdfelpmreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxdfelpmreset_in&quot; } ],
+                      &quot;rxdisperr&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rx_disp_err_out&quot; } ],
+                      &quot;rxlpmen&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxlpmen_in&quot; } ],
+                      &quot;rxmonitorout&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxmonitorout_out&quot; } ],
+                      &quot;rxmonitorsel&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxmonitorsel_in&quot; } ],
+                      &quot;rxnotintable&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rx_not_in_table_out&quot; } ],
+                      &quot;rxpcsreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxpcsreset_in&quot; } ],
+                      &quot;rxpmareset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxpmareset_in&quot; } ],
+                      &quot;rxprbscntreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxprbscntreset_in&quot; } ],
+                      &quot;rxprbserr&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxprbserr_out&quot; } ],
+                      &quot;rxprbssel&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxprbssel_in&quot; } ],
+                      &quot;rxrealign&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rx_realign_out&quot; } ],
+                      &quot;rxresetdone&quot;: [ { &quot;physical_name&quot;: &quot;gt0_rxresetdone_out&quot; } ],
+                      &quot;txbuferr&quot;: [ { &quot;physical_name&quot;: &quot;gt0_tx_buf_err_out&quot; } ],
+                      &quot;txbufstatus&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txbufstatus_out&quot; } ],
+                      &quot;txchardispmode&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txchardispmode_in&quot; } ],
+                      &quot;txchardispval&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txchardispval_in&quot; } ],
+                      &quot;txdiffctrl&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txdiffctrl_in&quot; } ],
+                      &quot;txinhibit&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txinhibit_in&quot; } ],
+                      &quot;txmaincursor&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txmaincursor_in&quot; } ],
+                      &quot;txpcsreset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txpcsreset_in&quot; } ],
+                      &quot;txpmareset&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txpmareset_in&quot; } ],
+                      &quot;txpolarity&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txpolarity_in&quot; } ],
+                      &quot;txpostcursor&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txpostcursor_in&quot; } ],
+                      &quot;txprbsforceerr&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txprbsforceerr_in&quot; } ],
+                      &quot;txprbssel&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txprbssel_in&quot; } ],
+                      &quot;txprecursor&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txprecursor_in&quot; } ],
+                      &quot;txresetdone&quot;: [ { &quot;physical_name&quot;: &quot;gt0_txresetdone_out&quot; } ]
+                    }
+                  },
+                  &quot;CORE_STATUS&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:core_status_out:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:core_status_out_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;CHANNEL_UP&quot;: [ { &quot;physical_name&quot;: &quot;channel_up&quot; } ],
+                      &quot;CRC_PASS_FAIL&quot;: [ { &quot;physical_name&quot;: &quot;crc_pass_fail_n&quot; } ],
+                      &quot;CRC_VALID&quot;: [ { &quot;physical_name&quot;: &quot;crc_valid&quot; } ],
+                      &quot;FRAME_ERR&quot;: [ { &quot;physical_name&quot;: &quot;frame_err&quot; } ],
+                      &quot;HARD_ERR&quot;: [ { &quot;physical_name&quot;: &quot;hard_err&quot; } ],
+                      &quot;LANE_UP&quot;: [ { &quot;physical_name&quot;: &quot;lane_up&quot; } ],
+                      &quot;RX_RESETDONE_OUT&quot;: [ { &quot;physical_name&quot;: &quot;rx_resetdone_out&quot; } ],
+                      &quot;SOFT_ERR&quot;: [ { &quot;physical_name&quot;: &quot;soft_err&quot; } ],
+                      &quot;TX_LOCK&quot;: [ { &quot;physical_name&quot;: &quot;tx_lock&quot; } ],
+                      &quot;TX_RESETDONE_OUT&quot;: [ { &quot;physical_name&quot;: &quot;tx_resetdone_out&quot; } ]
+                    }
+                  },
+                  &quot;CORE_CONTROL&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:core_control_in:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:core_control_in_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;LOOPBACK&quot;: [ { &quot;physical_name&quot;: &quot;loopback&quot; } ],
+                      &quot;PLL_NOT_LOCKED&quot;: [ { &quot;physical_name&quot;: &quot;pll_not_locked&quot; } ],
+                      &quot;Power_down&quot;: [ { &quot;physical_name&quot;: &quot;power_down&quot; } ]
+                    }
+                  },
+                  &quot;GT_SERIAL_TX&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_TX:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_TX_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;master&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;TXN&quot;: [ { &quot;physical_name&quot;: &quot;txn&quot; } ],
+                      &quot;TXP&quot;: [ { &quot;physical_name&quot;: &quot;txp&quot; } ]
+                    }
+                  },
+                  &quot;GT_SERIAL_RX&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_RX:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:GT_Serial_Transceiver_Pins_RX_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;RXN&quot;: [ { &quot;physical_name&quot;: &quot;rxn&quot; } ],
+                      &quot;RXP&quot;: [ { &quot;physical_name&quot;: &quot;rxp&quot; } ]
+                    }
+                  },
+                  &quot;QPLL_CONTROL_IN&quot;: {
+                    &quot;vlnv&quot;: &quot;xilinx.com:display_aurora:QPLL_CONTROL_IN:1.0&quot;,
+                    &quot;abstraction_type&quot;: &quot;xilinx.com:display_aurora:QPLL_CONTROL_IN_rtl:1.0&quot;,
+                    &quot;mode&quot;: &quot;slave&quot;,
+                    &quot;port_maps&quot;: {
+                      &quot;QPLLLOCK_QUAD1_IN&quot;: [ { &quot;physical_name&quot;: &quot;gt0_qplllock_in&quot; } ],
+                      &quot;QPLLREFCLKLOST_QUAD1_IN&quot;: [ { &quot;physical_name&quot;: &quot;gt0_qpllrefclklost_in&quot; } ]
+                    }
+                  }
+                }
+              }
+            }"/>
           </xilinx:boundaryDescriptionInfo>
         </xilinx:componentInstanceExtensions>
       </spirit:vendorExtensions>
