@@ -22,6 +22,7 @@ module auroraMGT #(
     parameter  MMCM_OUT3_DIVIDE     = 8,
     parameter  FPGA_FAMILY          = "7series",
     parameter  DEBUG                = "false",
+    parameter  MGT_PROTOCOL         = "AURORA_64B66B",
     parameter  INTERNAL_MMCM        = "false",
     parameter  ALLOW_MMCM_RESET     = "false"
     ) (
@@ -76,10 +77,15 @@ module auroraMGT #(
 
 generate
     if (FPGA_FAMILY != "7series" && FPGA_FAMILY != "ultrascaleplus") begin
-    FPGA_FAMILY_unsupported error();
-end
+        FPGA_FAMILY_unsupported error();
+    end
 endgenerate
 
+generate
+    if(MGT_PROTOCOL != "AURORA_64B66B" && MGT_PROTOCOL != "AURORA_8B10B") begin
+        MGT_PROTOCOL_unsupported_AURORA_8B10B_OR_64B66B_ALLOWED error();
+    end
+endgenerate
 
 //////////////////////////////////////////////////////////////////////////////
 // Parameters
@@ -336,197 +342,363 @@ end
 generate
 if (FPGA_FAMILY == "7series") begin
 
-assign initClk = sysClk;
+    assign initClk = sysClk;
+    assign txOutClkClrUnbuf = 1'b0;
 
-aurora64b66b aurora64b66bInst (
-    // TX AXI4-S Interface
-    .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
-    .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
-    .s_axi_tx_tlast(axiTXtlast),        // input
-    .s_axi_tx_tvalid(axiTXtvalid),      // input
-    .s_axi_tx_tready(axiTXtready),      // output
-    // RX AXI4-S Interface
-    .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
-    .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
-    .m_axi_rx_tlast(axiRXtlast),        // output
-    .m_axi_rx_tvalid(axiRXtValid),      // output
-    // GTX Serial I/O
-    .rxp(rx_p),                         // input
-    .rxn(rx_n),                         // input
-    .txp(tx_p),                         // output
-    .txn(tx_n),                         // output
-    //GTX Reference Clock Interface
-    .refclk1_in(refClk),                // input
-    .hard_err(hardErr),                 // output
-    .soft_err(softErr),                 // output
-    // Status
-    .channel_up(channelUp),             // output
-    .lane_up(laneUp),                   // output
-    .crc_pass_fail_n(gtCrcPass),        // output
-    .crc_valid(gtCrcValid),             // output
-    // System Interface
-    .mmcm_not_locked(mmcmNotLocked),    // input
-    .user_clk(userClkOut),              // input
-    .sync_clk(syncClkOut),              // input
-    .reset_pb(reset),                   // input
-    .gt_rxcdrovrden_in(1'b0),           // input
-    .power_down(powerDown),             // input
-    .loopback(3'b0),                    // input [2:0]
-    .pma_init(gtReset),                 // input
-    .gt_pll_lock(gtPllLock),            // output
-    .drp_clk_in(initClkIn),             // input
-    // GT quad assignment
-    .gt_qpllclk_quad1_in(1'b0),         // input
-    .gt_qpllrefclk_quad1_in(1'b0),      // input
-    // GT DRP Ports
-    .drpaddr_in(9'b0),                  // input  [8:0]
-    .drpdi_in(16'b0),                   // input  [15:0]
-    .drpen_in(1'b0),                    // input
-    .drpwe_in(1'b0),                    // input
-    .drpdo_out(),                       // output [15:0]
-    .drprdy_out(),                      // output
-    .init_clk(initClkIn),               // input
-    .link_reset_out(),                  // output
-    .gt_rxusrclk_out(),                 // output
-    //------------------------ RX Margin Analysis Ports ------------------------
-    .gt0_eyescandataerror_out(),        // output
-    .gt0_eyescanreset_in(1'b0),         // input
-    .gt0_eyescantrigger_in(1'b0),       // input
-    //------------------- Receive Ports - RX Equalizer Ports -------------------
-    .gt0_rxcdrhold_in(1'b0),            // input
-    .gt0_rxlpmhfovrden_in(1'b0),        // input
-    .gt0_rxdfeagchold_in(1'b0),         // input
-    .gt0_rxdfeagcovrden_in(1'b0),       // input
-    .gt0_rxdfelfhold_in(1'b0),          // input
-    .gt0_rxdfelpmreset_in(1'b0),        // input
-    .gt0_rxlpmlfklovrden_in(1'b0),      // input
-    .gt0_rxmonitorout_out(),            // output [6:0]
-    .gt0_rxmonitorsel_in(2'b0),         // input  [1:0]
-    .gt0_rxlpmen_in(1'b1),              // input
-    .gt0_rxpmareset_in(1'b0),           // input
-    .gt0_rxpcsreset_in(1'b0),           // input
-    .gt0_rxbufreset_in(1'b0),           // input
-    .gt0_rxprbssel_in(3'b0),            // input  [2:0]
-    .gt0_rxprbserr_out(),               // output
-    .gt0_rxprbscntreset_in(1'b0),       // input
-    .gt0_rxresetdone_out(rxResetDone),  // output
-    .gt0_rxbufstatus_out(rxBufStatus),  // output [2:0]
-    //---------------------- TX Configurable Driver Ports ----------------------
-    .gt0_txpostcursor_in(5'b0),         // input  [4:0]
-    .gt0_txdiffctrl_in(4'b1000),        // input  [3:0]
-    .gt0_txmaincursor_in(7'b0),         // input  [6:0]
-    .gt0_txprecursor_in(5'b0),          // input  [4:0]
-    //--------------- Transmit Ports - TX Polarity Control Ports ---------------
-    .gt0_txpolarity_in(1'b0),           // input
-    .gt0_txinhibit_in(1'b0),            // input
-    .gt0_txpmareset_in(txPMAreset),     // input
-    .gt0_txpcsreset_in(txPCSreset),     // input
-    .gt0_txprbssel_in(3'b0),            // input  [2:0]
-    .gt0_txprbsforceerr_in(1'b0),       // input
-    .gt0_txbufstatus_out(txBufStatus),  // output [1:0]
-    .gt0_txresetdone_out(txResetDone),  // output
-    .gt0_dmonitorout_out(),             // output [7:0]
-    .gt0_cplllock_out(cpllLock),        // output
-    .gt_qplllock(),                     // output
-    .sys_reset_out(),                   // output
-    .tx_out_clk(txOutClkUnbuf)          // output
-);
+    if (MGT_PROTOCOL == "AURORA_64B66B") begin
+        aurora64b66b aurora64b66bInst (
+            // TX AXI4-S Interface
+            .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
+            .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
+            .s_axi_tx_tlast(axiTXtlast),        // input
+            .s_axi_tx_tvalid(axiTXtvalid),      // input
+            .s_axi_tx_tready(axiTXtready),      // output
+            // RX AXI4-S Interface
+            .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
+            .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
+            .m_axi_rx_tlast(axiRXtlast),        // output
+            .m_axi_rx_tvalid(axiRXtValid),      // output
+            // GTX Serial I/O
+            .rxp(rx_p),                         // input
+            .rxn(rx_n),                         // input
+            .txp(tx_p),                         // output
+            .txn(tx_n),                         // output
+            //GTX Reference Clock Interface
+            .refclk1_in(refClk),                // input
+            .hard_err(hardErr),                 // output
+            .soft_err(softErr),                 // output
+            // Status
+            .channel_up(channelUp),             // output
+            .lane_up(laneUp),                   // output
+            .crc_pass_fail_n(gtCrcPass),        // output
+            .crc_valid(gtCrcValid),             // output
+            // System Interface
+            .mmcm_not_locked(mmcmNotLocked),    // input
+            .user_clk(userClkOut),              // input
+            .sync_clk(syncClkOut),              // input
+            .reset_pb(reset),                   // input
+            .gt_rxcdrovrden_in(1'b0),           // input
+            .power_down(powerDown),             // input
+            .loopback(3'b0),                    // input [2:0]
+            .pma_init(gtReset),                 // input
+            .gt_pll_lock(gtPllLock),            // output
+            .drp_clk_in(initClk),               // input
+            // GT quad assignment
+            .gt_qpllclk_quad1_in(1'b0),         // input
+            .gt_qpllrefclk_quad1_in(1'b0),      // input
+            // GT DRP Ports
+            .drpaddr_in(9'b0),                  // input  [8:0]
+            .drpdi_in(16'b0),                   // input  [15:0]
+            .drpen_in(1'b0),                    // input
+            .drpwe_in(1'b0),                    // input
+            .drpdo_out(),                       // output [15:0]
+            .drprdy_out(),                      // output
+            .init_clk(initClk),                 // input
+            .link_reset_out(),                  // output
+            .gt_rxusrclk_out(),                 // output
+            //------------------------ RX Margin Analysis Ports ------------------------
+            .gt0_eyescandataerror_out(),        // output
+            .gt0_eyescanreset_in(1'b0),         // input
+            .gt0_eyescantrigger_in(1'b0),       // input
+            //------------------- Receive Ports - RX Equalizer Ports -------------------
+            .gt0_rxcdrhold_in(1'b0),            // input
+            .gt0_rxlpmhfovrden_in(1'b0),        // input
+            .gt0_rxdfeagchold_in(1'b0),         // input
+            .gt0_rxdfeagcovrden_in(1'b0),       // input
+            .gt0_rxdfelfhold_in(1'b0),          // input
+            .gt0_rxdfelpmreset_in(1'b0),        // input
+            .gt0_rxlpmlfklovrden_in(1'b0),      // input
+            .gt0_rxmonitorout_out(),            // output [6:0]
+            .gt0_rxmonitorsel_in(2'b0),         // input  [1:0]
+            .gt0_rxlpmen_in(1'b1),              // input
+            .gt0_rxpmareset_in(1'b0),           // input
+            .gt0_rxpcsreset_in(1'b0),           // input
+            .gt0_rxbufreset_in(1'b0),           // input
+            .gt0_rxprbssel_in(3'b0),            // input  [2:0]
+            .gt0_rxprbserr_out(),               // output
+            .gt0_rxprbscntreset_in(1'b0),       // input
+            .gt0_rxresetdone_out(rxResetDone),  // output
+            .gt0_rxbufstatus_out(rxBufStatus),  // output [2:0]
+            //---------------------- TX Configurable Driver Ports ----------------------
+            .gt0_txpostcursor_in(5'b0),         // input  [4:0]
+            .gt0_txdiffctrl_in(4'b1000),        // input  [3:0]
+            .gt0_txmaincursor_in(7'b0),         // input  [6:0]
+            .gt0_txprecursor_in(5'b0),          // input  [4:0]
+            //--------------- Transmit Ports - TX Polarity Control Ports ---------------
+            .gt0_txpolarity_in(1'b0),           // input
+            .gt0_txinhibit_in(1'b0),            // input
+            .gt0_txpmareset_in(txPMAreset),     // input
+            .gt0_txpcsreset_in(txPCSreset),     // input
+            .gt0_txprbssel_in(3'b0),            // input  [2:0]
+            .gt0_txprbsforceerr_in(1'b0),       // input
+            .gt0_txbufstatus_out(txBufStatus),  // output [1:0]
+            .gt0_txresetdone_out(txResetDone),  // output
+            .gt0_dmonitorout_out(),             // output [7:0]
+            .gt0_cplllock_out(cpllLock),        // output
+            .gt_qplllock(),                     // output
+            .sys_reset_out(),                   // output
+            .tx_out_clk(txOutClkUnbuf)          // output
+        );
+    end
 
-assign txOutClkClrUnbuf = 1'b0;
+    if (MGT_PROTOCOL == "AURORA_8B10B") begin
+        /* AXI 32-bit interface */
+        wire [31:0]   axiTXtdata32;
+        wire  [3:0]   axiTXtkeep32;
+        wire          axiTXtvalid32;
+        wire          axiTXtlast32;
+        wire          axiTXtready32;
 
+        axiDataDownconverter
+          axiDataDownconverterInst(
+            /* Input stage 64-bit */
+            .sAxiStreamTdata(axiTXtdata),     // input  [63:0]
+            .sAxiStreamTkeep(axiTXtkeep),     // input  [7:0]
+            .sAxiStreamTuser(0),              // input  [7:0]
+            .sAxiStreamTlast(axiTXtlast),     // input
+            .sAxiStreamTvalid(axiTXtvalid),   // input
+            .sClk(auMGTclkOut),               // input
+            /* Output stage 32-bit */
+            .mAxiStreamTdata(axiTXtdata32),   // output [31:0]
+            .mAxiStreamTkeep(axiTXtkeep32),   // output [3:0]
+            .mAxiStreamTuser(),               // output [7:0]
+            .mAxiStreamTlast(axiTXtlast32),   // output
+            .mAxiStreamTvalid(axiTXtvalid32), // output
+            .mClk(auUserClkOut),              // input
+            .resetN(~reset));                 // input
+
+        wire [31:0]   axiRXtdata32;
+        wire  [3:0]   axiRXtkeep32;
+        wire          axiRXtvalid32;
+        wire          axiRXtlast32;
+
+        axiDataUpconverter
+          axiDataUpconverterInst (
+            /* Input stage 32-bit */
+            .sAxiStreamTdata(axiRXtdata32),      // input  [31:0]
+            .sAxiStreamTlast(axiRXtlast32),      // input
+            .sAxiStreamTready(axiRXtready32),    // output
+            .sAxiStreamTvalid(axiRXtvalid32),    // input
+            .sClk(auUserClkOut),                 // input
+            /* Output stage 64-bit */
+            .mAxiStreamTdata(axiRXtdata),        // output [63:0]
+            .mAxiStreamTkeep(axiRXtkeep),        // output [7:0]
+            .mAxiStreamTlast(axiRXtlast),        // output
+            .mAxiStreamTready(1'b1),             // input
+            .mAxiStreamTvalid(axiRXtvalid),      // output
+            .mClk(auMGTclkOut),                  // input
+            .resetN(~auMGTResetOut));            // input
+
+        aurora_8b10b aurora_8b10b_inst (
+            // AXI axiTx Interface
+            .s_axi_tx_tdata(axiTXtdata32),       // input   [0:31]
+            .s_axi_tx_tkeep(axiTXtkeep32),       // input   [0:3]
+            .s_axi_tx_tvalid(axiTXtvalid32),     // input
+            .s_axi_tx_tlast(axiTXtlast32),       // input
+            .s_axi_tx_tready(axiTXtready32),     // output
+            // AXI RX Interface
+            .m_axi_rx_tdata(axiRXtdata32),       // output  [0:31]
+            .m_axi_rx_tkeep(axiRXtkeep32),       // output  [0:3]
+            .m_axi_rx_tvalid(axiRXtValid32),     // output
+            .m_axi_rx_tlast(axiRXtlast32),       // output
+            // GT Serial I/O
+            .rxp(rx_p),                        // input
+            .rxn(rx_n),                        // input
+            .txp(tx_p),                        // output
+            .txn(tx_n),                        // output
+            // GT Reference Clock Interface
+            .gt_refclk1(refClk),               // input
+            // Error Detection Interface
+            .frame_err(),                      // output
+            .hard_err(hardErr),                // output
+            .soft_err(softErr),                // output
+            // Status
+            .lane_up(laneUp),                  // output
+            .channel_up(channelUp),            // output
+            // CRC output status signals
+            .crc_pass_fail_n(gtCrcPass),       // output
+            .crc_valid(gtCrcValid),            // output
+            // System Interface
+            .user_clk(userClkOut),             // input
+            .sync_clk(syncClkOut),             // input
+            .gt_reset(gtReset),                // input
+            .reset(reset),                     // input
+            .sys_reset_out(),                  // output
+
+            .power_down(powerDown),            // input
+            .loopback(3'b0),                   // input   [2:0]
+            .tx_lock(),                        // output
+
+            .init_clk_in(initClk),             // input
+            .tx_resetdone_out(txResetDone),    // output
+            .rx_resetdone_out(rxResetDone),    // output
+            .link_reset_out(),                 // output
+            // DRP Ports
+            .drpclk_in(initClk),               // input
+            .drpaddr_in(9'b0),                 // input   [8:0]
+            .drpen_in(1'b0),                   // input
+            .drpdi_in(16'b0),                  // input   [15:0]
+            .drprdy_out(),                     // output
+            .drpdo_out(),                      // output  [15:0]
+            .drpwe_in(1'b0),                   // input
+            .gt0_cplllock_out(cpllLock),       // output
+            // ---------- TX Configurable Driver Ports ---------------------------------
+            .gt0_txpostcursor_in(5'b0),        // input   [4:0]
+            .gt0_txprecursor_in(5'b0),         // input   [4:0]
+            // ---------- Transmit Ports - TX 8B/10B Encoder Ports ---------------------
+            .gt0_txchardispmode_in(4'b0),      // input   [3:0]
+            .gt0_txchardispval_in(4'b0),       // input   [3:0]
+            .gt0_txmaincursor_in(7'b0),        // input   [6:0]
+            .gt0_tx_buf_err_out(),             // output
+            .gt0_txdiffctrl_in(4'b0),          // input   [3:0]
+            // ---------- Transmit Ports - TX Polarity Control Ports -------------------
+            .gt0_txpolarity_in(1'b0),          // input
+            // ---------- Transmit Ports - Pattern Generator Ports ---------------------
+            .gt0_txprbsforceerr_in(1'b0),      // input
+            .gt0_txprbssel_in(3'b0),           // input   [2:0]
+            // ---------- Transmit Ports - TX Data Path interface ----------------------
+            .gt0_txpcsreset_in(txPCSreset),    // input
+            .gt0_txinhibit_in(1'b0),           // input
+            .gt0_txpmareset_in(txPMAreset),    // input
+            .gt0_txresetdone_out(),            // output
+            .gt0_txbufstatus_out(txBufStatus), // output  [1:0]
+
+            .gt0_rxresetdone_out(),            // output
+            .gt0_rxbufstatus_out(rxBufStatus), // output  [2:0]
+            // ---------- RX Margin Analysis Ports -------------------------------------
+            .gt0_eyescanreset_in(),            // input
+            .gt0_eyescandataerror_out(),       // output
+            .gt0_eyescantrigger_in(),          // input
+            .gt0_rxdfelpmreset_in(),           // input
+            .gt0_rxlpmen_in(),                 // input
+            .gt0_rxcdrovrden_in(),             // input
+            .gt0_rxmonitorout_out(),           // output  [6:0]
+            .gt0_rxmonitorsel_in(),            // input   [1:0]
+            .gt0_rxcdrhold_in(),               // input
+            .gt0_rxbyteisaligned_out(),        // output
+            .gt0_rx_realign_out(),             // output
+            .gt0_rx_buf_err_out(),             // output
+            .gt0_rxcommadet_out(),             // output
+            // ---------- Receive Ports - Pattern Checker Ports ------------------------
+            .gt0_rxprbserr_out(),              // output
+            .gt0_rxprbssel_in(),               // input   [2:0]
+            // ---------- Receive Ports - Pattern Checker ports ------------------------
+            .gt0_rxprbscntreset_in(),          // input
+            // ---------- Receive Ports - RX Data Path interface -----------------------
+            .gt0_rxpcsreset_in(),              // input
+            .gt0_rxpmareset_in(),              // input
+            .gt0_dmonitorout_out(),            // output  [7:0]
+            // ---------- Receive Ports - RX Elastic Buffer and Phase Alignment Ports --
+            .gt0_rxbufreset_in(),              // input
+            .gt0_rx_disp_err_out(),            // output  [3:0]
+            .gt0_rx_not_in_table_out(),        // output  [3:0]
+            // ____________________________ COMMON PORTS _______________________________
+            .gt0_qplllock_in(),                // input
+            .gt0_qpllrefclklost_in(),          // input
+            .gt0_qpllreset_out(),              // output
+            .gt_qpllclk_quad1_in(),            // input
+            .gt_qpllrefclk_quad1_in(),         // input
+            .tx_out_clk(txOutClkUnbuf)         // output
+            .pll_not_locked()                  // input
+         );
+    end
 end
 
 if (FPGA_FAMILY == "ultrascaleplus") begin
+    assign initClk = initClkIn;
 
-assign initClk = initClkIn;
+    if (MGT_PROTOCOL == "AURORA_64B66B") begin
+        aurora64b66b aurora64b66bInst (
+            // TX AXI4-S Interface
+            .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
+            .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
+            .s_axi_tx_tlast(axiTXtlast),        // input
+            .s_axi_tx_tvalid(axiTXtvalid),      // input
+            .s_axi_tx_tready(axiTXtready),      // output
+            // RX AXI4-S Interface
+            .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
+            .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
+            .m_axi_rx_tlast(axiRXtlast),        // output
+            .m_axi_rx_tvalid(axiRXtValid),      // output
+            // GTX Serial I/O
+            .rxp(rx_p),                         // input
+            .rxn(rx_n),                         // input
+            .txp(tx_p),                         // output
+            .txn(tx_n),                         // output
+            //GTX Reference Clock Interface
+            .refclk1_in(refClk),                // input
+            .hard_err(hardErr),                 // output
+            .soft_err(softErr),                 // output
+            // Status
+            .channel_up(channelUp),             // output
+            .lane_up(laneUp),                   // output
+            .crc_pass_fail_n(gtCrcPass),        // output
+            .crc_valid(gtCrcValid),             // output
+            // System Interface
+            .mmcm_not_locked(mmcmNotLocked),    // input
+            .user_clk(userClkOut),              // input
+            .sync_clk(syncClkOut),              // input
+            .reset_pb(reset),                   // input
+            .gt_rxcdrovrden_in(1'b0),           // input
+            .power_down(powerDown),             // input
+            .loopback(3'b0),                    // input [2:0]
+            .pma_init(gtReset),                 // input
+            // GT DRP Ports
+            .gt0_drpaddr(10'b0),                // input  [9:0]
+            .gt0_drpdi(16'b0),                  // input  [15:0]
+            .gt0_drpen(1'b0),                   // input
+            .gt0_drpwe(1'b0),                   // input
+            .gt0_drpdo(),                       // output [15:0]
+            .gt0_drprdy(),                      // output
+            .init_clk(initClk),                 // input
+            .link_reset_out(),                  // output
+            .gt_rxusrclk_out(),                 // output
+            //------------------------ RX Margin Analysis Ports ------------------------
+            .gt_eyescandataerror(),             // output
+            .gt_eyescanreset(1'b0),             // input
+            .gt_eyescantrigger(1'b0),           // input
+            //------------------- Receive Ports - RX Equalizer Ports -------------------
+            .gt_rxcdrhold(1'b0),                // input  [0:0]
+            .gt_rxdfelpmreset(1'b0),            // input  [0:0]
+            .gt_rxlpmen(1'b0),                  // input  [0:0]
+            .gt_rxpmareset(1'b0),               // input  [0:0]
+            .gt_rxpcsreset(1'b0),               // input  [0:0]
+            .gt_rxrate(2'b0),                   // input  [2:0]
+            .gt_rxbufreset(1'b0),               // input  [0:0]
+            .gt_rxpmaresetdone(),               // output [0:0]
+            .gt_rxprbssel(4'b0),                // input  [3:0]
+            .gt_rxprbscntreset(1'b0),           // input  [0:0]
+            .gt_rxprbserr(),                    // output [0:0]
+            .gt_rxresetdone(rxResetDone),       // output [0:0]
+            .gt_rxbufstatus(rxBufStatus),       // output [2:0]
+            //---------------------- TX Configurable Driver Ports ----------------------
+            .gt_txpostcursor(5'b0),             // input  [4:0]
+            .gt_txdiffctrl(5'b11000),           // input  [4:0]
+            .gt_txprecursor(5'b0),              // input  [4:0]
+            //--------------- Transmit Ports - TX Polarity Control Ports ---------------
+            .gt_txpolarity(1'b0),               // input
+            .gt_txinhibit(1'b0),                // input
+            .gt_txpmareset(txPMAreset),         // input
+            .gt_txpcsreset(txPCSreset),         // input
+            .gt_txprbssel(4'b0),                // input  [3:0]
+            .gt_txprbsforceerr(1'b0),           // input
+            .gt_txbufstatus(txBufStatus),       // output [1:0]
+            .gt_txresetdone(txResetDone),       // output
+            .gt_pcsrsvdin(16'b0),               // input  [15:0]
+            .gt_dmonitorout(),                  // output [15:0]
+            .gt_cplllock(cpllLock),             // output
+            .gt_qplllock(),                     // output
+            .gt_powergood(),                    // output [0:0]
+            .gt_pll_lock(gtPllLock),            // output
+            .bufg_gt_clr_out(txOutClkClrUnbuf), // output
+            .sys_reset_out(),                   // output
+            .tx_out_clk(txOutClkUnbuf)          // output
+        );
+    end
 
-aurora64b66b aurora64b66bInst (
-    // TX AXI4-S Interface
-    .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
-    .s_axi_tx_tkeep(axiTXtkeep),        // input  [0:7]
-    .s_axi_tx_tlast(axiTXtlast),        // input
-    .s_axi_tx_tvalid(axiTXtvalid),      // input
-    .s_axi_tx_tready(axiTXtready),      // output
-    // RX AXI4-S Interface
-    .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
-    .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
-    .m_axi_rx_tlast(axiRXtlast),        // output
-    .m_axi_rx_tvalid(axiRXtValid),      // output
-    // GTX Serial I/O
-    .rxp(rx_p),                         // input
-    .rxn(rx_n),                         // input
-    .txp(tx_p),                         // output
-    .txn(tx_n),                         // output
-    //GTX Reference Clock Interface
-    .refclk1_in(refClk),                // input
-    .hard_err(hardErr),                 // output
-    .soft_err(softErr),                 // output
-    // Status
-    .channel_up(channelUp),             // output
-    .lane_up(laneUp),                   // output
-    .crc_pass_fail_n(gtCrcPass),        // output
-    .crc_valid(gtCrcValid),             // output
-    // System Interface
-    .mmcm_not_locked(mmcmNotLocked),    // input
-    .user_clk(userClkOut),              // input
-    .sync_clk(syncClkOut),              // input
-    .reset_pb(reset),                   // input
-    .gt_rxcdrovrden_in(1'b0),           // input
-    .power_down(powerDown),             // input
-    .loopback(3'b0),                    // input [2:0]
-    .pma_init(gtReset),                 // input
-    // GT DRP Ports
-    .gt0_drpaddr(10'b0),                // input  [9:0]
-    .gt0_drpdi(16'b0),                  // input  [15:0]
-    .gt0_drpen(1'b0),                   // input
-    .gt0_drpwe(1'b0),                   // input
-    .gt0_drpdo(),                       // output [15:0]
-    .gt0_drprdy(),                      // output
-    .init_clk(initClkIn),               // input
-    .link_reset_out(),                  // output
-    .gt_rxusrclk_out(),                 // output
-    //------------------------ RX Margin Analysis Ports ------------------------
-    .gt_eyescandataerror(),             // output
-    .gt_eyescanreset(1'b0),             // input
-    .gt_eyescantrigger(1'b0),           // input
-    //------------------- Receive Ports - RX Equalizer Ports -------------------
-    .gt_rxcdrhold(1'b0),                // input  [0:0]
-    .gt_rxdfelpmreset(1'b0),            // input  [0:0]
-    .gt_rxlpmen(1'b0),                  // input  [0:0]
-    .gt_rxpmareset(1'b0),               // input  [0:0]
-    .gt_rxpcsreset(1'b0),               // input  [0:0]
-    .gt_rxrate(2'b0),                   // input  [2:0]
-    .gt_rxbufreset(1'b0),               // input  [0:0]
-    .gt_rxpmaresetdone(),               // output [0:0]
-    .gt_rxprbssel(4'b0),                // input  [3:0]
-    .gt_rxprbscntreset(1'b0),           // input  [0:0]
-    .gt_rxprbserr(),                    // output [0:0]
-    .gt_rxresetdone(rxResetDone),       // output [0:0]
-    .gt_rxbufstatus(rxBufStatus),       // output [2:0]
-    //---------------------- TX Configurable Driver Ports ----------------------
-    .gt_txpostcursor(5'b0),             // input  [4:0]
-    .gt_txdiffctrl(5'b11000),           // input  [4:0]
-    .gt_txprecursor(5'b0),              // input  [4:0]
-    //--------------- Transmit Ports - TX Polarity Control Ports ---------------
-    .gt_txpolarity(1'b0),               // input
-    .gt_txinhibit(1'b0),                // input
-    .gt_txpmareset(txPMAreset),         // input
-    .gt_txpcsreset(txPCSreset),         // input
-    .gt_txprbssel(4'b0),                // input  [3:0]
-    .gt_txprbsforceerr(1'b0),           // input
-    .gt_txbufstatus(txBufStatus),       // output [1:0]
-    .gt_txresetdone(txResetDone),       // output
-    .gt_pcsrsvdin(16'b0),               // input  [15:0]
-    .gt_dmonitorout(),                  // output [15:0]
-    .gt_cplllock(cpllLock),             // output
-    .gt_qplllock(),                     // output
-    .gt_powergood(),                    // output [0:0]
-    .gt_pll_lock(gtPllLock),            // output
-    .bufg_gt_clr_out(txOutClkClrUnbuf), // output
-    .sys_reset_out(),                   // output
-    .tx_out_clk(txOutClkUnbuf)          // output
-);
-
+    if (MGT_PROTOCOL == "AURORA_8B10B") begin
+        MGT_PROTOCOL_AURORA_8b10b_not_supported_for_ultrascaleplus error();
+    end
 end
 endgenerate
 
