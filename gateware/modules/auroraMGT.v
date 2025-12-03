@@ -487,7 +487,7 @@ if (FPGA_FAMILY == "7series") begin
             .mAxiStreamTready(1'b1),             // input
             .mAxiStreamTvalid(axiRXtvalid),      // output
             .mClk(auMGTclkOut),                  // input
-            .resetN(~auMGTResetOut));            // input
+            .resetN(~reset));                    // input
 
         aurora_8b10b aurora_8b10b_inst (
             // AXI axiTx Interface
@@ -598,7 +598,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_qpllreset_out(),              // output
             .gt_qpllclk_quad1_in(),            // input
             .gt_qpllrefclk_quad1_in(),         // input
-            .tx_out_clk(txOutClkUnbuf)         // output
+            .tx_out_clk(txOutClkUnbuf),        // output
             .pll_not_locked()                  // input
          );
     end
