@@ -337,8 +337,6 @@ end
 
 ////////////////////////////////////////////////////////////////////////////////
 // Aurora IP instance
-`ifndef SIMULATE
-
 generate
 if (FPGA_FAMILY == "7series") begin
 
@@ -346,6 +344,8 @@ if (FPGA_FAMILY == "7series") begin
     assign txOutClkClrUnbuf = 1'b0;
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
+
+        `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
             // TX AXI4-S Interface
             .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -439,6 +439,7 @@ if (FPGA_FAMILY == "7series") begin
             .sys_reset_out(),                   // output
             .tx_out_clk(txOutClkUnbuf)          // output
         );
+        `endif
     end
 
     if (MGT_PROTOCOL == "AURORA_8B10B") begin
@@ -489,6 +490,7 @@ if (FPGA_FAMILY == "7series") begin
             .mClk(auMGTclkOut),                  // input
             .resetN(~reset));                    // input
 
+        `ifndef SIMULATE
         aurora_8b10b aurora_8b10b_inst (
             // AXI axiTx Interface
             .s_axi_tx_tdata(axiTXtdata32),       // input   [0:31]
@@ -601,6 +603,7 @@ if (FPGA_FAMILY == "7series") begin
             .tx_out_clk(txOutClkUnbuf),        // output
             .pll_not_locked()                  // input
          );
+        `endif // `ifndef SIMULATE
     end
 end
 
@@ -608,6 +611,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     assign initClk = initClkIn;
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
+        `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
             // TX AXI4-S Interface
             .s_axi_tx_tdata(axiTXtdata),        // input  [0:63]
@@ -694,6 +698,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .sys_reset_out(),                   // output
             .tx_out_clk(txOutClkUnbuf)          // output
         );
+        `endif
     end
 
     if (MGT_PROTOCOL == "AURORA_8B10B") begin
@@ -702,5 +707,4 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
 end
 endgenerate
 
-`endif // `ifndef SIMULATE
 endmodule
