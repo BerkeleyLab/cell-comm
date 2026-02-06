@@ -77,7 +77,7 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 // Control register
 //
-reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
+reg ccwInhibit = 0, cwInhibit = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
 reg stopUBreadoutReq = 0, stopUBreadout = 0;
 (*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;
@@ -86,8 +86,7 @@ always @(posedge sysClk) begin
         cellCount <= GPIO_OUT[0+:CELL_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+1];
-        useFakeData <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
-        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+3];
+        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
     end
 end
 
@@ -333,8 +332,8 @@ end
 // MicroBlaze status
 //
 assign csr = { readoutActive, readoutValid, readoutTime, seqno,
-            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-4-(3*CELL_COUNT_WIDTH){1'b0}},
-                            stopUBreadout, useFakeData, cwInhibit, ccwInhibit,
+            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*CELL_COUNT_WIDTH){1'b0}},
+                                     stopUBreadout, cwInhibit, ccwInhibit,
                                      cwPacketCount, ccwPacketCount, cellCount };
 
 //
