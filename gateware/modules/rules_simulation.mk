@@ -9,7 +9,8 @@ TEST_BENCH = \
 	writeFMPSTestLink_tb \
 	writeBPMTestLink_tb \
 	fmpsReadLink_tb \
-	fmpsReadLinks_tb
+	fmpsReadLinks_tb \
+	readoutStream_tb
 
 TGT_ := $(TEST_BENCH)
 NO_CHECK =

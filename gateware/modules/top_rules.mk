@@ -23,4 +23,4 @@ VFLAGS_DEP += $(addprefix -y, $(CELL_COMM_MODULES_DIR))
 VFLAGS_DEP += $(addprefix -I, $(CELL_COMM_MODULES_DIR))
 
 # Ignore RTL version of the fmpsReadLinksMux, use the .xci IP
-UNISIM_CRAP += -e 'fmpsReadLinksMux'
+UNISIM_CRAP += -e 'fmpsReadLinksMux|fofbReadLinksMux'

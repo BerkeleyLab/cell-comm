@@ -23,6 +23,10 @@ module fmpsReadLinks #(
     (*mark_debug=statusDebug*) output reg [(1<<INDEX_WIDTH)-1:0] fmpsBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                        fmpsEnabled,
 
+    (*mark_debug=statusDebug*) output reg readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg readoutValid = 0,
+    (*mark_debug=statusDebug*) output reg readTimeout = 0,
+
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire FAstrobe,
 
@@ -31,15 +35,14 @@ module fmpsReadLinks #(
     (*mark_debug=statusDebug*) output wire [2:0] sysStatusCode,
     (*mark_debug=statusDebug*) output reg        sysTimeoutStrobe = 0,
 
-    (*mark_debug=statusDebug*) output reg  readoutActive = 0,
-    (*mark_debug=statusDebug*) output reg  readoutValid = 0,
-
     // Data Readout, mostly for debug/checking. The FMPS data is
     // actually used by the Mitigation Node
     (*mark_debug=readoutDebug*)
     input wire      [INDEX_WIDTH-1:0] fmpsReadoutAddress,
     (*mark_debug=readoutDebug*)
     output wire                [31:0] fmpsReadout,
+    (*mark_debug=readoutDebug*)
+    output wire                       fmpsReadoutPresent,
 
     // Values to microBlaze
     input  wire                       uBreadoutStrobe,
@@ -69,13 +72,14 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0;
 reg [FMPS_COUNT_WIDTH-1:0] fmpsCount = 0;
-reg readTimeout = 0;
 reg auReadoutValid_m, auReadoutValid;
+reg stopUBreadoutReq = 0, stopUBreadout = 0;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
         fmpsCount <= GPIO_OUT[0+:FMPS_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*FMPS_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*FMPS_COUNT_WIDTH+1];
+        stopUBreadoutReq <= GPIO_OUT[3*FMPS_COUNT_WIDTH+2];
     end
 end
 
@@ -221,6 +225,7 @@ always @(posedge sysClk) begin
         timeoutFlag <= 0;
         fmpsBitmapAllFASnapshot <= fmpsBitmapAll;
         fmpsEnableBitmapFASnapshot <= fmpsBitmapEnabled;
+        stopUBreadout <= stopUBreadoutReq;
     end
     else if (readoutActive) begin
         if (fmpsCounter == fmpsCount) begin
@@ -295,13 +300,14 @@ always @(posedge sysClk) begin
     cwHasFMPS <= readoutValid && auCW_FMPSbitmap[fmpsReadoutAddress];
 end
 assign fmpsReadout = ccwHasFMPS ? ccwData : (cwHasFMPS ? cwData : 0);
+assign fmpsReadoutPresent = cwHasFMPS | ccwHasFMPS;
 
 //
 // MicroBlaze status
 //
 assign csr = { readoutActive, readoutValid, readoutTime, seqno,
             {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*FMPS_COUNT_WIDTH){1'b0}},
-                                     1'b0, cwInhibit, ccwInhibit,
+                                     stopUBreadout, cwInhibit, ccwInhibit,
                                      cwPacketCount, ccwPacketCount, fmpsCount };
 
 //
@@ -321,7 +327,7 @@ always @(posedge sysClk) begin
         uBreadoutAddress <= GPIO_OUT[INDEX_WIDTH-1:0];
 
     uBq <= uBdpram[uBreadoutAddress];
-    if (fmpsReadoutValid) begin
+    if (fmpsReadoutValid && !stopUBreadout) begin
         uBdpram[fmpsReadoutAddress_d] <= fmpsReadout;
     end
 end

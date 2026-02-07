@@ -1,0 +1,53 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Thu Feb 13 19:42:32 2025
+[*]
+[dumpfile] "readoutStream_tb.vcd"
+[dumpfile_mtime] "Thu Feb 13 19:38:46 2025"
+[dumpfile_size] 43328
+[savefile] "readoutStream_tb.gtkw"
+[timestart] 0
+[size] 1920 1121
+[pos] -1 -1
+*-10.200001 2199 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] readoutStream_tb.
+[sst_width] 273
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 310
+@28
+readoutStream_tb.DUT.clk
+readoutStream_tb.DUT.reset
+readoutStream_tb.DUT.readoutActive
+readoutStream_tb.DUT.readoutValid
+readoutStream_tb.DUT.readoutPresent
+[color] 3
+readoutStream_tb.DUT.readoutActive_d
+@22
+[color] 3
+readoutStream_tb.DUT.readoutAddress_d[8:0]
+[color] 3
+readoutStream_tb.DUT.readoutData[31:0]
+@28
+[color] 3
+readoutStream_tb.DUT.readoutValid_d
+[color] 3
+readoutStream_tb.DUT.state
+@22
+[color] 2
+readoutStream_tb.DUT.readoutAddress[8:0]
+[color] 2
+readoutStream_tb.DUT.packetIndex[8:0]
+[color] 2
+readoutStream_tb.DUT.packetData[31:0]
+@28
+[color] 2
+readoutStream_tb.DUT.packetValid
+@421
+[color] 7
+readoutStream_tb.errors
+@29
+[color] 7
+readoutStream_tb.fail
+[pattern_trace] 1
+[pattern_trace] 0

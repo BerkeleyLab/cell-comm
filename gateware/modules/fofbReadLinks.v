@@ -21,11 +21,13 @@ module fofbReadLinks #(
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot = 0,
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot = 0,
 
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAll = 0,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled = 0,
-    (*mark_debug=statusDebug*) output reg                 fofbEnabled = 0,
-    (*mark_debug=statusDebug*) output reg                 fofbReadoutActive = 0,
-    (*mark_debug=statusDebug*) output reg                 fofbReadoutValid = 0,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAll,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled,
+    (*mark_debug=statusDebug*) output reg                 fofbEnabled,
+
+    (*mark_debug=statusDebug*) output reg 		  readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg                 readoutValid = 0,
+    (*mark_debug=statusDebug*) output reg 		  readTimeout = 0,
 
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire        FAstrobe,
@@ -44,6 +46,8 @@ module fofbReadLinks #(
     output wire                [31:0] fofbDSPreadoutY,
     (*mark_debug=dspReadoutDebug*)
     output wire                [31:0] fofbDSPreadoutS,
+    (*mark_debug=dspReadoutDebug*)
+    output wire                       fofbDSPreadoutPresent,
 
     // Values to microBlaze
     input  wire                       uBreadoutStrobe,
@@ -75,14 +79,15 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
-reg readTimeout = 0;
+reg stopUBreadoutReq = 0, stopUBreadout = 0;
 (*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;
 always @(posedge sysClk) begin
     if (csrStrobe) begin
         cellCount <= GPIO_OUT[0+:CELL_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+1];
-        useFakeData <= GPIO_OUT[20];
+        useFakeData <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
+        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+3];
     end
 end
 
@@ -220,29 +225,30 @@ always @(posedge sysClk) begin
         fofbCounter <= 0;
         fofbBitmapAll <= 0;
         fofbBitmapEnabled <= 0;
-        fofbReadoutActive <= 1;
-        fofbReadoutValid <= 0;
+        readoutActive <= 1;
+        readoutValid <= 0;
         usDivider <= ((SYSCLK_RATE/1000000)/2)-1;
         readoutTimer <= 0;
         readTimeout <= 0;
         timeoutFlag <= 0;
         fofbBitmapAllFASnapshot <= fofbBitmapAll;
         fofbEnableBitmapFASnapshot <= fofbBitmapEnabled;
+        stopUBreadout <= stopUBreadoutReq;
     end
-    else if (fofbReadoutActive) begin
+    else if (readoutActive) begin
         if (cellCounter == cellCount) begin
             fofbEnabled <= (fofbCounter == cellCount);
             seqno <= seqno + 1;
-            fofbReadoutValid <= 1;
+            readoutValid <= 1;
             readoutTime <= readoutTimer;
-            fofbReadoutActive <= 0;
+            readoutActive <= 0;
         end
         else if (timeoutFlag) begin
             fofbEnabled <= 0;
             readTimeout <= 1;
             timeoutToggle <= !timeoutToggle;
             readoutTime <= readoutTimer;
-            fofbReadoutActive <= 0;
+            readoutActive <= 0;
         end
         if (mergedTVALID && (mergedStatus == ST_SUCCESS)) begin
 
@@ -282,7 +288,7 @@ end
 assign auCCWcellInhibit = auCCWcellInhibit_m2;
 assign auCWcellInhibit = auCWcellInhibit_m2;
 always @(posedge auClk)begin
-    auReadoutValid_m <= fofbReadoutValid;
+    auReadoutValid_m <= readoutValid;
     auReadoutValid   <= auReadoutValid_m;
     auCCWcellInhibit_m <= ccwInhibit;
     auCWcellInhibit_m  <= cwInhibit;
@@ -303,12 +309,13 @@ end
 always @(posedge sysClk) begin
     // The one cycle latency in extracting the bit from the bitmap matches the
     // one cycle latency to read the values from the 'readLink' DPRAM.
-    ccwHasBPM <= fofbReadoutValid && auCCW_FOFBbitmap[fofbDSPreadoutAddress];
-    cwHasBPM <= fofbReadoutValid && auCW_FOFBbitmap[fofbDSPreadoutAddress];
+    ccwHasBPM <= readoutValid && auCCW_FOFBbitmap[fofbDSPreadoutAddress];
+    cwHasBPM <= readoutValid && auCW_FOFBbitmap[fofbDSPreadoutAddress];
 end
 assign fofbDSPreadoutX = ccwHasBPM ? ccwX : (cwHasBPM ? cwX : saveBPMx);
 assign fofbDSPreadoutY = ccwHasBPM ? ccwY : (cwHasBPM ? cwY : saveBPMy);
 assign fofbDSPreadoutS = ccwHasBPM ? ccwS : (cwHasBPM ? cwS : 0);
+assign fofbDSPreadoutPresent = cwHasBPM | ccwHasBPM;
 
 //
 // Store values so we can use them next cycle if no new data arrive
@@ -327,12 +334,9 @@ end
 //
 // MicroBlaze status
 //
-//8140:1042
-//0000 0001  0000  0100 0010
-// 00   000001  000001 000010
-assign csr = { fofbReadoutActive, fofbReadoutValid, readoutTime, seqno,
-            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*CELL_COUNT_WIDTH){1'b0}},
-                                     useFakeData, cwInhibit, ccwInhibit,
+assign csr = { readoutActive, readoutValid, readoutTime, seqno,
+            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-4-(3*CELL_COUNT_WIDTH){1'b0}},
+                            stopUBreadout, useFakeData, cwInhibit, ccwInhibit,
                                      cwPacketCount, ccwPacketCount, cellCount };
 
 //
@@ -347,7 +351,7 @@ reg [FOFB_INDEX_WIDTH-1:0] uBreadoutAddress;
 always @(posedge sysClk) begin
     if (uBreadoutStrobe) uBreadoutAddress <= GPIO_OUT[FOFB_INDEX_WIDTH-1:0];
     uBq <= uBdpram[uBreadoutAddress];
-    if (fofbDSPreadoutValid) begin
+    if (fofbDSPreadoutValid && !stopUBreadout) begin
         uBdpram[fofbDSPreadoutAddress_d] <=
                             {fofbDSPreadoutS, fofbDSPreadoutY, fofbDSPreadoutX};
     end
