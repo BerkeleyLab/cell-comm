@@ -25,10 +25,10 @@ module fofbReadLinks #(
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                 fofbEnabled,
 
-    (*mark_debug=statusDebug*) output reg 		  readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg         readoutActive = 0,
     (*mark_debug=statusDebug*) output reg         readoutValid = 0,
-    (*mark_debug=statusDebug*) output reg 		  readTimeout = 0,
-    (*mark_debug=statusDebug*) output reg 		  useFakeData = 0,
+    (*mark_debug=statusDebug*) output reg         readTimeout = 0,
+    (*mark_debug=statusDebug*) output reg         useFakeData = 0,
 
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire        FAstrobe,
