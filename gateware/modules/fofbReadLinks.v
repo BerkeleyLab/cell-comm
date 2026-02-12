@@ -86,7 +86,8 @@ always @(posedge sysClk) begin
         cellCount <= GPIO_OUT[0+:CELL_COUNT_WIDTH];
         ccwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+0];
         cwInhibit <= GPIO_OUT[3*CELL_COUNT_WIDTH+1];
-        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
+        useFakeData <= GPIO_OUT[3*CELL_COUNT_WIDTH+2];
+        stopUBreadoutReq <= GPIO_OUT[3*CELL_COUNT_WIDTH+3];
     end
 end
 
@@ -332,8 +333,8 @@ end
 // MicroBlaze status
 //
 assign csr = { readoutActive, readoutValid, readoutTime, seqno,
-            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-3-(3*CELL_COUNT_WIDTH){1'b0}},
-                                     stopUBreadout, cwInhibit, ccwInhibit,
+            {32-2-READOUT_TIMER_WIDTH-SEQNO_WIDTH-4-(3*CELL_COUNT_WIDTH){1'b0}},
+                            stopUBreadout, useFakeData, cwInhibit, ccwInhibit,
                                      cwPacketCount, ccwPacketCount, cellCount };
 
 //
