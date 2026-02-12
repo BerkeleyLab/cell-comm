@@ -18,16 +18,17 @@ module fofbReadLinks #(
     input wire                                            csrStrobe,
     input wire                                     [31:0] GPIO_OUT,
     (*mark_debug=statusDebug*) output wire         [31:0] csr,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot = 0,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot = 0,
 
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAll,
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                 fofbEnabled,
 
-    (*mark_debug=statusDebug*) output reg readoutActive = 0,
-    (*mark_debug=statusDebug*) output reg readoutValid = 0,
-    (*mark_debug=statusDebug*) output reg readTimeout = 0,
+    (*mark_debug=statusDebug*) output reg         readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg         readoutValid = 0,
+    (*mark_debug=statusDebug*) output reg         readTimeout = 0,
+    (*mark_debug=statusDebug*) output reg         useFakeData = 0,
 
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire        FAstrobe,
@@ -155,6 +156,7 @@ wire mergedFOFBenabled = mergedTUSER[0];
 localparam LINK_CCW = 1'b0, LINK_CW = 1'b1;
 localparam ST_SUCCESS = 2'd0;
 
+`ifndef SIMULATE
 fofbReadLinksMux fofbReadLinksMux (
     .ACLK(auClk),
     .ARESETN(~auReset),
@@ -176,6 +178,7 @@ fofbReadLinksMux fofbReadLinksMux (
     .M00_AXIS_TUSER(mergedTUSER),
     .S00_ARB_REQ_SUPPRESS(1'b0),
     .S01_ARB_REQ_SUPPRESS(1'b0));
+`endif
 
 //
 // Forward link packet counts to system clock domain
