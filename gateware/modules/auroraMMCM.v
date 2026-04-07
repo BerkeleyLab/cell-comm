@@ -72,6 +72,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     );
 
     assign TX_CLK_OUT = SYNC_CLK;
+    assign locked_i = 1'b1;
 
 end
 
