@@ -491,7 +491,7 @@ if (FPGA_FAMILY == "7series") begin
             .resetN(~reset));                    // input
 
         `ifndef SIMULATE
-        aurora_8b10b aurora_8b10b_inst (
+        aurora8b10b aurora8b10b_inst (
             // AXI axiTx Interface
             .s_axi_tx_tdata(axiTXtdata32),       // input   [0:31]
             .s_axi_tx_tkeep(axiTXtkeep32),       // input   [0:3]
