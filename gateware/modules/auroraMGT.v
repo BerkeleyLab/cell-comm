@@ -42,6 +42,8 @@ module auroraMGT #(
     output              syncClkOut,
     input               mmcmNotLockedIn,
     output              mmcmNotLockedOut,
+    output              txOutClk,
+    output              txOutClkClr,
 
     /* MGT pins */
     output              tx_p,
@@ -69,10 +71,7 @@ module auroraMGT #(
     output              mgtChannelUp,
     output              mgtTxResetDone,
     output              mgtRxResetDone,
-    output              mgtMmcmNotLocked,
-
-    output              txOutClk,
-    output              txOutClkClr
+    output              mgtMmcmNotLocked
 );
 
 generate
@@ -152,17 +151,17 @@ if (INTERNAL_MMCM == "true") begin
     );
     assign userClkOut = userClkMMCM;
     assign syncClkOut = syncClkMMCM;
-    assign txOutClkClr = txOutClkClrUnbuf;
 end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
-    assign txOutClk = 1'b0;
-    assign txOutClkClr = 1'b0;
+    assign txOutClk = txOutClkIn;
 end else begin
     ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
 end
+
 assign mmcmNotLockedOut = mmcmNotLocked;
+assign txOutClkClr = txOutClkClrUnbuf;
 
 //////////////////////////////////////////////////////////////////////////////
 // Status and control signals
@@ -458,14 +457,14 @@ if (FPGA_FAMILY == "7series") begin
             .sAxiStreamTuser(0),              // input  [7:0]
             .sAxiStreamTlast(axiTXtlast),     // input
             .sAxiStreamTvalid(axiTXtvalid),   // input
-            .sClk(auMGTclkOut),               // input
+            .sClk(userClkOut),               // input
             /* Output stage 32-bit */
             .mAxiStreamTdata(axiTXtdata32),   // output [31:0]
             .mAxiStreamTkeep(axiTXtkeep32),   // output [3:0]
             .mAxiStreamTuser(),               // output [7:0]
             .mAxiStreamTlast(axiTXtlast32),   // output
             .mAxiStreamTvalid(axiTXtvalid32), // output
-            .mClk(auUserClkOut),              // input
+            .mClk(syncClkOut),                // input
             .resetN(~reset));                 // input
 
         wire [31:0]   axiRXtdata32;
@@ -480,14 +479,14 @@ if (FPGA_FAMILY == "7series") begin
             .sAxiStreamTlast(axiRXtlast32),      // input
             .sAxiStreamTready(axiRXtready32),    // output
             .sAxiStreamTvalid(axiRXtvalid32),    // input
-            .sClk(auUserClkOut),                 // input
+            .sClk(syncClkOut),                   // input
             /* Output stage 64-bit */
             .mAxiStreamTdata(axiRXtdata),        // output [63:0]
             .mAxiStreamTkeep(axiRXtkeep),        // output [7:0]
             .mAxiStreamTlast(axiRXtlast),        // output
             .mAxiStreamTready(1'b1),             // input
             .mAxiStreamTvalid(axiRXtvalid),      // output
-            .mClk(auMGTclkOut),                  // input
+            .mClk(userClkOut),                  // input
             .resetN(~reset));                    // input
 
         `ifndef SIMULATE
@@ -521,7 +520,7 @@ if (FPGA_FAMILY == "7series") begin
             .crc_pass_fail_n(gtCrcPass),       // output
             .crc_valid(gtCrcValid),            // output
             // System Interface
-            .user_clk(userClkOut),             // input
+            .user_clk(syncClkOut),             // input
             .sync_clk(syncClkOut),             // input
             .gt_reset(gtReset),                // input
             .reset(reset),                     // input
