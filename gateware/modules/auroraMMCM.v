@@ -13,11 +13,9 @@ module auroraMMCM # (
     parameter   OUT3_DIVIDE     =   8
     ) (
     input  TX_CLK,
-    input  TX_CLK_CLR,
     input  CLK_LOCKED,
     output USER_CLK,
     output SYNC_CLK,
-    output TX_CLK_OUT,
     output MMCM_NOT_LOCKED);
 
 generate
@@ -40,19 +38,6 @@ assign MMCM_NOT_LOCKED  = !locked_i;
 generate
 
 if (FPGA_FAMILY == "ultrascaleplus") begin
-
-    localparam integer P_FREQ_RATIO_SOURCE_TO_USRCLK  = 1;
-    localparam integer P_USRCLK_INT_DIV  = P_FREQ_RATIO_SOURCE_TO_USRCLK - 1;
-    localparam   [2:0] P_USRCLK_DIV      = P_USRCLK_INT_DIV[2:0];
-    BUFG_GT bufg_gt_usrclk_inst (
-        .CE      (1'b1),
-        .CEMASK  (1'b1),
-        .CLR     (TX_CLK_CLR),
-        .CLRMASK (1'b1),
-        .DIV     (P_USRCLK_DIV),
-        .I       (TX_CLK),
-        .O       (TX_CLK_OUT)
-    );
 
     MMCME4_ADV #(.BANDWIDTH            ("OPTIMIZED"),
                  .CLKOUT4_CASCADE      ("FALSE"),
@@ -96,7 +81,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .CLKOUT6             (),
             // Input clock control
             .CLKFBIN             (clkfbout),
-            .CLKIN1              (TX_CLK_OUT),
+            .CLKIN1              (TX_CLK),
             .CLKIN2              (1'b0),
             // Tied to always select the primary input clock
             .CLKINSEL            (1'b1),
@@ -122,12 +107,6 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
 end
 
 if (FPGA_FAMILY == "7series") begin
-
-    BUFG txout_clock_net_i
-    (
-        .I(TX_CLK),
-        .O(TX_CLK_OUT)
-    );
 
     MMCME2_ADV #(.BANDWIDTH            ("OPTIMIZED"),
                  .CLKOUT4_CASCADE      ("FALSE"),
@@ -171,7 +150,7 @@ if (FPGA_FAMILY == "7series") begin
             .CLKOUT6             (),
             // Input clock control
             .CLKFBIN             (clkfbout),
-            .CLKIN1              (TX_CLK_OUT),
+            .CLKIN1              (TX_CLK),
             .CLKIN2              (1'b0),
             // Tied to always select the primary input clock
             .CLKINSEL            (1'b1),

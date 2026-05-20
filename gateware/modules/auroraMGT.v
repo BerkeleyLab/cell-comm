@@ -140,12 +140,10 @@ if (INTERNAL_MMCM == "true") begin
         .OUT2_DIVIDE  (MMCM_OUT2_DIVIDE),
         .OUT3_DIVIDE  (MMCM_OUT3_DIVIDE)
     )
-        auroraCWmmcm (
-        .TX_CLK(txOutClkUnbuf),         // input
-        .TX_CLK_CLR(txOutClkClrUnbuf),  // input
+    auroraCWmmcm (
+        .TX_CLK(txOutClk),              // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
-        .TX_CLK_OUT(txOutClk),          // output
         .SYNC_CLK(syncClkMMCM),         // output
         .MMCM_NOT_LOCKED(mmcmNotLocked) // output
     );
@@ -155,7 +153,6 @@ end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
-    assign txOutClk = txOutClkIn;
 end else begin
     ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
 end
@@ -341,6 +338,12 @@ if (FPGA_FAMILY == "7series") begin
 
     assign initClk = sysClk;
     assign txOutClkClrUnbuf = 1'b0;
+
+    BUFG txoutclk_inst
+    (
+        .I(txOutClkUnbuf),
+        .O(txOutClk)
+    );
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
 
@@ -608,6 +611,19 @@ end
 
 if (FPGA_FAMILY == "ultrascaleplus") begin
     assign initClk = initClkIn;
+
+    localparam integer P_FREQ_RATIO_SOURCE_TO_USRCLK  = 1;
+    localparam integer P_USRCLK_INT_DIV  = P_FREQ_RATIO_SOURCE_TO_USRCLK - 1;
+    localparam   [2:0] P_USRCLK_DIV      = P_USRCLK_INT_DIV[2:0];
+    BUFG_GT bufg_gt_usrclk_inst (
+        .CE      (1'b1),
+        .CEMASK  (1'b1),
+        .CLR     (txOutClkClrUnbuf),
+        .CLRMASK (1'b1),
+        .DIV     (P_USRCLK_DIV),
+        .I       (txOutClkUnbuf),
+        .O       (txOutClk)
+    );
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
         `ifndef SIMULATE
