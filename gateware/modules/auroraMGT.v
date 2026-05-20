@@ -452,6 +452,7 @@ if (FPGA_FAMILY == "7series") begin
         wire          axiTXtlast32;
         wire          axiTXtready32;
 
+        assign        axiTXtready = 1'b1;
         axiDataDownconverter
           axiDataDownconverterInst(
             /* Input stage 64-bit */
