@@ -570,38 +570,38 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_rxresetdone_out(),            // output
             .gt0_rxbufstatus_out(rxBufStatus), // output  [2:0]
             // ---------- RX Margin Analysis Ports -------------------------------------
-            .gt0_eyescanreset_in(),            // input
+            .gt0_eyescanreset_in(1'b0),        // input
             .gt0_eyescandataerror_out(),       // output
-            .gt0_eyescantrigger_in(),          // input
-            .gt0_rxdfelpmreset_in(),           // input
-            .gt0_rxlpmen_in(),                 // input
-            .gt0_rxcdrovrden_in(),             // input
+            .gt0_eyescantrigger_in(1'b0),      // input
+            .gt0_rxdfelpmreset_in(1'b0),       // input
+            .gt0_rxlpmen_in(1'b0),             // input
+            .gt0_rxcdrovrden_in(1'b0),         // input
             .gt0_rxmonitorout_out(),           // output  [6:0]
-            .gt0_rxmonitorsel_in(),            // input   [1:0]
-            .gt0_rxcdrhold_in(),               // input
+            .gt0_rxmonitorsel_in(2'b0),        // input   [1:0]
+            .gt0_rxcdrhold_in(1'b0),           // input
             .gt0_rxbyteisaligned_out(),        // output
             .gt0_rx_realign_out(),             // output
             .gt0_rx_buf_err_out(),             // output
             .gt0_rxcommadet_out(),             // output
             // ---------- Receive Ports - Pattern Checker Ports ------------------------
             .gt0_rxprbserr_out(),              // output
-            .gt0_rxprbssel_in(),               // input   [2:0]
+            .gt0_rxprbssel_in(2'b0),           // input   [2:0]
             // ---------- Receive Ports - Pattern Checker ports ------------------------
-            .gt0_rxprbscntreset_in(),          // input
+            .gt0_rxprbscntreset_in(1'b0),      // input
             // ---------- Receive Ports - RX Data Path interface -----------------------
-            .gt0_rxpcsreset_in(),              // input
-            .gt0_rxpmareset_in(),              // input
+            .gt0_rxpcsreset_in(1'b0),          // input
+            .gt0_rxpmareset_in(1'b0),          // input
             .gt0_dmonitorout_out(),            // output  [7:0]
             // ---------- Receive Ports - RX Elastic Buffer and Phase Alignment Ports --
-            .gt0_rxbufreset_in(),              // input
+            .gt0_rxbufreset_in(1'b0),              // input
             .gt0_rx_disp_err_out(),            // output  [3:0]
             .gt0_rx_not_in_table_out(),        // output  [3:0]
             // ____________________________ COMMON PORTS _______________________________
-            .gt0_qplllock_in(),                // input
-            .gt0_qpllrefclklost_in(),          // input
+            .gt0_qplllock_in(1'b0),            // input
+            .gt0_qpllrefclklost_in(1'b0),      // input
             .gt0_qpllreset_out(),              // output
-            .gt_qpllclk_quad1_in(),            // input
-            .gt_qpllrefclk_quad1_in(),         // input
+            .gt_qpllclk_quad1_in(1'b0),        // input
+            .gt_qpllrefclk_quad1_in(1'b0),     // input
             .tx_out_clk(txOutClkUnbuf),        // output
             .pll_not_locked()                  // input
          );
