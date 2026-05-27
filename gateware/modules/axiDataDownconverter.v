@@ -6,12 +6,14 @@ module axiDataDownconverter (
     input  [7:0]    sAxiStreamTuser,
     input           sAxiStreamTlast,
     input           sAxiStreamTvalid,
+    output          sAxiStreamTready,
     input           sClk,
     /* Output stage 32-bit */
     output [31:0]   mAxiStreamTdata,
     output [3:0]    mAxiStreamTkeep,
     output [7:0]    mAxiStreamTuser,
     output          mAxiStreamTlast,
+    input           mAxiStreamTready,
     output          mAxiStreamTvalid,
     input           mClk,
     /* Control */
@@ -46,6 +48,7 @@ axiStreamSubConvInDowncon axiStreamSubConvInDownconInst(
     /*Input stage */
     .aclk(sClk),                                        // input
     .s_axis_tvalid(sAxiStreamTvalid),                   // input
+    .s_axis_tready(sAxiStreamTready),                   // output
     .s_axis_tdata(sAxiStreamTdata),                     // input [63:0]
     .s_axis_tkeep(sAxiStreamTkeep),                     // input [7:0]
     .s_axis_tlast(sAxiStreamTlast),                     // input
@@ -115,6 +118,7 @@ axiStreamSubConvOutDowncon axiStreamSubConvOutDownconInst(
     .m_axis_tdata(mAxiStreamTdata),  // output [31:0]
     .m_axis_tkeep(mAxiStreamTkeep),  // output [3:0]
     .m_axis_tlast(mAxiStreamTlast),  // output
+    .m_axis_tready(mAxiStreamTready),  // input
     .m_axis_tuser(mAxiStreamTuser)); // output [7:0]
 
 `endif // SIMULATE

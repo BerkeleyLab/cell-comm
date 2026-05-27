@@ -452,7 +452,6 @@ if (FPGA_FAMILY == "7series") begin
         wire          axiTXtlast32;
         wire          axiTXtready32;
 
-        assign        axiTXtready = 1'b1;
         axiDataDownconverter
           axiDataDownconverterInst(
             /* Input stage 64-bit */
@@ -460,6 +459,7 @@ if (FPGA_FAMILY == "7series") begin
             .sAxiStreamTkeep(axiTXtkeep),     // input  [7:0]
             .sAxiStreamTuser(0),              // input  [7:0]
             .sAxiStreamTlast(axiTXtlast),     // input
+            .sAxiStreamTready(axiTXtready),   // output
             .sAxiStreamTvalid(axiTXtvalid),   // input
             .sClk(userClkOut),               // input
             /* Output stage 32-bit */
@@ -468,6 +468,7 @@ if (FPGA_FAMILY == "7series") begin
             .mAxiStreamTuser(),               // output [7:0]
             .mAxiStreamTlast(axiTXtlast32),   // output
             .mAxiStreamTvalid(axiTXtvalid32), // output
+            .mAxiStreamTready(axiTXtready32), // input
             .mClk(syncClkOut),                // input
             .resetN(~reset));                 // input
 
