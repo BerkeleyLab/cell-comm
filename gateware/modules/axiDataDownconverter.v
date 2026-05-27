@@ -59,8 +59,7 @@ axiStreamSubConvInDowncon axiStreamSubConvInDownconInst(
     .m_axis_tdata(scToCcTdata),                         // output [63:0]
     .m_axis_tkeep(scToCcTkeep),                         // output [7:0]
     .m_axis_tlast(scToCcTlast),                         // output
-    .m_axis_tuser(scToCcTUser),                         // output [15:0]
-    .transfer_dropped());                               // output
+    .m_axis_tuser(scToCcTUser));                        // output [15:0]
 
 axiStreamClkConvDowncon axiStreamClkConvDownconInst(
     /* Control stage */
