@@ -18,16 +18,17 @@ module fofbReadLinks #(
     input wire                                            csrStrobe,
     input wire                                     [31:0] GPIO_OUT,
     (*mark_debug=statusDebug*) output wire         [31:0] csr,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot,
-    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAllFASnapshot = 0,
+    (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbEnableBitmapFASnapshot = 0,
 
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapAll,
     (*mark_debug=statusDebug*) output reg [MAX_CELLS-1:0] fofbBitmapEnabled,
     (*mark_debug=statusDebug*) output reg                 fofbEnabled,
 
-    (*mark_debug=statusDebug*) output reg readoutActive = 0,
-    (*mark_debug=statusDebug*) output reg readoutValid = 0,
-    (*mark_debug=statusDebug*) output reg readTimeout = 0,
+    (*mark_debug=statusDebug*) output reg         readoutActive = 0,
+    (*mark_debug=statusDebug*) output reg         readoutValid = 0,
+    (*mark_debug=statusDebug*) output reg         readTimeout = 0,
+    (*mark_debug=statusDebug*) output reg         useFakeData = 0,
 
     // Synchronization
     (*mark_debug=FAstrobeDebug*) input  wire        FAstrobe,
@@ -77,7 +78,7 @@ localparam READOUT_TIMER_WIDTH = 5;
 //
 // Control register
 //
-reg ccwInhibit = 0, cwInhibit = 0, useFakeData = 0;
+reg ccwInhibit = 0, cwInhibit = 0;
 reg [CELL_COUNT_WIDTH-1:0] cellCount = 0;
 reg stopUBreadoutReq = 0, stopUBreadout = 0;
 (*ASYNC_REG="true"*) reg auReadoutValid_m, auReadoutValid;

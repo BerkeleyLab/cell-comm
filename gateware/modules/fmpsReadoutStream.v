@@ -2,11 +2,13 @@ module fmpsReadoutStream #(
     parameter INDEX_WIDTH       = 5
 ) (
     input wire                        sysClk,
-    input wire                 [31:0] fmpsCSR,
 
     input wire [(1<<INDEX_WIDTH)-1:0] fmpsBitmapAll,
     output reg      [INDEX_WIDTH-1:0] fmpsReadoutAddress = 0,
     input wire                 [31:0] fmpsReadout,
+
+    input wire                        fmpsReadoutActive,
+    input wire                        fmpsReadoutValid,
 
     output reg      [INDEX_WIDTH-1:0] fmpsIndex = 0,
     output reg                 [31:0] fmpsData = 0,
@@ -14,8 +16,6 @@ module fmpsReadoutStream #(
 );
 
 // Tap into the CSR
-wire fmpsReadoutActive = fmpsCSR[31];
-wire fmpsReadoutValid = fmpsCSR[30];
 reg fmpsReadoutActive_d = 0, fmpsReadoutValid_d = 0;
 
 wire fmpsPacketPresent = fmpsBitmapAll[fmpsReadoutAddress];
