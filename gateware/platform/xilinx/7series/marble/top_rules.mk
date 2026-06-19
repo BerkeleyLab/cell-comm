@@ -20,7 +20,7 @@ cell_comm_IP_CORES = \
 cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_marble_platform_DIR), $(cell_comm_IP_CORES))
 
 # For top-level makefile
-IP_CORES_XCIS += $(addsuffix .xci, $(cell_comm_IP_CORES))
+IP_CORES_TCLS += $(addsuffix .tcl, $(cell_comm_IP_CORES))
 IP_CORES_DIRS += $(cell_comm_IP_CORES_DIRS)
 
-vpath %.xci $(IP_CORES_DIRS)
+vpath %.tcl $(IP_CORES_DIRS)
