@@ -44,6 +44,7 @@ module auroraLink #(
     output wire [3:0]  axiRxTkeep,
     output wire [7:0]  axiRxTuser,
     output wire        axiRxTlast,
+    input  wire        axiRxTready,
     output wire        axiRxTvalid,
 
     input  wire [31:0] axiTxTdata,
@@ -179,12 +180,14 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .sAxiStreamTuser(axiTuser),                             // input  [7:0]
         .sAxiStreamTlast(axiRxTlast64b),                        // input
         .sAxiStreamTvalid(axiRxTvalid64b),                      // input
+        .sAxiStreamTready(),                                    // output absent
         .sClk(auMGTclkOut),                                     // input
         /* Output stage 32-bit */
         .mAxiStreamTdata(axiRxTdata),                           // output [31:0]
         .mAxiStreamTkeep(axiRxTkeep),                           // output [3:0]
         .mAxiStreamTuser(axiRxTuser),                           // output [7:0]
         .mAxiStreamTlast(axiRxTlast),                           // output
+        .mAxiStreamTready(axiRxTready),                         // input
         .mAxiStreamTvalid(axiRxTvalid),                         // output
         .mClk(auUserClkOut),                                    // input
         .resetN(~auMGTResetOut));                               // input
