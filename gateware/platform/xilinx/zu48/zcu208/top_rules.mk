@@ -1,8 +1,10 @@
-cell_comm_zcu208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu48/zcu208/
+cell_comm_zcu208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu48/zcu208
 
 cell_comm_IP_CORES = \
-	ila_td400_s16384_cap \
-	ila_td400_s4096_cap \
+	fofbReadLinksMux \
+	fmpsReadLinksMux \
+	forwardCellLinkMux \
+	readBPMlinksMux \
 	axisDataFifo32 \
 	axiStreamDwUpcon \
 	axiStreamSubConvUpcon \
@@ -11,12 +13,13 @@ cell_comm_IP_CORES = \
 	axiStreamDwDowncon \
 	axiStreamSubConvInDowncon \
 	axiStreamSubConvOutDowncon \
-	aurora64b66b
+	aurora64b66b \
+	ila_td400_s4096_cap
 
 cell_comm_IP_CORES_DIRS = $(addprefix $(cell_comm_zcu208_platform_DIR), $(cell_comm_IP_CORES))
 
 # For top-level makefile
-IP_CORES_XCIS += $(addsuffix .xci, $(cell_comm_IP_CORES))
+IP_CORES_TCLS += $(addsuffix .tcl, $(cell_comm_IP_CORES))
 IP_CORES_DIRS += $(cell_comm_IP_CORES_DIRS)
 
-vpath %.xci $(IP_CORES_DIRS)
+vpath %.tcl $(IP_CORES_DIRS)
