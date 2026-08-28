@@ -141,7 +141,8 @@ if (INTERNAL_MMCM == "true") begin
         .OUT3_DIVIDE  (MMCM_OUT3_DIVIDE)
     )
     auroraCWmmcm (
-        .TX_CLK(txOutClk),              // input
+        .TX_CLK(txOutClkUnbuf),         // input
+        .TX_CLK_CLR(txOutClkClrUnbuf),  // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
         .SYNC_CLK(syncClkMMCM),         // output
@@ -154,7 +155,7 @@ end else if (INTERNAL_MMCM == "false") begin
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
 end else begin
-    ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
+    ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED err();
 end
 
 assign mmcmNotLockedOut = mmcmNotLocked;
