@@ -1,4 +1,4 @@
-cell_comm_zcu208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu48/zcu208
+cell_comm_zcu208_platform_DIR = $(CELL_COMM_PLATFORM_DIR)xilinx/zu48/zcu208/
 
 cell_comm_IP_CORES = \
 	fofbReadLinksMux \
