@@ -610,7 +610,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_rxcommadet_out(),             // output
             // ---------- Receive Ports - Pattern Checker Ports ------------------------
             .gt0_rxprbserr_out(),              // output
-            .gt0_rxprbssel_in(2'b0),           // input   [2:0]
+            .gt0_rxprbssel_in(3'b0),           // input   [2:0]
             // ---------- Receive Ports - Pattern Checker ports ------------------------
             .gt0_rxprbscntreset_in(1'b0),      // input
             // ---------- Receive Ports - RX Data Path interface -----------------------
@@ -720,7 +720,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .gt_rxlpmen(1'b0),                  // input  [0:0]
             .gt_rxpmareset(1'b0),               // input  [0:0]
             .gt_rxpcsreset(1'b0),               // input  [0:0]
-            .gt_rxrate(2'b0),                   // input  [2:0]
+            .gt_rxrate(3'b0),                   // input  [2:0]
             .gt_rxbufreset(1'b0),               // input  [0:0]
             .gt_rxpmaresetdone(),               // output [0:0]
             .gt_rxprbssel(4'b0),                // input  [3:0]
