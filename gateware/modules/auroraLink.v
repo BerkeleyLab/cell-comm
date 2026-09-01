@@ -132,7 +132,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .axiRXtdata(axiRxTdata64b),                             // output [63:0]
         .axiRXtkeep(axiRxTkeep64b),                             // output [7:0]
         .axiRXtlast(axiRxTlast64b),                             // output
-        .axiRXtValid(axiRxTvalid64b),                           // output
+        .axiRXtvalid(axiRxTvalid64b),                           // output
 
         .axiTXtdata(axiTxTdata64b),                             // input  [63:0]
         .axiTXtkeep(axiTxTkeep64b),                             // input  [7:0]
