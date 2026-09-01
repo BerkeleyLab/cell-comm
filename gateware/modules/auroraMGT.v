@@ -120,6 +120,18 @@ wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
 wire [1:0] txBufStatus;
 wire [2:0] rxBufStatus;
 
+/* AXI 32-bit interface */
+wire [31:0] axiTXtdata32;
+wire  [3:0] axiTXtkeep32;
+wire        axiTXtvalid32;
+wire        axiTXtlast32;
+wire        axiTXtready32;
+wire [31:0] axiRXtdata32;
+wire  [3:0] axiRXtkeep32;
+wire        axiRXtvalid32;
+wire        axiRXtlast32;
+wire        axiRXtready32;
+
 //////////////////////////////////////////////////////////////////////////////
 // Sync clock and User clock generation
 if (INTERNAL_MMCM == "true") begin
@@ -299,22 +311,31 @@ if (DEBUG == "true") begin
         .clk(syncClkOut),
         .probe0({
             axiTXtdata32,
+            axiTXtkeep32,
+            axiTXtvalid32,
+            axiTXtlast32,
+            axiTXtready32,
             axiRXtdata32,
+            axiRXtkeep32,
+            axiRXtvalid32,
+            axiRXtlast32,
+            axiTXtdata,
+            axiTXtkeep,
+            axiTXtlast,
+            axiTXtvalid,
+            axiTXtready,
+            axiRXtdata,
+            axiRXtkeep,
+            axiRXtlast,
+            axiRXtvalid,
             gtPllLock,
             mmcmNotLocked,
-            axiRXtValid32,
-            axiRXtkeep32,
-            axiRXtlast32,
             powerDown,
             reset,
             gtReset,
             txPolarity,
             txPMAreset,
             txPCSreset,
-            axiTXtvalid32,
-            axiTXtlast32,
-            axiTXtready32,
-            axiTXtkeep32,
             hardErr,
             softErr,
             laneUp,
@@ -347,6 +368,18 @@ if (FPGA_FAMILY == "7series") begin
     );
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
+
+        // Unused if AURORA 64b66b
+        assign axiTXtdata32 = 0;
+        assign axiTXtkeep32 = 0;
+        assign axiTXtvalid32 = 0;
+        assign axiTXtlast32 = 0;
+        assign axiTXtready32 = 0;
+        assign axiRXtdata32 = 0;
+        assign axiRXtkeep32 = 0;
+        assign axiRXtvalid32 = 0;
+        assign axiRXtlast32 = 0;
+        assign axiRXtready32 = 0;
 
         `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
@@ -446,12 +479,6 @@ if (FPGA_FAMILY == "7series") begin
     end
 
     if (MGT_PROTOCOL == "AURORA_8B10B") begin
-        /* AXI 32-bit interface */
-        wire [31:0]   axiTXtdata32;
-        wire  [3:0]   axiTXtkeep32;
-        wire          axiTXtvalid32;
-        wire          axiTXtlast32;
-        wire          axiTXtready32;
 
         axiDataDownconverter
           axiDataDownconverterInst(
@@ -472,11 +499,6 @@ if (FPGA_FAMILY == "7series") begin
             .mAxiStreamTready(axiTXtready32), // input
             .mClk(syncClkOut),                // input
             .resetN(~reset));                 // input
-
-        wire [31:0]   axiRXtdata32;
-        wire  [3:0]   axiRXtkeep32;
-        wire          axiRXtvalid32;
-        wire          axiRXtlast32;
 
         axiDataUpconverter
           axiDataUpconverterInst (
@@ -629,6 +651,19 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     );
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
+
+        // Unused if AURORA 64b66b
+        assign axiTXtdata32 = 0;
+        assign axiTXtkeep32 = 0;
+        assign axiTXtvalid32 = 0;
+        assign axiTXtlast32 = 0;
+        assign axiTXtready32 = 0;
+        assign axiRXtdata32 = 0;
+        assign axiRXtkeep32 = 0;
+        assign axiRXtvalid32 = 0;
+        assign axiRXtlast32 = 0;
+        assign axiRXtready32 = 0;
+
         `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
             // TX AXI4-S Interface
