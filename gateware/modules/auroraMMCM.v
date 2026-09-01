@@ -70,6 +70,8 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
         .O       (SYNC_CLK)
     );
 
+    assign locked_i = 1'b1;
+
 end
 
 if (FPGA_FAMILY == "7series") begin
