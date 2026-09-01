@@ -55,7 +55,7 @@ module auroraMGT #(
     output     [63:0]   axiRXtdata,
     output      [7:0]   axiRXtkeep,
     output              axiRXtlast,
-    output              axiRXtValid,
+    output              axiRXtvalid,
     input      [63:0]   axiTXtdata,
     input       [7:0]   axiTXtkeep,
     input               axiTXtvalid,
@@ -360,7 +360,7 @@ if (FPGA_FAMILY == "7series") begin
             .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
             .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
             .m_axi_rx_tlast(axiRXtlast),        // output
-            .m_axi_rx_tvalid(axiRXtValid),      // output
+            .m_axi_rx_tvalid(axiRXtvalid),      // output
             // GTX Serial I/O
             .rxp(rx_p),                         // input
             .rxn(rx_n),                         // input
@@ -506,7 +506,7 @@ if (FPGA_FAMILY == "7series") begin
             // AXI RX Interface
             .m_axi_rx_tdata(axiRXtdata32),       // output  [0:31]
             .m_axi_rx_tkeep(axiRXtkeep32),       // output  [0:3]
-            .m_axi_rx_tvalid(axiRXtValid32),     // output
+            .m_axi_rx_tvalid(axiRXtvalid32),     // output
             .m_axi_rx_tlast(axiRXtlast32),       // output
             // GT Serial I/O
             .rxp(rx_p),                        // input
@@ -641,7 +641,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
             .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
             .m_axi_rx_tlast(axiRXtlast),        // output
-            .m_axi_rx_tvalid(axiRXtValid),      // output
+            .m_axi_rx_tvalid(axiRXtvalid),      // output
             // GTX Serial I/O
             .rxp(rx_p),                         // input
             .rxn(rx_n),                         // input
