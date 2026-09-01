@@ -107,7 +107,7 @@ work/
 /gateware/platform/xilinx/*/*/axisDataFifo32/*
 !/gateware/platform/xilinx/*/*/axisDataFifo32/axisDataFifo32.tcl
 /gateware/platform/xilinx/*/*/axiStreamDwUpcon/*
-!/gateware/platform/xilinx/*/*/axiStreamDwUpcon/axiStreamDwUpcon.tclf
+!/gateware/platform/xilinx/*/*/axiStreamDwUpcon/axiStreamDwUpcon.tcl
 /gateware/platform/xilinx/*/*/axiStreamSubConvUpcon/*
 !/gateware/platform/xilinx/*/*/axiStreamSubConvUpcon/axiStreamSubConvUpcon.tcl
 /gateware/platform/xilinx/*/*/axiStreamClkConvUpcon/*

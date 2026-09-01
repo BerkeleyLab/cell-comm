@@ -55,7 +55,7 @@ module auroraMGT #(
     output     [63:0]   axiRXtdata,
     output      [7:0]   axiRXtkeep,
     output              axiRXtlast,
-    output              axiRXtValid,
+    output              axiRXtvalid,
     input      [63:0]   axiTXtdata,
     input       [7:0]   axiTXtkeep,
     input               axiTXtvalid,
@@ -120,6 +120,18 @@ wire gtPllLock, hardErr, softErr, laneUp, channelUp, sysCrcPass,
 wire [1:0] txBufStatus;
 wire [2:0] rxBufStatus;
 
+/* AXI 32-bit interface */
+wire [31:0] axiTXtdata32;
+wire  [3:0] axiTXtkeep32;
+wire        axiTXtvalid32;
+wire        axiTXtlast32;
+wire        axiTXtready32;
+wire [31:0] axiRXtdata32;
+wire  [3:0] axiRXtkeep32;
+wire        axiRXtvalid32;
+wire        axiRXtlast32;
+wire        axiRXtready32;
+
 //////////////////////////////////////////////////////////////////////////////
 // Sync clock and User clock generation
 if (INTERNAL_MMCM == "true") begin
@@ -141,7 +153,8 @@ if (INTERNAL_MMCM == "true") begin
         .OUT3_DIVIDE  (MMCM_OUT3_DIVIDE)
     )
     auroraCWmmcm (
-        .TX_CLK(txOutClk),              // input
+        .TX_CLK(txOutClkUnbuf),         // input
+        .TX_CLK_CLR(txOutClkClrUnbuf),  // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
         .SYNC_CLK(syncClkMMCM),         // output
@@ -154,7 +167,7 @@ end else if (INTERNAL_MMCM == "false") begin
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
 end else begin
-    ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED();
+    ERROR_INTERNAL_MMCM_ONLY_TRUE_OR_FALSE_ALLOWED err();
 end
 
 assign mmcmNotLockedOut = mmcmNotLocked;
@@ -298,22 +311,31 @@ if (DEBUG == "true") begin
         .clk(syncClkOut),
         .probe0({
             axiTXtdata32,
+            axiTXtkeep32,
+            axiTXtvalid32,
+            axiTXtlast32,
+            axiTXtready32,
             axiRXtdata32,
+            axiRXtkeep32,
+            axiRXtvalid32,
+            axiRXtlast32,
+            axiTXtdata,
+            axiTXtkeep,
+            axiTXtlast,
+            axiTXtvalid,
+            axiTXtready,
+            axiRXtdata,
+            axiRXtkeep,
+            axiRXtlast,
+            axiRXtvalid,
             gtPllLock,
             mmcmNotLocked,
-            axiRXtValid32,
-            axiRXtkeep32,
-            axiRXtlast32,
             powerDown,
             reset,
             gtReset,
             txPolarity,
             txPMAreset,
             txPCSreset,
-            axiTXtvalid32,
-            axiTXtlast32,
-            axiTXtready32,
-            axiTXtkeep32,
             hardErr,
             softErr,
             laneUp,
@@ -347,6 +369,18 @@ if (FPGA_FAMILY == "7series") begin
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
 
+        // Unused if AURORA 64b66b
+        assign axiTXtdata32 = 0;
+        assign axiTXtkeep32 = 0;
+        assign axiTXtvalid32 = 0;
+        assign axiTXtlast32 = 0;
+        assign axiTXtready32 = 0;
+        assign axiRXtdata32 = 0;
+        assign axiRXtkeep32 = 0;
+        assign axiRXtvalid32 = 0;
+        assign axiRXtlast32 = 0;
+        assign axiRXtready32 = 0;
+
         `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
             // TX AXI4-S Interface
@@ -359,7 +393,7 @@ if (FPGA_FAMILY == "7series") begin
             .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
             .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
             .m_axi_rx_tlast(axiRXtlast),        // output
-            .m_axi_rx_tvalid(axiRXtValid),      // output
+            .m_axi_rx_tvalid(axiRXtvalid),      // output
             // GTX Serial I/O
             .rxp(rx_p),                         // input
             .rxn(rx_n),                         // input
@@ -445,12 +479,6 @@ if (FPGA_FAMILY == "7series") begin
     end
 
     if (MGT_PROTOCOL == "AURORA_8B10B") begin
-        /* AXI 32-bit interface */
-        wire [31:0]   axiTXtdata32;
-        wire  [3:0]   axiTXtkeep32;
-        wire          axiTXtvalid32;
-        wire          axiTXtlast32;
-        wire          axiTXtready32;
 
         axiDataDownconverter
           axiDataDownconverterInst(
@@ -471,11 +499,6 @@ if (FPGA_FAMILY == "7series") begin
             .mAxiStreamTready(axiTXtready32), // input
             .mClk(syncClkOut),                // input
             .resetN(~reset));                 // input
-
-        wire [31:0]   axiRXtdata32;
-        wire  [3:0]   axiRXtkeep32;
-        wire          axiRXtvalid32;
-        wire          axiRXtlast32;
 
         axiDataUpconverter
           axiDataUpconverterInst (
@@ -505,7 +528,7 @@ if (FPGA_FAMILY == "7series") begin
             // AXI RX Interface
             .m_axi_rx_tdata(axiRXtdata32),       // output  [0:31]
             .m_axi_rx_tkeep(axiRXtkeep32),       // output  [0:3]
-            .m_axi_rx_tvalid(axiRXtValid32),     // output
+            .m_axi_rx_tvalid(axiRXtvalid32),     // output
             .m_axi_rx_tlast(axiRXtlast32),       // output
             // GT Serial I/O
             .rxp(rx_p),                        // input
@@ -587,7 +610,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_rxcommadet_out(),             // output
             // ---------- Receive Ports - Pattern Checker Ports ------------------------
             .gt0_rxprbserr_out(),              // output
-            .gt0_rxprbssel_in(2'b0),           // input   [2:0]
+            .gt0_rxprbssel_in(3'b0),           // input   [2:0]
             // ---------- Receive Ports - Pattern Checker ports ------------------------
             .gt0_rxprbscntreset_in(1'b0),      // input
             // ---------- Receive Ports - RX Data Path interface -----------------------
@@ -628,6 +651,19 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     );
 
     if (MGT_PROTOCOL == "AURORA_64B66B") begin
+
+        // Unused if AURORA 64b66b
+        assign axiTXtdata32 = 0;
+        assign axiTXtkeep32 = 0;
+        assign axiTXtvalid32 = 0;
+        assign axiTXtlast32 = 0;
+        assign axiTXtready32 = 0;
+        assign axiRXtdata32 = 0;
+        assign axiRXtkeep32 = 0;
+        assign axiRXtvalid32 = 0;
+        assign axiRXtlast32 = 0;
+        assign axiRXtready32 = 0;
+
         `ifndef SIMULATE
         aurora64b66b aurora64b66bInst (
             // TX AXI4-S Interface
@@ -640,7 +676,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .m_axi_rx_tdata(axiRXtdata),        // output [0:63]
             .m_axi_rx_tkeep(axiRXtkeep),        // output [0:7]
             .m_axi_rx_tlast(axiRXtlast),        // output
-            .m_axi_rx_tvalid(axiRXtValid),      // output
+            .m_axi_rx_tvalid(axiRXtvalid),      // output
             // GTX Serial I/O
             .rxp(rx_p),                         // input
             .rxn(rx_n),                         // input
@@ -684,7 +720,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .gt_rxlpmen(1'b0),                  // input  [0:0]
             .gt_rxpmareset(1'b0),               // input  [0:0]
             .gt_rxpcsreset(1'b0),               // input  [0:0]
-            .gt_rxrate(2'b0),                   // input  [2:0]
+            .gt_rxrate(3'b0),                   // input  [2:0]
             .gt_rxbufreset(1'b0),               // input  [0:0]
             .gt_rxpmaresetdone(),               // output [0:0]
             .gt_rxprbssel(4'b0),                // input  [3:0]
