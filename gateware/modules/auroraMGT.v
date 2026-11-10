@@ -461,7 +461,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_txmaincursor_in(7'b0),         // input  [6:0]
             .gt0_txprecursor_in(5'b0),          // input  [4:0]
             //--------------- Transmit Ports - TX Polarity Control Ports ---------------
-            .gt0_txpolarity_in(1'b0),           // input
+            .gt0_txpolarity_in(txPolarity),     // input
             .gt0_txinhibit_in(1'b0),            // input
             .gt0_txpmareset_in(txPMAreset),     // input
             .gt0_txpcsreset_in(txPCSreset),     // input
@@ -581,7 +581,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_tx_buf_err_out(),             // output
             .gt0_txdiffctrl_in(4'b0),          // input   [3:0]
             // ---------- Transmit Ports - TX Polarity Control Ports -------------------
-            .gt0_txpolarity_in(1'b0),          // input
+            .gt0_txpolarity_in(txPolarity),    // input
             // ---------- Transmit Ports - Pattern Generator Ports ---------------------
             .gt0_txprbsforceerr_in(1'b0),      // input
             .gt0_txprbssel_in(3'b0),           // input   [2:0]
@@ -733,7 +733,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .gt_txdiffctrl(5'b11000),           // input  [4:0]
             .gt_txprecursor(5'b0),              // input  [4:0]
             //--------------- Transmit Ports - TX Polarity Control Ports ---------------
-            .gt_txpolarity(1'b0),               // input
+            .gt_txpolarity(txPolarity),         // input
             .gt_txinhibit(1'b0),                // input
             .gt_txpmareset(txPMAreset),         // input
             .gt_txpcsreset(txPCSreset),         // input
