@@ -599,7 +599,7 @@ if (FPGA_FAMILY == "7series") begin
             .gt0_eyescandataerror_out(),       // output
             .gt0_eyescantrigger_in(1'b0),      // input
             .gt0_rxdfelpmreset_in(1'b0),       // input
-            .gt0_rxlpmen_in(1'b0),             // input
+            .gt0_rxlpmen_in(1'b1),             // input
             .gt0_rxcdrovrden_in(1'b0),         // input
             .gt0_rxmonitorout_out(),           // output  [6:0]
             .gt0_rxmonitorsel_in(2'b0),        // input   [1:0]
@@ -717,7 +717,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             //------------------- Receive Ports - RX Equalizer Ports -------------------
             .gt_rxcdrhold(1'b0),                // input  [0:0]
             .gt_rxdfelpmreset(1'b0),            // input  [0:0]
-            .gt_rxlpmen(1'b0),                  // input  [0:0]
+            .gt_rxlpmen(1'b1),                  // input  [0:0]
             .gt_rxpmareset(1'b0),               // input  [0:0]
             .gt_rxpcsreset(1'b0),               // input  [0:0]
             .gt_rxrate(3'b0),                   // input  [2:0]
