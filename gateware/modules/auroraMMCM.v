@@ -44,7 +44,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
     // are likely to be too tight. Luckily, we can use BUFG_GT with the
     // divide feature.
 
-    localparam integer P_USER_CLK_FREQ_RATIO_SOURCE_TO  = 2;
+    localparam integer P_USER_CLK_FREQ_RATIO_SOURCE_TO  = 1;
     localparam integer P_USER_CLK_INT_DIV  = P_USER_CLK_FREQ_RATIO_SOURCE_TO - 1;
     localparam   [2:0] P_USER_CLK_DIV      = P_USER_CLK_INT_DIV[2:0];
     BUFG_GT bufg_gt_user_clk_inst (
