@@ -28,15 +28,18 @@ module auroraLink #(
     input  wire        MGT_RX_N,
 
     /* Clocks in case of external MMCMM */
-    input  wire        auMGTclkIn,
+    input  wire        auSyncClkIn,
     input  wire        auUserClkIn,
+    input  wire        auUserClk2xIn,
     input  wire        mmcmLockedIn,
 
     /* Clocks in case of internal MMCMM */
-    output wire        auMGTclkOut,
-    output wire        auMGTResetOut,
+    output wire        auSyncClkOut,
+    output wire        auSyncResetOut,
     output wire        auUserClkOut,
     output wire        auUserResetOut,
+    output wire        auUserClk2xOut,
+    output wire        auUser2xResetOut,
     output wire        mmcmLockedOut,
 
     /* Axi stream 32 bit interface */
@@ -82,19 +85,26 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
 
     wire          resetOut;
 
-    (* ASYNC_REG="TRUE" *) reg  auMGTReset_m = 0, auMGTReset = 0;
-    always @(posedge auMGTclkOut) begin
-        auMGTReset_m <= resetOut;
-        auMGTReset <= auMGTReset_m;
-    end
-    assign auMGTResetOut = auMGTReset;
-
     (* ASYNC_REG="TRUE" *) reg  auUserReset_m = 0, auUserReset = 0;
     always @(posedge auUserClkOut) begin
         auUserReset_m <= resetOut;
         auUserReset <= auUserReset_m;
     end
     assign auUserResetOut = auUserReset;
+
+    (* ASYNC_REG="TRUE" *) reg  auUser2xReset_m = 0, auUser2xReset = 0;
+    always @(posedge auUserClk2xOut) begin
+        auUser2xReset_m <= resetOut;
+        auUser2xReset <= auUser2xReset_m;
+    end
+    assign auUser2xResetOut = auUser2xReset;
+
+    (* ASYNC_REG="TRUE" *) reg  auSyncReset_m = 0, auSyncReset = 0;
+    always @(posedge auSyncClkOut) begin
+        auSyncReset_m <= resetOut;
+        auSyncReset <= auSyncReset_m;
+    end
+    assign auSyncResetOut = auSyncReset;
 
     auroraMGT #(
         .MMCM_MULT(MMCM_MULT),
@@ -118,10 +128,12 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .initClkIn(initClk),
 
         .refClkIn(refClk),                                      // input
-        .syncClkIn(auUserClkIn),                                // input
-        .userClkIn(auMGTclkIn),                                 // input
-        .userClkOut(auMGTclkOut),                               // output
-        .syncClkOut(auUserClkOut),                              // output
+        .userClkIn(auUserClkIn),                                // input
+        .userClk2xIn(auUserClk2xIn),                            // input
+        .syncClkIn(auSyncClkIn),                                // input
+        .userClkOut(auUserClkOut),                              // output
+        .userClk2xOut(auUserClk2xOut),                          // output
+        .syncClkOut(auSyncClkOut),                              // output
         .mmcmNotLockedIn(mmcmLockedIn),                         // input
         .mmcmNotLockedOut(mmcmLockedOut),                       // output
 
@@ -163,15 +175,15 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .sAxiStreamTlast(axiTxTlast),                           // input
         .sAxiStreamTready(axiTxTready),                         // output
         .sAxiStreamTvalid(axiTxTvalid),                         // input
-        .sClk(auUserClkOut),                                    // input
+        .sClk(auUserClk2xOut),                                  // input
         /* Output stage 64-bit */
         .mAxiStreamTdata(axiTxTdata64b),                        // output [63:0]
         .mAxiStreamTkeep(axiTxTkeep64b),                        // output [7:0]
         .mAxiStreamTlast(axiTxTlast64b),                        // output
         .mAxiStreamTready(axiTxTready64b),                      // input
         .mAxiStreamTvalid(axiTxTvalid64b),                      // output
-        .mClk(auMGTclkOut),                                     // input
-        .resetN(~auMGTResetOut));                               // input
+        .mClk(auUserClkOut),                                    // input
+        .resetN(~auUserResetOut));                              // input
 
     axiDataDownconverter axiDataDownconverterInst(
         /* Input stage 64-bit */
@@ -181,7 +193,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .sAxiStreamTlast(axiRxTlast64b),                        // input
         .sAxiStreamTvalid(axiRxTvalid64b),                      // input
         .sAxiStreamTready(),                                    // output absent
-        .sClk(auMGTclkOut),                                     // input
+        .sClk(auUserClkOut),                                    // input
         /* Output stage 32-bit */
         .mAxiStreamTdata(axiRxTdata),                           // output [31:0]
         .mAxiStreamTkeep(axiRxTkeep),                           // output [3:0]
@@ -189,8 +201,8 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
         .mAxiStreamTlast(axiRxTlast),                           // output
         .mAxiStreamTready(axiRxTready),                         // input
         .mAxiStreamTvalid(axiRxTvalid),                         // output
-        .mClk(auUserClkOut),                                    // input
-        .resetN(~auMGTResetOut));                               // input
+        .mClk(auUserClk2xOut),                                  // input
+        .resetN(~auUserResetOut));                              // input
 
     // Debugging
     `ifndef SIMULATE
@@ -217,7 +229,7 @@ if(MGT_PROTOCOL == "AURORA_64B66B") begin
                     axiTxTlast64b,
                     axiTxTready64b,
                     resetOut,
-                    auMGTResetOut,
+                    auUserResetOut,
                     axiTuser}) // [399:0]
                 );
             end

@@ -38,7 +38,9 @@ module auroraMGT #(
     input               refClkIn,
     input               syncClkIn,
     input               userClkIn,
+    input               userClk2xIn,
     output              userClkOut,
+    output              userClk2xOut,
     output              syncClkOut,
     input               mmcmNotLockedIn,
     output              mmcmNotLockedOut,
@@ -99,7 +101,7 @@ localparam TX_PMA_RESET_INIT_STATE = 1'b0;
 localparam TX_PCS_RESET_INIT_STATE = 1'b0;
 // Clock
 wire mmcmNotLocked, cpllLock, mmcmClkInLock;
-wire txOutClkClrUnbuf, txOutClkUnbuf, userClkMMCM, syncClkMMCM;
+wire txOutClkClrUnbuf, txOutClkUnbuf, userClkMMCM, userClk2xMMCM, syncClkMMCM;
 wire refClk = refClkIn;
 wire initClk;
 // Controls
@@ -157,13 +159,16 @@ if (INTERNAL_MMCM == "true") begin
         .TX_CLK_CLR(txOutClkClrUnbuf),  // input
         .CLK_LOCKED(mmcmClkInLock),     // input
         .USER_CLK(userClkMMCM),         // output
+        .USER_CLK_2X(userClk2xMMCM),    // output
         .SYNC_CLK(syncClkMMCM),         // output
         .MMCM_NOT_LOCKED(mmcmNotLocked) // output
     );
     assign userClkOut = userClkMMCM;
+    assign userClk2xOut = userClk2xMMCM;
     assign syncClkOut = syncClkMMCM;
 end else if (INTERNAL_MMCM == "false") begin
     assign userClkOut = userClkIn;
+    assign userClk2xOut = userClk2xIn;
     assign syncClkOut = syncClkIn;
     assign mmcmNotLocked = mmcmNotLockedIn;
 end else begin
@@ -308,7 +313,7 @@ end
 `ifndef SIMULATE
 if (DEBUG == "true") begin
     ila_td400_s4096_cap ila_auroraMGT_inst (
-        .clk(syncClkOut),
+        .clk(userClk2xOut),
         .probe0({
             axiTXtdata32,
             axiTXtkeep32,
