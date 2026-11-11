@@ -26,15 +26,16 @@ generate
 end
 endgenerate
 
-(* KEEP = "TRUE" *)    wire             clk_not_locked_i;
-wire                                    sync_clk_i;
-wire                                    user_clk_i;
-wire                                    user_clk_2x_i;
-wire                                    clkfbout_i;
-wire                                    clkfbout;
-wire                                    locked_i;
-assign clk_not_locked_i = !CLK_LOCKED;
+wire sync_clk_i;
+wire user_clk_i;
+wire user_clk_2x_i;
+wire clkfbout_i;
+wire clkfbout;
+wire locked_i;
+wire clk_not_locked_i = !CLK_LOCKED;
 assign MMCM_NOT_LOCKED  = !locked_i;
+
+wire mmcm_rst = clk_not_locked_i || TX_CLK_CLR;
 
 `ifndef SIMULATE
 
@@ -125,7 +126,7 @@ if (FPGA_FAMILY == "ultrascaleplus") begin
             .CLKINSTOPPED        (),
             .CLKFBSTOPPED        (),
             .PWRDWN              (1'b0),
-            .RST                 (clk_not_locked_i));
+            .RST                 (mmcm_rst));
 
     BUFG txout_fbout_net_i
     (
@@ -207,7 +208,7 @@ if (FPGA_FAMILY == "7series") begin
             .CLKINSTOPPED        (),
             .CLKFBSTOPPED        (),
             .PWRDWN              (1'b0),
-            .RST                 (clk_not_locked_i));
+            .RST                 (mmcm_rst));
 
     // BUFG for the feedback clock.  The feedback signal is phase aligned to the input
     // and must come from the CLK0 or CLK2X output of the PLL. In this case, we use
